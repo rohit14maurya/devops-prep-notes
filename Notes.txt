@@ -1,0 +1,2272 @@
+
+1️⃣ IAM
+2️⃣ EC2
+3️⃣ S3
+4️⃣ Lambda
+5️⃣ VPC
+6️⃣ RDS
+7️⃣ DynamoDB
+8️⃣ Route 53
+9️⃣ CloudWatch
+🔟 CloudFormation
+1️⃣1️⃣ Auto Scaling
+1️⃣2️⃣ Elastic Load Balancer (ELB)
+1️⃣3️⃣ CodePipeline
+1️⃣4️⃣ API Gateway
+1️⃣5️⃣ SQS
+1️⃣6️⃣ SNS
+1️⃣7️⃣ Secrets Manager
+1️⃣8️⃣ Security Group
+1️⃣9️⃣ NAT Gateway
+2️⃣0️⃣ KMS
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Master these 7 core AWS services, and you’ll be ahead of 90% of the competition. Let’s break them down:
+🔹 1. EC2 (Elastic Compute Cloud)
+Your go-to for running servers and applications.
+ Set up virtual machines, install software, host backend APIs, and build scalable systems.
+Learn to launch, SSH, configure security groups, and auto-scale.
+🔹 2. S3 (Simple Storage Service)
+A highly scalable, durable storage system for files, backups, logs, and static websites.
+Know how to upload/download files, manage permissions, and set lifecycle rules.
+🔹 3. IAM (Identity and Access Management)
+Control who can access what in your AWS environment.
+Understand users, groups, roles, policies, and least privilege access.
+🔹 4. RDS (Relational Database Service)
+Managed databases like MySQL, PostgreSQL, and more — without manual setup.
+Learn to launch, connect, back up, and tune performance.
+🔹 5. Lambda
+Run code without provisioning servers — pay only for what you use.
+Perfect for automation, triggers, cron jobs, and microservices.
+🔹 6. CloudWatch
+Monitor logs, set alarms, and get visibility into your AWS infrastructure.
+Learn to create dashboards, alerts, and troubleshoot failures.
+🔹 7. VPC (Virtual Private Cloud)
+Design your network architecture: private/public subnets, internet access, NAT, etc.
+Know how to create secure, isolated environments for your workloads.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+kubectl Command: Behind the scenes
+
+When you perform kubectl apply, Kubernetes executes a series of steps to manage the desired state of the resources defined in the provided configuration files. Here’s on what happens:
+
+1. User issues the kubectl apply -f request.
+ 
+2. The kubectl tool sends an API request to the Kubernetes API server to create or update the resource.
+
+3. The server validates the user’s request. If all looks good, the server will write the new or modified resource into etcd.
+
+4. The kube-controller-manager is a daemon that continually watches the kube-apiserver.
+
+5. It will be notified of the new deployment and proceeds to create new pods to achieve the desired state through another call to the kube-apiserver.
+
+6. Then we have kube-scheduler which is responsible for scheduling Kubernetes pods on worker nodes.
+
+6. The kube-scheduler is then notified about the new pods that have been created and proceeds to determine which nodes are valid placements for the same. The scheduler’s primary task is to identify the create request and choose the best node for a pod that satisfies the requirements.
+
+7. Finally, Kubelet is an agent component that runs on every node in the cluster that gets notified if a pod has been assigned to it. The assigned node then coordinates with the container runtime on the node to start the appropriate containers.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+linux is the backbone of many cloud environments — and as a DevOps Engineer, knowing how the file system is structured is non-negotiable. Here's a simplified breakdown of the most critical directories every DevOps learner should get comfortable with:
+📁 / – The root directory. Everything starts here.
+ 🔧 /bin – Essential system binaries like ls, cat, and cp.
+ ⚙️ /boot – Bootloader and kernel files. Without this, your system won’t boot.
+ 🧠 /proc – Virtual directory that gives you info about system and kernel processes in real time.
+ 📊 /var – Variable data like logs, caches, and spools live here.
+ 💾 /mnt – Manual mount point for temporarily attaching external filesystems.
+ 📂 /media – Auto-mount point for external devices like USBs.
+ 🔌 /dev – Represents device files for hardware like hard drives and USBs.
+ 🛠 /etc – Configuration files for the system and installed services.
+ 🧹 /tmp – Temporary files that reset after reboot.
+ 📚 /lib – Shared libraries used by binaries in /bin and /sbin.
+ 🏠 /root – Home directory for the root (superuser).
+ 👤 /usr – Contains user-installed software and binaries.
+ 🏡 /home – Home directories for regular users (/home/olaoluwa for example 😊).
+Every directory plays a role in system operation, security, and automation. As I build my skills with Linux, AWS, Docker, and more, understanding these paths is helping me automate tasks, troubleshoot better, and write cleaner scripts. 🧑🏽‍💻
+-----------------------------------------------------------------------------------------------------------------------------------------
+Before Kubernetes, Terraform, or CI/CD tools, learn:
+
+- how services run (systemd, service, journalctl, targets)
+- how permissions work (chmod, chown, umask, sticky bit)
+- how storage works (mount, fstab, df, du, LVM, RAID basics)
+- how users are managed (useradd, passwd, groups, sudoers)
+- how to debug systems (logs, journalctl, ps, top, netstat, lsof)
+- how Linux operates (processes, file system, systemd, signals)
+- how to check performance (top, iostat, vmstat, strace, sar, perf)
+- how networking works (interfaces, ports, DNS, routing, firewalls)
+- how to use the command line (bash, grep, awk, sed, pipes, redirects)
+- how to write automation scripts (bash scripts, cron jobs, conditionals, loops)
+-------------------------------------------------------------------------------------------------------------------------
+For 1–3 Years Experience
+1.Have hands-on projects with Jenkins pipelines, Ansible/Terraform.
+2.Know Kubernetes architecture and deployment.
+3.Familiarity with AWS CLI, EC2, S3, IAM policies.
+4.Be able to troubleshoot CI/CD failures.
+5.Write custom Dockerfiles and debug container issues.
+------------------------------------------------------------------------------------------------------------------------
+🚨 Kubernetes Node Drain Stuck Due to Zombie Pods with Custom Finalizers — A Real-World Cluster Management Challenge 🚨
+
+I recently faced a challenging Kubernetes cluster issue that I believe many Kubernetes admins and DevOps engineers might encounter at some point. It’s a subtle yet impactful problem that can halt critical maintenance operations.
+
+Scenario Overview: When performing a node drain operation using the command kubectl drain <node-name>, the process unexpectedly hung indefinitely. The reason? One or more pods on the node were stuck in the Terminating state and refused to exit. This caused the drain to block forever, preventing node maintenance or upgrades.
+
+What exactly happened? 🤔
+🛠️ The pod in question had a custom finalizer configured.
+🔗 Finalizers are Kubernetes metadata hooks that prevent resource deletion until certain cleanup operations are completed.
+🤖 Usually, a dedicated controller is responsible for executing this cleanup and then removing the finalizer, signaling Kubernetes that the pod can be safely deleted.
+⚠️ However, in this case, the controller responsible for that finalizer had crashed or become unresponsive.
+🧟‍♂️ Because the finalizer was never removed, Kubernetes continued to wait indefinitely, leaving the pod stuck in Terminating and blocking the entire node drain process.
+
+Why is this important?
+🔄 Node drains are essential for safely evacuating workloads during maintenance such as upgrades, scaling, or hardware replacement.
+🧟‍♀️ A stuck pod in Terminating state with a lingering finalizer creates a “zombie” pod scenario, effectively blocking operational workflows and increasing downtime risks.
+🎯 Understanding the lifecycle and behavior of finalizers is critical for any Kubernetes administrator or DevOps engineer managing production clusters.
+
+How to detect and troubleshoot such issues? 🔍
+1. Identify stuck pods
+Run: kubectl get pods --all-namespaces -o wide
+Look for pods in the Terminating state, especially those lingering for a long time.
+2. Inspect pod details for finalizers
+Describe the problematic pod: kubectl describe pod <pod-name>
+Check the finalizers field under metadata. A non-empty list indicates a pod waiting on some cleanup action.
+3. Investigate the controller managing the finalizer: Review logs and status of the controller/operator responsible for that finalizer to ensure it’s running correctly.
+4. How to resolve the issue quickly? 🛠️
+If the responsible controller is down and immediate node maintenance is required, you can force remove the finalizer from the pod metadata using: kubectl patch pod <pod-name> -p '{"metadata":{"finalizers":[]}}' --type=merge
+This command tells Kubernetes to ignore the finalizer and delete the pod immediately.
+
+⚠️ Warning: Use this carefully because it skips any cleanup logic, which might lead to resource leaks or inconsistent states.
+-------------------------------------------------------------------------------------------------------
+How Kubernetes Works: End-to-End Explained Simply
+
+1. Cluster Setup
+You begin by setting up a Kubernetes cluster, which includes a control plane and one or more worker nodes.
+
+2. Define Your Application
+You describe your application using YAML configuration files—these define resources like Deployments, Services, ConfigMaps, etc.
+
+3. Apply Configuration
+You apply the YAML files using kubectl apply -f <file>. This sends your request to the API Server, which is the central management component of the cluster.
+
+4. API Server Processing
+Kubernetes processes the request and decides:
+
+Whether to create a new resource (e.g., Pod, Deployment)
+
+Update or delete an existing resource
+Or trigger a controller to take action
+
+5. Store in etcd
+The API Server stores the resource’s specification in etcd, the cluster’s key-value store and source of truth.
+
+6. Controller Detects Change
+A relevant controller (e.g., ReplicaSet Controller) detects the new spec and responds accordingly.
+
+7. Resource Creation
+The controller initiates resource creation, instructing the scheduler to deploy Pods.
+
+8. Scheduling
+The scheduler assigns Pods to appropriate nodes based on current resource availability and scheduling policies.
+
+9. Kubelet Interaction
+Once assigned, the Kubelet on the target node receives the Pod specification and requests the container runtime to start the container.
+
+10. Container Deployment
+The container runtime pulls the required image, creates the container, and runs it inside the Pod.
+
+11. Network Assignment
+The CNI plugin (Container Network Interface) assigns a network identity to the Pod. It gets an IP address and joins the cluster network.
+
+12. Service Routing with kube-proxy
+kube-proxy sets up the routing rules to allow Services to forward traffic to the appropriate and healthy Pods.
+---------------------------------------------------------------------------------------------------------------------------
+Real time Kubernetes troubleshooting scenarios https://lnkd.in/guQ3HecS
+
+1) Pod stuck in CrashLoopBackOff
+Check logs: kubectl logs <pod-name>
+Describe the pod: kubectl describe pod <pod-name>
+
+2) Pod in Pending state
+Describe pod: kubectl describe pod <pod-name>
+Check resource requests vs. node capacity
+No available nodes / taints preventing scheduling
+
+3) Service not reachable
+Check service: kubectl get svc, kubectl describe svc
+Test with curl inside a pod
+
+4) Image pull failure
+Check error: kubectl describe pod <pod-name>
+Invalid image name or tag
+
+5) DNS issues inside cluster
+Test DNS: kubectl run -it busybox --image=busybox --restart=Never -- nslookup kubernetes
+Check coredns logs
+Validate DNS config in /etc/resolv.conf of pod
+Intermediate Troubleshooting Scenarios
+
+6) Node is NotReady
+Check node status: kubectl get nodes
+Inspect: kubectl describe node <node-name>
+Check kubelet logs and disk/CPU/memory pressure
+
+7) High pod restarts across namespace
+Run: kubectl get pods --all-namespaces -o wide
+Check for readiness/liveness probe failures
+Investigate resource throttling or OOMKilled
+
+8) Service discovery failing between namespaces
+Use full DNS name: <svc>.<namespace>.svc.cluster.local
+NetworkPolicy may be blocking
+Test from one pod to another with curl
+
+9) PVC not bound
+Describe PVC: kubectl describe pvc <name>
+No matching storage class or insufficient volume capacity
+
+10) ConfigMap or Secret not mounted
+Describe pod: check volumes and volumeMounts
+Check permissions on secret/configmap
+Advanced Troubleshooting Scenarios
+
+11) Pod OOMKilled frequently
+Check kubectl describe pod <pod-name>
+Compare memory limits vs. actual usage (monitoring tools like Prometheus/Grafana)
+Adjust requests/limits or fix memory leaks
+
+12) Readiness/Liveness probe failures
+Describe pod and inspect probe configuration
+Manually test probe path with curl or wget
+Increase timeout/initialDelay if app is slow to start
+
+13) NetworkPolicy blocking traffic
+Validate with kubectl get networkpolicy
+Use netshoot pod to test port access
+Whitelist required ingress/egress rules
+
+14) Etcd cluster issues
+kubectl logs etcd-<node> -n kube-system
+Check for disk full, slow I/O, or expired certificates
+Ensure backup/snapshot policy is in place
+
+15) Control plane components crashing (API server, controller-manager)
+Logs in /var/log/containers or use journalctl
+Inspect static pod manifests in /etc/kubernetes/manifests
+Check resource usage, certificates, or RBAC
+
+16) Cluster certificate expiration
+Check expiry with kubeadm certs check-expiration
+Rotate with kubeadm certs renew all and restart components
+
+17) Ingress not routing traffic
+Check ingress object and controller logs
+Verify DNS, service backend, and TLS config
+Test path matching and annotations
+
+Checkout my youtube channel - https://lnkd.in/guQ3HecS
+Grab free devops resources - https://lnkd.in/grmxXFcq
+
+Do follow Praveen Singampalli and share this post with your community
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Amazon Web Services (AWS) Cloud Engineer Interview Scenarios – Can You Answer These?
+
+In AWS interviews, scenario-based questions test not just your knowledge but also your troubleshooting approach. Here are a few real-world problems — how would you respond?
+
+1. EKS pods can’t scale due to insufficient IPs
+ → Check if the VPC CIDR is too small; enable VPC CNI custom networking or add a secondary CIDR.
+
+2. EC2 instance stuck in “pending”
+ → The AMI or instance type may not be available in that AZ. Verify both before retrying.
+
+3. ALB routing unevenly to healthy targets
+ → Sticky sessions might be on, or cross-zone load balancing is disabled. Check these settings.
+
+4. Application can’t retrieve AWS Secrets Manager secret
+ → Ensure IAM role has secretsmanager\:GetSecretValue and the correct secret ARN.
+
+5. SQS queue piling up, Lambda not consuming
+ → Confirm Lambda event source mapping exists and IAM role has SQS read permission.
+
+6. DynamoDB throttling during peak traffic
+ → Enable auto-scaling or switch to on-demand capacity mode.
+
+7. EKS pods crashing with OOM errors
+ → Review and adjust pod CPU/memory requests and limits in the deployment spec.
+
+8. IAM user bypassing MFA
+ → Attach and enforce an MFA-required policy for console login.
+
+Pro tip: In interviews, focus on a step-by-step diagnosis, then share the root cause and resolution. This shows your problem-solving process, not just your AWS knowledge.
+--------------------------------------------------------------------------------------------------------------
+ 10 Terraform Scenarios Every DevOps Engineer Must Be Battle-Tested For
+Terraform is powerful… until it bites back.
+ If you’ve worked with it in real-world environments, you know it’s not if you’ll hit these issues, but when.
+Here are 10 scenarios I’ve seen DevOps teams face — and how to handle them like a pro:
+1️⃣ Deleted state file 😬
+ ➡️ Keep state in a secure remote backend (S3 + DynamoDB for AWS) and enable versioning.
+2️⃣ Two people running terraform apply at the same time
+ ➡️ Enable state locking in the backend to avoid collisions.
+3️⃣ Apply fails halfway through
+ ➡️ Use terraform plan + smaller change sets; terraform apply -refresh=true to reconcile.
+4️⃣ AWS API rate limits
+ ➡️ Use provider "aws" { max_retries = N } and stagger deployments.
+5️⃣ Drift between code and actual infra
+ ➡️ Run terraform plan regularly; schedule drift detection jobs in CI/CD.
+6️⃣ Resource removed from code but still exists in cloud
+ ➡️ Use terraform destroy -target or terraform state rm after confirmation.
+7️⃣ Provider/API changes after upgrades
+ ➡️ Test in staging with pinned provider versions before upgrading.
+8️⃣ Circular module dependencies
+ ➡️ Break dependencies using terraform_remote_state or separate stacks.
+9️⃣ AWS quota limits hit
+ ➡️ Monitor quotas; request increases ahead of scaling events.
+🔟 Lost access to remote backend
+ ➡️ Maintain access documentation and backup state exports securely.
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+🚨 Kubernetes Troubleshooting Cheatsheet 🛠️
+
+1) Confirm cluster and namespace
+⚫ Check current context: kubectl config current-context
+⚫ List contexts: kubectl config get-contexts
+⚫ Switch context: kubectl config use-context <name>
+⚫ List namespaces or pods in a namespace: kubectl get ns and kubectl get pods -n <namespace>
+
+2) Get the big picture: nodes, pods and events
+🔴 Nodes: kubectl get nodes
+🔴 All pods: kubectl get pods -A
+🔴 All deployments: kubectl get deployments -A
+🔴 Recent events: kubectl get events --sort-by=.metadata.creationTimestamp -A
+
+3) Inspect the failing pod
+🟣 Describe the pod: kubectl describe pod <pod> -n <ns>
+🟣 View logs: kubectl logs <pod> -n <ns>
+🟣 Logs for a specific container: kubectl logs <pod> -c <container> -n <ns>
+🟣 Open a shell inside the pod: kubectl exec -it <pod> -n <ns> -- /bin/sh
+
+4) Check probes and health
+🟢 See readiness and liveness probe info in kubectl describe output
+🟢 Test the probe endpoint from inside the pod:
+🟢 kubectl exec -it <pod> -n <ns> -- curl -sv localhost:<port>/health
+🟢 If probes fail, consider adjusting timeouts or probe settings
+
+5) Rollouts, history and recovery
+🟠 Check rollout status: kubectl rollout status deployment/<name> -n <ns>
+🟠 View rollout history: kubectl rollout history deployment/<name> -n <ns>
+🟠 Rollback if needed: kubectl rollout undo deployment/<name> -n <ns>
+
+6) Networking and services
+🟤 List services: kubectl get svc -n <ns>
+🟤 Check endpoints: kubectl get endpoints -n <ns>
+🟤 DNS test from a pod: kubectl exec -it <pod> -n <ns> -- nslookup <service>
+🟤 Quick local test with port-forward: kubectl port-forward svc/<svc> 8080:80 -n <ns>
+
+7) Storage: PVC and PV checks
+🟡 List PVCs: kubectl get pvc -n <ns>
+🟡 Describe a PVC: kubectl describe pvc <pvc> -n <ns>
+🟡 Look for mount errors in the pod describe output
+
+8) Resources, logs and quick fixes
+🔵 Resource usage: kubectl top nodes and kubectl top pods -n <ns>
+🔵 Tail logs across pods with tools like stern or kubetail
+🔵 Restart deployment: kubectl rollout restart deployment/<name> -n <ns>
+🔵 Recreate a pod safely: kubectl delete pod <pod> -n <ns> (controller will recreate it)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Important Interview Questions Related to EC2 instances.
+
+👉What is Amazon EC2 and why is it used?
+• Amazon EC2 (Elastic Compute Cloud) provides scalable virtual servers in the AWS cloud. 
+• Use it to host application servers, monitoring agents, CI/CD runners, and even temporary test environments. 
+• It’s cost-effective because we can scale instances up or down
+
+👉What are the different EC2 instance types you have used?
+• t3/t4g → General purpose for app servers, low-cost dev/test
+• m5/m6i → Balanced compute & memory for production services
+• c5/c6g → Compute-optimized for heavy backend processing
+• r5/r6i → Memory-optimized for caching & in-memory DBs
+• p3/p4 → GPU workloads (ML training)
+
+👉How do you connect to an EC2 instance?
+• Linux EC2 → SSH using .pem key or Session Manager (IAM-based)
+• Windows EC2 → RDP after decrypting password with .pem key
+• In production, I prefer Session Manager to avoid opening SSH/RDP ports for security.
+
+👉How do you make an EC2 instance highly available?
+• Deploy EC2s in multiple AZs behind an ELB/ALB/NLB.
+• Use Auto Scaling Groups (ASG) to automatically replace failed instances.
+• Store application data in S3, RDS, or EFS instead of instance local disk.
+• Use health checks on the load balancer.
+
+👉How do you secure EC2 instances?
+• Restrict inbound access with Security Groups & NACLs.
+• Use IAM roles instead of hardcoding credentials.
+• Enable AWS Systems Manager Session Manager for shell access instead of SSH in public internet.
+• Patch regularly using SSM Patch Manager.
+
+👉How do you troubleshoot EC2 instance issues?
+• Instance not reachable → Check SG rules, NACLs, route tables, and public/private subnet settings.
+• CPU/Memory high → Use CloudWatch metrics, top/htop, ps.
+• Disk full → df -h, log rotation, increase EBS volume size.
+• Instance stopped/terminated unexpectedly → Check AWS Personal Health Dashboard and CloudTrail events.
+
+👉What’s the difference between Security Groups and NACLs?
+• Security Groups → Instance-level, stateful, allow rules only.
+• NACLs → Subnet-level, stateless, allow & deny rules.
+Start with SGs for application-level security and use NACLs for an extra network layer.
+
+👉What happens when you stop and start an EC2 instance?
+• Stop → Instance is shut down, EBS volumes preserved, public IP changes (unless using Elastic IP).
+• Start → Instance resumes from scratch but retains the same EBS volume data.
+• Ephemeral storage data is lost.
+
+👉An EC2 in production is at 100% CPU and the app is slow. How to fix it?
+• Identify process → top / htop / ps -aux --sort=-%cpu
+• Application scaling → If it’s legitimate load, add more EC2s in an Auto Scaling Group.
+• Rightsizing → Move to compute-optimized (c5/c6g) if CPU-intensive.
+• Long-term → Set CloudWatch alarms to alert before hitting 90% CPU.
+------------------------------------------------------------------------------------------------------------------------------------------------
+Kubernetes for DevOps Engineers: Below are the Question which you can get in interview.
+
+Q: How do you expose a Kubernetes application to the outside world?
+
+A: Use a Service of type LoadBalancer or configure an Ingress. LoadBalancers provide a direct public IP, while Ingress supports advanced routing, TLS termination, and centralized traffic management.
+
+Q: What causes pods to go into a CrashLoopBackOff state?
+A: Common reasons include incorrect image versions, missing environment variables, failing readiness/liveness probes, or insufficient resource limits. Checking logs with kubectl logs and describing the pod helps pinpoint the issue.
+
+Q: How do you scale an application in Kubernetes?
+A: Use kubectl scale to manually adjust replicas or define an HorizontalPodAutoscaler (HPA) for CPU/memory-based auto-scaling. This ensures apps can handle traffic spikes without downtime.
+
+Q: What’s the difference between a Deployment and a StatefulSet?
+A: Deployments are ideal for stateless workloads where replicas are identical. StatefulSets are used for stateful apps (like databases) requiring stable network IDs, persistent storage, and ordered scaling.
+
+Q: How do you secure sensitive data in Kubernetes?
+A: Store credentials, API keys, and certificates in Secrets rather than ConfigMaps. Mount them as environment variables or volumes, and use encryption at rest with RBAC for strict access control.
+
+Q: What’s the best way to monitor Kubernetes workloads?
+A: Integrate Prometheus for metrics collection, Grafana for visualization, and Alertmanager for proactive notifications. This trio gives end-to-end visibility into cluster health and app performance.
+
+Q: How do you perform a rolling update in Kubernetes?
+A: A Deployment supports rolling updates by gradually replacing old pods with new ones, ensuring zero downtime. You can control the pace using maxUnavailable and maxSurge parameters.
+
+Q: What’s the purpose of a DaemonSet?
+A: A DaemonSet ensures a copy of a pod runs on all (or selected) nodes in the cluster. It’s commonly used for logging agents, monitoring tools, and security daemons.
+
+Q: How do you handle persistent storage in Kubernetes?
+A: Use PersistentVolumes (PV) and PersistentVolumeClaims (PVC) to abstract storage from pods. This allows apps to survive restarts and rescheduling without losing data.
+----------------------------------------------------------------------------------------------------------------------------------------
+Why senior DevOps engineers get paid 2x more: They think differently, not harder.
+
+Take this example:
+A production Kubernetes cluster goes down. 500 pods crash simultaneously.
+
+Junior DevOps Engineer:
+Frantically checks random logs across 20 different services. Looks at CPU metrics, memory usage, disk space. Restarts pods one by one hoping something works. Opens 5 different monitoring dashboards. Googles “Kubernetes pods crashing” for the 10th time.
+
+3 hours later: Still debugging.
+
+Senior DevOps Engineer:
+Asks 4 simple questions before touching anything:
+
+- What deployments happened in the last 24 hours?
+- What cronjobs or automated processes are running?
+- What external dependencies could be affecting this?
+- What does the event log show for the failing pods?
+
+Runs: 
+kubectl get events --sort-by='.lastTimestamp' | head -20
+
+Discovers a new ConfigMap deployment removed a critical environment variable that one services depend on.
+
+Issue resolved in 15 minutes.
+
+The difference isn’t technical knowledge. It’s thinking methodology.
+
+Junior engineers react. Senior engineers investigate.
+
+Junior engineers check symptoms. Senior engineers find root causes.
+
+Junior engineers panic in chaos. Senior engineers follow a mental framework.
+
+Real-world Kubernetes troubleshooting isn’t about memorizing kubectl commands.
+
+It’s about understanding:
+
+- How distributed systems fail
+- What changes trigger cascading failures
+- How to trace problems across multiple services
+- When to rollback vs when to fix forward
+
+This is what separates DevOps engineers making 25 LPA from those making 50+ LPA.
+----------------------------------------------------------------------------------------------------------------------
+It’s Friday evening. You’re about to step away for the weekend. Then — ping! — PagerDuty lights up.
+𝐏𝐫𝐨𝐝𝐮𝐜𝐭𝐢𝐨𝐧 𝐢𝐬 𝐝𝐨𝐰𝐧.
+
+For DevOps engineers, this is the moment where theory meets reality.
+The playbooks, the tools, the checklists — they all come into play… but so does the stress.
+
+Last month, I faced a situation where:
+
+• Kubernetes pods were stuck in CrashLoopBackOff
+• CI/CD pipeline deploys were frozen mid-run
+• Terraform destroy operation was blocked by dangling AWS ENIs
+
+Here’s how I handled it (and how you can too):
+
+𝟏. 𝐏𝐚𝐮𝐬𝐞 𝐁𝐞𝐟𝐨𝐫𝐞 𝐘𝐨𝐮 𝐏𝐚𝐧𝐢𝐜
+Take 2 minutes to assess. Identify the blast radius. Which services are actually impacted?
+
+𝟐. 𝐂𝐡𝐞𝐜𝐤 𝐎𝐛𝐬𝐞𝐫𝐯𝐚𝐛𝐢𝐥𝐢𝐭𝐲 𝐅𝐢𝐫𝐬𝐭
+Don’t guess — look at your Grafana dashboards, CloudWatch metrics, or Dynatrace traces. Find the earliest point of failure.
+
+𝟑. 𝐑𝐨𝐥𝐥 𝐁𝐚𝐜𝐤 𝐐𝐮𝐢𝐜𝐤𝐥𝐲
+If the deployment caused the outage, use Jenkins / GitHub Actions to trigger a rollback to the last stable version.
+
+𝟒. 𝐈𝐬𝐨𝐥𝐚𝐭𝐞 𝐭𝐡𝐞 𝐏𝐫𝐨𝐛𝐥𝐞𝐦
+In my case, a Kubernetes upgrade introduced a storage class mismatch. Scaling down non-critical workloads freed enough resources to keep business-critical pods running.
+
+𝟓. 𝐅𝐢𝐱 𝐰𝐢𝐭𝐡 𝐌𝐢𝐧𝐢𝐦𝐚𝐥 𝐑𝐢𝐬𝐤
+Applied a patch via kubectl edit to fix the storage class, then ran kubectl rollout restart for affected deployments.
+
+𝟔. 𝐏𝐨𝐬𝐭-𝐌𝐨𝐫𝐭𝐞𝐦 𝐖𝐢𝐭𝐡𝐨𝐮𝐭 𝐁𝐥𝐚𝐦𝐞
+Once stable, document the root cause, impact, and prevention steps. This builds team trust and improves processes.
+
+𝐊𝐞𝐲 𝐓𝐚𝐤𝐞𝐚𝐰𝐚𝐲𝐬 𝐟𝐨𝐫 𝐃𝐞𝐯𝐎𝐩𝐬 𝐄𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐬:
+• Your calmness in the first 5 minutes sets the tone for the recovery.
+• Always have 𝐫𝐨𝐥𝐥𝐛𝐚𝐜𝐤 𝐬𝐜𝐫𝐢𝐩𝐭𝐬 𝐚𝐧𝐝 𝐓𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦 𝐬𝐭𝐚𝐭𝐞 𝐛𝐚𝐜𝐤𝐮𝐩𝐬 ready.
+• Document learnings — future-you will thank you.
+
+DevOps isn’t just tools — it’s how you handle the unexpected.
+Because sometimes, the real deployment is deploying yourself under pressure
+---------------------------------------------------------------------------------------------------------------
+Real-time DevOps questions and answers.
+
+1. How do you handle a failed deployment in production?
+
+First, trigger a rollback using versioned deployments or Helm.
+
+Investigate logs: kubectl logs, pipeline output.
+
+Use monitoring tools (Datadog, Prometheus) to check the impact.
+
+Run postmortem and update runbooks.
+
+2. What is a blue-green deployment, and why is it used?
+
+It creates two identical environments: Blue (live) and Green (new).
+
+After deploying to Green, traffic is switched.
+
+It reduces downtime and allows instant rollback by switching back to Blue.
+
+3. How do you automate infrastructure provisioning?
+
+Use IaC tools like Terraform, CloudFormation, or ARM.
+
+Store infrastructure code in Git.
+
+Trigger deployments via CI/CD pipeline tools like GitHub Actions or Jenkins.
+
+4. How do you manage secrets securely in DevOps?
+
+Use tools like HashiCorp Vault, AWS Secrets Manager, or Kubernetes Secrets.
+
+Avoid hardcoding secrets in code or pipelines.
+
+Enable audit logs and version control for secrets.
+
+5. Describe your CI/CD pipeline.
+
+Build: Compile and lint code.
+
+Test: Unit, integration, and security checks.
+
+Deploy: Push to dev → QA → prod.
+
+Tools: Jenkins, GitHub Actions, GitLab CI, ArgoCD for GitOps.
+
+6. What’s the difference between Docker and Kubernetes?
+
+Docker: Container runtime for building and running containers.
+
+Kubernetes: An Orchestrator that manages containerised workloads (scheduling, scaling, rolling updates).
+
+7. How do you monitor application health?
+
+Use Prometheus + Grafana, Datadog, or New Relic.
+
+Configure liveness/readiness probes in Kubernetes.
+
+Set up alerts for CPU, memory, error rate, and response time.
+
+8. How do you handle zero-downtime deployments?
+
+Use rolling updates, canary deployments, or blue-green strategies.
+
+Configure readiness probes to avoid routing traffic to unhealthy pods.
+
+Ensure database changes are backwards-compatible.
+
+9. What is Infrastructure Drift, and how do you detect it?
+
+Drift = actual infra differs from IaC config.
+
+Detect with terraform plan or drift detection tools like Terraform Cloud, Atlantis.
+
+Fix by reapplying the code or correcting the config.
+
+10. How do you secure a CI/CD pipeline?
+
+Restrict access with RBAC.
+
+Use signed commits and validated runners.
+
+Mask secrets and use environment-specific variables.
+
+Enforce approval steps before production deployment.
+-----------------------------------------------------------------------------------------------------------------------------
+ DevOps Interview Preparation – My Takeaways
+
+I have recently taken the first technical round of an interview, and I observed something important:
+
+👉 Even candidates with 3+ years of experience often miss the fundamentals concepts of DevOps tools like Linux, AWS services, Terraform, Docker, Kubernetes, Prometheus and grafana.
+
+💡 This reminded me that solid basics matter more than memorizing advanced topics.
+
+Here are some sample questions that often come up in DevOps interviews:
+
+
+🔹 AWS Cloud Questios: 
+
+What is the difference between an EC2, Lambda, and ECS? When should you use each?
+
+What is the difference between EC2, Lambda, ECS, and EKS? When would you choose one over the other?
+
+How does an S3 bucket differ from EBS and EFS?
+
+What are the different types of load balancers in AWS?
+
+How does Auto Scaling work in EC2? Can you give a real-world use case?
+
+Explain IAM roles vs IAM policies vs IAM users.
+
+How would you design a highly available architecture in AWS for a web application?
+
+What are VPC, Subnets, Security Groups, and NACLs and how do they work together?
+
+
+🔹 Terraform: 
+
+How does state file work? What happens if two people apply changes at the same time?
+
+What is a Terraform state file and why is it important?
+
+What happens if two engineers run terraform apply at the same time?
+
+Difference between terraform import and terraform taint?
+
+How do you use Terraform modules?
+
+How do you manage sensitive data in Terraform?
+
+Explain the difference between count and for_each.
+
+How do you handle multi-environment deployments with Terraform?
+
+
+🔹 Docker: 
+
+What is the difference between images, containers, and volumes?
+
+What are Docker volumes and why are they used?
+
+Explain the difference between Dockerfile, Docker Compose, and Docker Swarm.
+
+How does Docker handle networking (bridge, host, overlay)?
+
+What is the difference between COPY and ADD in a Dockerfile?
+
+How do you reduce the size of a Docker image?
+
+How do you debug a failing container?
+
+
+🔹 Kubernetes: 
+
+How does a Deployment differ from a StatefulSet?
+
+What is the difference between a Deployment, DaemonSet, and StatefulSet?
+
+How does a Service in Kubernetes work (ClusterIP, NodePort, LoadBalancer)?
+
+What are ConfigMaps vs Secrets?
+
+Explain etcd and why it is important in Kubernetes.
+
+What is the difference between ReplicaSet and ReplicationController?
+
+How do you perform a rolling update vs a blue-green deployment in Kubernetes?
+
+How do you debug a Pod stuck in CrashLoopBackOff?
+
+
+✅ If you’re preparing for DevOps interviews:
+
+Focus on core concepts + hands-on practice
+
+Understand why a tool is used, not just how
+
+Practice with real-world scenarios (scaling, failures, cost optimization, automation)
+
+📌 I will keep sharing questions, strategies, and preparation tips to help the DevOps community.
+Let’s learn and grow together 🚀
+---------------------------------------------------------------------------------------------------------------------
+Top 7 kubernetes troubleshooting scenarios with free handson projects https://lnkd.in/gfvif5WT
+
+𝟏) 𝐏𝐨𝐝 𝐒𝐭𝐮𝐜𝐤 𝐢𝐧 𝐏𝐞𝐧𝐝𝐢𝐧𝐠
+Symptoms: Pod never starts, stays in Pending
+Checks:
+kubectl describe pod <pod> → Look for scheduling errors
+kubectl get nodes → Check node NotReady or resource pressure
+Common Causes:
+No nodes have enough CPU/memory
+Fix:
+Add more resources or relax constraints
+Remove/adjust taints if needed
+
+𝟐) 𝐂𝐫𝐚𝐬𝐡𝐋𝐨𝐨𝐩𝐁𝐚𝐜𝐤𝐎𝐟𝐟
+Symptoms: Pod keeps restarting
+Checks:
+kubectl logs <pod> → Inspect container logs
+kubectl describe pod <pod> → Look at Events
+Common Causes:
+Application misconfigured (bad env vars, missing secrets)
+Dependency service not available
+Liveness/readiness probe failing
+Fix:
+Fix app configs or missing secrets
+Increase probe timeouts if too strict
+Debug locally using same image
+
+𝟑) 𝐈𝐦𝐚𝐠𝐞𝐏𝐮𝐥𝐥𝐁𝐚𝐜𝐤𝐎𝐟𝐟
+Symptoms: Pod fails with ErrImagePull
+Checks:
+kubectl describe pod <pod> → Look for Failed to pull image
+Common Causes:
+Wrong image name or tag
+Private registry creds missing
+DockerHub rate limits
+Fix:
+Verify image name & tag
+Create a Kubernetes secret with registry creds:
+
+kubectl create secret docker-registry regcred \
+ --docker-username=<user> --docker-password=<pwd> --docker-server=<server>
+Reference secret in Pod spec
+
+𝟒)𝐒𝐞𝐫𝐯𝐢𝐜𝐞 𝐍𝐨𝐭 𝐑𝐞𝐚𝐜𝐡𝐚𝐛𝐥𝐞
+Symptoms: Pod cannot access another service
+Checks:
+kubectl get svc <svc> → Verify ClusterIP/ports
+kubectl get endpoints <svc> → Ensure backend pods are listed
+kubectl exec <pod> -- curl <svc>:<port> → Test DNS connectivity
+Common Causes:
+Service selector doesn’t match pod labels
+NetworkPolicy blocking traffic
+Wrong targetPort
+Fix:
+Correct selector labels
+Update NetworkPolicy
+Ensure correct ports mapped
+
+𝟓) 𝐍𝐨𝐝𝐞 𝐍𝐨𝐭𝐑𝐞𝐚𝐝𝐲
+
+Symptoms: Node shows NotReady in kubectl get nodes
+Checks:
+kubectl describe node <node> → Look for DiskPressure, MemoryPressure
+systemctl status kubelet on node
+Common Causes:
+Kubelet stopped/crashed
+Disk full
+Network outage between node and master
+Fix:
+Restart kubelet
+Free disk space
+Fix underlying network issues
+
+𝟔) 𝐈𝐧𝐠𝐫𝐞𝐬𝐬 𝐍𝐨𝐭 𝐖𝐨𝐫𝐤𝐢𝐧𝐠
+
+Symptoms: External traffic not reaching service
+Checks:
+kubectl get ingress → Verify rules
+kubectl describe ingress → Look for events
+Check Ingress controller logs
+Common Causes:
+Ingress controller not deployed
+DNS not pointing to ingress
+TLS misconfigured
+Fix:
+Deploy NGINX/HAProxy ingress controller
+Verify DNS entry
+Update TLS secret
+
+𝟕) 𝐇𝐢𝐠𝐡 𝐋𝐚𝐭𝐞𝐧𝐜𝐲 / 𝐏𝐨𝐝 𝐑𝐞𝐬𝐨𝐮𝐫𝐜𝐞 𝐈𝐬𝐬𝐮𝐞𝐬
+
+Symptoms: Pods slow or OOMKilled
+Checks:
+kubectl top pods and kubectl top node
+kubectl describe pod → check OOMKilled events
+Common Causes:
+Requests/limits too low
+Node overloaded
+Fix:
+Adjust resource requests/limits
+
+--------------------------------------------------------------------------------
+Git / DevOps Q&A
+1. Which branching strategy did you use? Name at least two alternative strategies.
+
+ I primarily used GitFlow, which separates work into main, develop, and feature branches, making release and hotfix management easy. Two alternatives are GitHub Flow, which is simpler and good for CI/CD pipelines, and Trunk-Based Development, where small commits go directly to the main branch with feature flags for incomplete features.
+
+2. Which deployment strategy did you use, and how was it implemented?
+
+ I mostly used the Blue-Green Deployment strategy, where two identical environments (blue and green) are maintained. Traffic is switched to the green environment after successful deployment, minimizing downtime. Alternatively, Rolling Deployments and Canary Deployments can also be used to gradually update services.
+
+3. How do you recover a deleted branch?
+ If the branch was pushed to remote, it can be recovered using git checkout -b branch-name origin/branch-name. If deleted locally, we can use git reflog to find the last commit hash and restore it with git checkout -b branch-name <commit-hash>.
+
+4. If a file is deleted from a storage account, how do you retrieve it?
+
+ In Azure, we can restore deleted files if soft delete or blob versioning is enabled on the storage account. These features allow recovery of accidentally deleted data. If not enabled, the only option is to restore from backup.
+
+5. How do you grant secure access to a storage account?
+
+ We grant access using Shared Access Signatures (SAS) or Azure RBAC with Managed Identities. This ensures temporary, least-privilege-based access without exposing account keys. Using Azure AD authentication is the recommended best practice for secure access.
+
+6. When you create a storage account with Terraform, how do you reference a Key Vault key?
+
+ We first store the secret in Azure Key Vault and then use Terraform’s azurerm_key_vault_secret data source to fetch it. This secret can be passed to the storage account resource, ensuring sensitive values are never hardcoded in Terraform code.
+
+7. What is a state file, where is it stored, and how do you unlock it?
+
+ A Terraform state file keeps track of infrastructure resources. By default, it is stored locally, but in production, we use remote backends like Azure Storage, S3, or Terraform Cloud. To unlock a state file, we manually remove locks (e.g., in S3 with DynamoDB lock table or in Azure Storage with state lock blob).
+
+8. How do you reference multiple VMs as backend targets for an Application Gateway in Terraform?
+
+ We use a backend address pool in Terraform and dynamically assign multiple VM private IPs or NICs. This is usually achieved with loops (for_each or count) to reference multiple VM instances and add them to the gateway backend pool.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+DevOps Scenario-Based Interview Questions & Answers
+1. What will you do if a Jenkins pipeline fails?
+Answer: Check Jenkins logs → Identify stage of failure → Fix configuration/code issue → Re-run the pipeline. If infra-related, verify Terraform or Kubernetes changes before redeploying.
+2. How do you handle a failed deployment in Kubernetes?
+Answer: Use kubectl describe pod and kubectl logs to check errors → If critical, rollback with kubectl rollout undo deployment <name> → Fix and redeploy.
+3. How do you manage Terraform state in a team?
+Answer: Store state in remote backend (Azure Blob, GCS bucket, Terraform Cloud) → Enable state locking to prevent conflicts → Use versioning for recovery.
+4. You changed a Terraform variable and want to see the impact before applying. What do you do?
+Answer: Run terraform plan to preview changes before applying.
+5. How do you ensure zero downtime deployment in Kubernetes?
+Answer: Use RollingUpdate strategy in deployments, configure readiness probes, and keep replicas running until new pods are healthy.
+6. How do you roll back in Jenkins if a deployment causes issues?
+Answer: Keep artifact versioning → Redeploy the last stable build from Jenkins → Or trigger rollback pipeline.
+7. What if Terraform state file gets corrupted or deleted?
+Answer: Restore from remote backend version history (e.g., GCS versioning, Azure Blob snapshots) → If not available, use terraform import to rebuild state.
+8. How do you secure secrets in pipelines?
+Answer: Use Jenkins credentials manager, Vault, or cloud secret managers (GCP Secret Manager, Azure Key Vault) instead of storing secrets in code.
+9. How do you monitor Kubernetes clusters?
+Answer: Use Prometheus + Grafana for metrics, ELK/EFK stack for logs, and Kubernetes liveness/readiness probes for pod health.
+10. What will you do if a pod is stuck in CrashLoopBackOff?
+Answer: Run kubectl describe pod and kubectl logs → Check startup script, image, or config issue → Fix error → Redeploy.
+11. How do you manage infrastructure across multiple environments (Dev/QA/Prod) using Terraform?
+Answer: Use workspaces or separate state files with environment-specific variables.
+12. How do you optimize CI/CD pipelines in Jenkins?
+Answer: Use parallel stages, caching (e.g., Docker layers, Maven cache), and parameterized builds to save time.
+13. How do you perform blue-green deployment in Kubernetes?
+Answer: Run two environments (Blue = current, Green = new) → Route traffic to Green only after successful validation → Rollback to Blue if issues occur.
+14. How do you troubleshoot high CPU usage on a Linux server?
+Answer: Use top, htop, vmstat, and iostat → Identify process → Kill/fix process → Scale infra if required.
+15. How do you automate infrastructure scaling in cloud?
+Answer: Configure Auto Scaling Groups in GCP (Instance Groups) or Azure (VM Scale Sets) → Integrate with Terraform for automation.
+16. What if a Terraform apply fails halfway?
+Answer: Terraform creates a partial state → Fix the error → Run terraform plan again → Apply → Or use terraform refresh to sync state.
+
+
+17. How do you manage multi-cloud deployments (GCP + Azure)?
+Answer: Use Terraform with multiple providers → Create modules for each cloud → Keep separate state files for GCP and Azure.
+
+
+18. How do you handle a disk full issue in Linux?
+Answer: Run df -h to check usage → Clear logs from /var/log → Remove unused Docker images/containers → Expand disk if required.
+
+
+19. How do you implement rollback in Terraform?
+Answer: Use version control to revert .tf files → Run terraform apply again → Restore previous infra state from remote backend version.
+
+
+20. How do you ensure security in DevOps pipelines?
+Answer:
+Scan code with SonarQube
+Scan images with Trivy/Anchore
+Use IAM least privilege in GCP/Azure
+Store secrets in Secret Manager/Key Vault
+Enable audit logging
+21. How do you manage Terraform modules for reusability?
+Answer: Create modules for common components (VPC, VM, AKS/GKE, IAM) → Store them in Git → Call modules in different projects with version control.
+22. What if two team members run Terraform apply at the same time?
+Answer: Use remote backend with state locking (like Azure Blob with locking or GCS with locking) → This prevents conflicts.
+23. How do you perform Canary Deployment in Kubernetes?
+Answer: Deploy a new version to a small % of users → Use Istio/NGINX Ingress for traffic routing → Gradually increase traffic → Rollback if errors.
+24. How do you troubleshoot “ImagePullBackOff” in Kubernetes?
+Answer:
+Check if image exists in registry.
+Validate credentials/secret for private registry.
+Verify image tag.
+Fix and redeploy.
+25. How do you integrate Jenkins with GitHub?
+Answer: Configure GitHub webhook → Connect Jenkins job to repo → Trigger builds automatically on code push/PR.
+26. How do you perform zero-downtime DB migration in CI/CD?
+Answer: Use Liquibase/Flyway migration scripts → Apply backward-compatible schema changes → Deploy app → Apply destructive changes only later.
+27. What if a Jenkins agent node goes offline?
+Answer: Check agent logs → Restart service → Verify connectivity with master → Add auto-scaling slaves (Kubernetes or cloud VMs).
+28. How do you set resource limits in Kubernetes?
+Answer: Define requests & limits in pod spec → Ensures fair resource allocation and prevents pod from consuming all CPU/memory.
+29. How do you implement CI/CD for Terraform?
+Answer:
+Use Jenkins/GitHub Actions → terraform fmt, terraform validate, terraform plan, approval stage, then terraform apply.
+Store state in backend.
+30. How do you monitor logs in Kubernetes?
+Answer: Use kubectl logs for quick debugging → For centralized logging, use EFK (Elasticsearch + Fluentd + Kibana) or Loki + Grafana.
+
+Q1. What happens if two engineers run terraform apply at the same time?
+Answer: Without state locking, race conditions occur → infra may break. That’s why we use remote state + locking (e.g., DynamoDB lock in AWS, GCS bucket lock in GCP).
+
+Q2. Can you edit state file manually?
+Answer: Yes, but not recommended. Only in emergency situations (like orphaned resources). Safer option → use terraform state commands.
+
+Q3. How to recover from a deleted state file?
+Answer: Re-run terraform import to re-map real resources into a new state file.
+Use backups (if remote state backend is enabled).
+
+Q: What is Terraform Enterprise?
+👉 Terraform Enterprise is the paid, self-hosted version of Terraform Cloud that organizations use for managing infrastructure at scale. It provides features like role-based access control (RBAC), private module registry, policy enforcement with Sentinel, audit logging, and team collaboration.
+
+In short, it’s Terraform designed for large enterprises where multiple teams, security, compliance, and collaboration are critical.
+
+
+Q: Explain Terraform Enterprise Architecture.
+👉 Imagine Terraform Enterprise as a factory for infrastructure:
+--> Developers bring their “blueprints” (Terraform code).
+--> These blueprints are sent to the Terraform Enterprise application layer (runs on VMs or Kubernetes).
+The Application Layer has different modules:
+1. UI/API → where users and CI/CD pipelines connect.
+2. Workers/Agents → actually run the Terraform plans and applies.
+3. Vault/Secrets Storage → keeps sensitive data like cloud keys safe.
+4. Database (Postgres) → stores states, configs, history.
+5. Object Storage (like S3, GCS, or MinIO) → keeps Terraform state files and logs.
+Finally, it interacts with the cloud providers (AWS, GCP, Azure, etc.) to provision infrastructure.
+So, the flow looks like:
+ User → Terraform Enterprise (UI/API) → Worker Agents → Database/Storage → Cloud Providers
+✅ Best Interview Tip:
+ Keep it 3-part answer:
+1. What it is → A self-hosted, enterprise-ready version of Terraform Cloud.
+2. Why it exists → For collaboration, security, compliance, and scalability.
+3. How it works (Architecture) → Users → App Layer (UI, Workers, Policies) → Database/Storage → Cloud.
+
+Terraform Enterprise in easy way:
+
+🌱 Step 1: Imagine a Real-Life Example
+
+Suppose you and your team need to build houses (infrastructure).
+
+Terraform Open Source (CLI) = You build your house alone with your own tools. You decide everything, you save the blueprint in your notebook, and no one else knows what you did.
+
+Terraform Enterprise (TFE) = Your entire company is building 100s of houses together. You need:
+
+1. Shared blueprints 📘
+2. Central storage of designs 🗄️
+3. Rules (policies) ⚖️
+4. Manager approvals ✅
+5. Record of who built what 📝
+
+So TFE is like a construction company’s project management system for Terraform.
+
+🌱 Step 2: What Problem Does TFE Solve?
+
+If teams only use Terraform open-source:
+❌ Everyone keeps their own state files → conflicts happen
+❌ No security → anyone can destroy infra by mistake
+❌ No tracking → you don’t know who changed what
+❌ No automation → someone must run terraform apply from their laptop
+
+Terraform Enterprise fixes this:
+✅ Centralized state → No conflicts
+✅ Secure remote execution → No one runs risky code on laptops
+✅ Access control → Only right people can apply
+✅ Policies → Prevent mistakes (like creating expensive servers)
+✅ Automation → Connects with GitHub to auto-deploy
+
+🌱 Step 3: How TFE Works (Super Simple Flow)
+
+1. Developer writes Terraform code (example: create VM in AWS).
+2. Pushes code to GitHub.
+3. Terraform Enterprise notices change → runs terraform plan.
+4. Manager approves the plan.
+5. TFE applies changes in a secure environment.
+6. State is stored safely in TFE (not on anyone’s laptop).
+
+🌱 Step 4: Key Features (EASY Words)
+
+1. Workspaces → Like separate folders for Dev, Test, and Prod environments.
+2. Remote State → State is stored in TFE, not on your computer.
+3. VCS Integration → Connect GitHub/GitLab, auto-run Terraform when code changes.
+4. Sentinel → Rules engine (example: "Only allow servers in Mumbai region").
+5. RBAC (Role Based Access Control) → Control who can view, plan, or apply.
+6. Private Module Registry → Share reusable Terraform code inside your company.
+7. Audit Logs → See who made changes and when.
+
+🌱 Step 5: Very Simple Analogy
+
+1. Terraform OSS = Personal diary 📝 (only you can see and use it).
+2. Terraform Enterprise = Company’s Google Drive 📂 (shared, secure, tracked, access-controlled).
+
+🌱 Step 6: One-Line Interview Definition
+
+👉 Terraform Enterprise is HashiCorp’s commercial version of Terraform that helps teams work together on infrastructure safely. It provides remote execution, secure state management, version control integration, role-based access, and policy enforcement.
+
+Q: What are Terraform variables and outputs, and why are they used?
+Can you also give a real-world example of how both would be used in the same project?
+
+Ans: Terraform Variables
+What they are:
+--> Variables are like placeholders in Terraform code that store values you can reuse.
+Why use them:
+--> Avoid hardcoding values (e.g., machine type, region).
+--> Make your code reusable for different environments (dev, test, prod).
+Example:
+variable "region" {
+ default = "us-central1"
+}
+
+resource "google_compute_instance" "vm" {
+ name = "my-vm"
+ machine_type = "e2-medium"
+ zone = "${var.region}-a"
+}
+Here, if you change the region variable, Terraform will create resources in the new region without changing every line of code.
+
+Terraform Outputs
+What they are:
+--> Outputs are used to display important information after Terraform creates infrastructure.
+
+Why use them:
+--> Share details with your team or other Terraform configurations.
+--> Show key values like IP addresses, database connection strings.
+Example:
+
+output "vm_ip" {
+ value = google_compute_instance.vm.network_interface[0].access_config[0].nat_ip
+}
+After terraform apply, Terraform will print the VM’s IP address.
+
+Real-World Example Using Both Together
+Let’s say you’re creating a GCP VM for a web server:
+1. You define a variable for the VM’s machine type, so it’s easy to change in the future.
+2. You define an output for the VM’s public IP, so your team can access the website without logging into the GCP console.
+---------------------------------------------------------------------------------------------------------------------------------
+
+scenario-based DevOps interview questions & answers
+
+What if a Terraform apply fails halfway?
+Answer: Terraform creates a partial state → Fix the error → Run terraform plan again → Apply → Or use terraform refresh to sync state.
+
+
+How do you manage multi-cloud deployments (GCP + Azure)?
+Answer: Use Terraform with multiple providers → Create modules for each cloud → Keep separate state files for GCP and Azure.
+
+
+How do you handle a disk full issue in Linux?
+Answer: Run df -h to check usage → Clear logs from /var/log → Remove unused Docker images/containers → Expand disk if required.
+
+
+How do you implement rollback in Terraform?
+Answer: Use version control to revert .tf files → Run terraform apply again → Restore previous infra state from remote backend version.
+
+
+How do you ensure security in DevOps pipelines?
+Answer:
+Scan code with SonarQube
+Scan images with Trivy/Anchore
+Use IAM least privilege in GCP/Azure
+Store secrets in Secret Manager/Key Vault
+Enable audit logging
+How do you manage Terraform modules for reusability?
+Answer: Create modules for common components (VPC, VM, AKS/GKE, IAM) → Store them in Git → Call modules in different projects with version control.
+
+
+What if two team members run Terraform apply at the same time?
+Answer: Use remote backend with state locking (like Azure Blob with locking or GCS with locking) → This prevents conflicts.
+
+
+How do you perform Canary Deployment in Kubernetes?
+Answer: Deploy a new version to a small % of users → Use Istio/NGINX Ingress for traffic routing → Gradually increase traffic → Rollback if errors.
+
+
+How do you troubleshoot “ImagePullBackOff” in Kubernetes?
+Answer:
+Check if image exists in registry.
+Validate credentials/secret for private registry.
+Verify image tag.
+Fix and redeploy.
+
+
+How do you integrate Jenkins with GitHub?
+Answer: Configure GitHub webhook → Connect Jenkins job to repo → Trigger builds automatically on code push/PR.
+
+
+How do you perform zero-downtime DB migration in CI/CD?
+Answer: Use Liquibase/Flyway migration scripts → Apply backward-compatible schema changes → Deploy app → Apply destructive changes only later.
+
+
+What if a Jenkins agent node goes offline?
+Answer: Check agent logs → Restart service → Verify connectivity with master → Add auto-scaling slaves (Kubernetes or cloud VMs).
+
+
+How do you set resource limits in Kubernetes?
+Answer: Define requests & limits in pod spec → Ensures fair resource allocation and prevents pod from consuming all CPU/memory.
+
+
+How do you implement CI/CD for Terraform?
+Answer:
+Use Jenkins/GitHub Actions → terraform fmt, terraform validate, terraform plan, approval stage, then terraform apply.
+Store state in backend.
+
+
+How do you monitor logs in Kubernetes?
+Answer: Use kubectl logs for quick debugging → For centralized logging, use EFK (Elasticsearch + Fluentd + Kibana) or Loki + Grafana.
+-----------------------------------------------------------------------------------------------------------------------------
+Important Interview Questions Related to EC2 instances.
+
+👉What is Amazon EC2 and why is it used?
+• Amazon EC2 (Elastic Compute Cloud) provides scalable virtual servers in the AWS cloud. 
+• Use it to host application servers, monitoring agents, CI/CD runners, and even temporary test environments. 
+• It’s cost-effective because we can scale instances up or down
+
+👉What are the different EC2 instance types you have used?
+• t3/t4g → General purpose for app servers, low-cost dev/test
+• m5/m6i → Balanced compute & memory for production services
+• c5/c6g → Compute-optimized for heavy backend processing
+• r5/r6i → Memory-optimized for caching & in-memory DBs
+• p3/p4 → GPU workloads (ML training)
+
+👉How do you connect to an EC2 instance?
+• Linux EC2 → SSH using .pem key or Session Manager (IAM-based)
+• Windows EC2 → RDP after decrypting password with .pem key
+• In production, I prefer Session Manager to avoid opening SSH/RDP ports for security.
+
+👉How do you make an EC2 instance highly available?
+• Deploy EC2s in multiple AZs behind an ELB/ALB/NLB.
+• Use Auto Scaling Groups (ASG) to automatically replace failed instances.
+• Store application data in S3, RDS, or EFS instead of instance local disk.
+• Use health checks on the load balancer.
+
+👉How do you secure EC2 instances?
+• Restrict inbound access with Security Groups & NACLs.
+• Use IAM roles instead of hardcoding credentials.
+• Enable AWS Systems Manager Session Manager for shell access instead of SSH in public internet.
+• Patch regularly using SSM Patch Manager.
+
+👉How do you troubleshoot EC2 instance issues?
+• Instance not reachable → Check SG rules, NACLs, route tables, and public/private subnet settings.
+• CPU/Memory high → Use CloudWatch metrics, top/htop, ps.
+• Disk full → df -h, log rotation, increase EBS volume size.
+• Instance stopped/terminated unexpectedly → Check AWS Personal Health Dashboard and CloudTrail events.
+
+👉What’s the difference between Security Groups and NACLs?
+• Security Groups → Instance-level, stateful, allow rules only.
+• NACLs → Subnet-level, stateless, allow & deny rules.
+Start with SGs for application-level security and use NACLs for an extra network layer.
+
+👉What happens when you stop and start an EC2 instance?
+• Stop → Instance is shut down, EBS volumes preserved, public IP changes (unless using Elastic IP).
+• Start → Instance resumes from scratch but retains the same EBS volume data.
+• Ephemeral storage data is lost.
+
+👉An EC2 in production is at 100% CPU and the app is slow. How to fix it?
+• Identify process → top / htop / ps -aux --sort=-%cpu
+• Application scaling → If it’s legitimate load, add more EC2s in an Auto Scaling Group.
+• Rightsizing → Move to compute-optimized (c5/c6g) if CPU-intensive.
+• Long-term → Set CloudWatch alarms to alert before hitting 90% CPU.
+----------------------------------------------------------------------------------------------------
+💡 Key Takeaways:
+✔️ Always use logs (kubectl logs, Jenkins logs) to debug efficiently.
+✔️ Remote state management + versioning is critical in Terraform.
+✔️ Use RollingUpdate strategies & readiness probes for Kubernetes zero-downtime.
+✔️ Artifact versioning ensures safe rollbacks in CI/CD pipelines.
+✔️ Secure secrets using Vault, AWS/GCP Secret Manager, or Kubernetes Secrets.
+------------------------------------------------------------------------------------------------
+🚀 5 Prompts Every DevOps Engineer Should Save Today
+
+Most engineers still think ChatGPT is just for writing cover letters.
+Big mistake.
+
+If you’re in DevOps, AI can literally cut hours from your daily grind.
+But only if you know how to prompt it right.
+
+Here are 5 prompts I’ve tested (and actually use):
+
+1️⃣ Kubernetes Debugging
+👉 “You are a Kubernetes expert. Analyze this YAML file and suggest fixes for why my pod is stuck in CrashLoopBackOff.”
+
+2️⃣ CI/CD Pipeline Optimization
+👉 “Act as a DevOps architect. Redesign this Jenkins pipeline to reduce build time by 50%, using caching and parallel stages.”
+
+3️⃣ Docker Slimming
+👉 “You are a Docker optimization expert. Rewrite this Dockerfile to reduce image size below 300MB.”
+
+4️⃣ Cloud Cost-Saving
+👉 “Pretend you are a Cloud FinOps consultant. Suggest 10 ways to reduce AWS EC2 + S3 cost by 30% without affecting performance.”
+
+5️⃣ Resume/Interview Prep
+👉 “You are a DevOps hiring manager. Rewrite my resume bullets to highlight impact and outcomes, not just tools.”
+
+💡 The truth?
+AI won’t replace DevOps engineers.
+But DevOps engineers who master prompts will replace those who don’t.
+--------------------------------------------------------------------------------------------------------------------------
+☸️ MakeItSimple: Kubernetes Edition ☸️ 
+How does the Kubelet know when to start a Pod?
+Kubernetes is often seen as complex, but the flow is actually very elegant. Let’s break it down 👇
+
+1️⃣ You create a Pod
+kubectl apply -f pod.yaml → The API Server stores the Pod spec in etcd.
+
+2️⃣ Scheduler assigns a Node
+At first, the Pod has no nodeName.
+The scheduler updates the Pod object with nodeName=node-1.
+
+3️⃣ Kubelet watches the API Server
+Each kubelet constantly watches for Pods assigned to its node.
+When kubelet on node-1 sees a Pod with nodeName=node-1 → it claims responsibility.
+
+4️⃣ Kubelet pulls the Pod spec
+It retrieves details: container images, volumes, configs, etc.
+
+5️⃣ Kubelet talks to the container runtime (CRI)
+Using containerd/Docker, kubelet:
+🪀 pulls images
+🪀 creates containers
+🪀 sets up networking & storage
+
+6️⃣ Pod starts running!
+Kubelet then reports status (Running, Failed, etc.) back to the API Server.
+
+🔑 In short:
+Scheduler decides where (sets nodeName)
+Kubelet decides how (runs containers on its node)
+-----------------------------------------------------------------------------------------------------------------
+Core Components
+
+1. Master Node (Control Plane) – The brain of Kubernetes, responsible for making decisions about the cluster.
+
+API Server – Front door for all Kubernetes commands (kubectl, API calls).
+
+Scheduler – Assigns Pods to nodes based on resource availability.
+
+Controller Manager – Ensures the desired cluster state is maintained.
+
+etcd – Key-value store for all cluster data.
+
+2. Worker Nodes – Where your application actually runs.
+
+Kubelet – Talks to the API server and ensures containers are running.
+
+Kube-proxy – Manages networking and service discovery.
+
+Container Runtime – Runs the containers (Docker, containerd, CRI-O).
+
+🗺️ Visual Overview
+
+Master Node 🧠 → Manages the cluster
+Worker Nodes 💪 → Run your apps
+--------------------------------------------------------------------------------------------------------------------
+ou're not a Kubernetes Pro until you have-
+
+*Watched a pod fail over and over with no idea what's wrong.
+
+*Had at least one nightmare about pods in CrashLoopBackOff.
+
+*Accidentally deleted something crucial and realized way too late.
+
+*Cluster crash in the middle of the night, forcing you to fix it half-asleep.
+
+*Ran kubectl get all and immediately regretted the chaos on your screen.
+
+*Set up persistent volumes and wondered why your data still vanished on restart.
+
+*Upgraded Kubernetes, then spent days fixing all the things that broke afterward.
+
+*Scaled your clu ster, thinking it'd be easy, and ended up fighting with node allocation.
+-------------------------------------------------------------------------------------------------------------------
+Real-World Production Perspective in Kubernetes, 
+
+I’m starting to connect the dots between theory and production realities. It’s not just about running kubectl commands—it’s about thinking like a production engineer.
+
+🔹 Namespaces in Production
+In real deployments, namespaces are more than just “folders” in Kubernetes—they’re an isolation strategy.
+We use them to separate environments (dev, staging, prod) and apply RBAC for controlled access.
+
+🔹 Resource Quotas & Limits
+In production, forgetting to set CPU/memory limits can cause a single pod to eat up the cluster’s resources—leading to outages.
+Always define requests and limits in manifests.
+
+🔹 Secrets & ConfigMaps
+Hardcoding credentials? ❌ Not in production.
+Instead, use Secrets for sensitive data and ConfigMaps for environment-specific configs.
+Pro tip: Always encrypt secrets at rest and integrate with tools like SealedSecrets or HashiCorp Vault.
+
+💡 Key Takeaway:
+Learning Kubernetes isn’t just about knowing what a command does—it’s about knowing why it matters in production.
+-------------------------------------------------------------------------------------------------------------------
+*Understanding Services in Kubernetes-
+
+In Kubernetes, Pods are ephemeral they can be created, destroyed, or replaced at any time. But applications often need a stable network endpoint to communicate. This is where Services come into play.
+
+🔹 What is a Service?
+A Kubernetes Service is an abstraction layer that exposes a set of Pods as a single, stable network endpoint. It ensures that even if the underlying Pods change, the communication remains uninterrupted.
+
+🔹 Common Service Types:
+1️⃣ ClusterIP – Default type; exposes the service within the cluster.
+2️⃣ NodePort – Exposes the service on a static port on each Node’s IP.
+3️⃣ LoadBalancer – Integrates with cloud providers to create an external load balancer.
+4️⃣ ExternalName – Maps the service to an external DNS name.
+
+🔹 Why Services Matter:
+✅ Enables load balancing across Pods.
+✅ Decouples applications from Pod IPs.
+✅ Supports internal and external communication.
+----------------------------------------------------------------------------------------------------------------------
+Zero-Downtime Updates with Deployments
+
+Imagine you’re running an E-commerce website with a Product Service deployed in Kubernetes.
+Currently, it’s running version 1.0 of the service, but you want to upgrade to version 2.0 without causing downtime for users.
+
+🔹 Steps with Deployment:
+
+1. Create Deployment (v1.0)
+
+The initial deployment runs product-service:v1.0 with 3 replicas.
+
+2. Rolling Update to v2.0
+
+You update the Deployment YAML to use product-service:v2.0.
+
+Kubernetes gradually replaces old pods with new pods, ensuring at least some pods are always running.
+
+3. Health Check with Probes
+
+Kubernetes uses readiness probes to ensure the new pods are healthy before sending traffic.
+
+4. Rollback if Needed
+
+If v2.0 has issues, you can instantly rollback using:
+
+kubectl rollout undo deployment product-service
+
+✅ Result: Users keep shopping without interruptions while the service upgrades behind the scenes.
+
+
+Deployments are a game-changer for managing applications – they allow scaling, rolling updates, and quick rollbacks with zero downtime.
+an e-commerce app upgrading its Product Service from v1.0 to v2.0.
+With Deployments, Kubernetes smoothly replaces old pods with new ones, checks health before sending traffic, and keeps the app running without users noticing any downtime.
+
+This is the power of cloud-native app management – reliability + automation.
+------------------------------------------------------------------------------------------------------------------------
+ConfigMaps & Secrets
+
+🔹 In real-world Kubernetes applications, we don’t want to hardcode configurations (like database URLs, API keys, credentials) inside Pods. Instead, we use ConfigMaps and Secrets.
+
+🔹 hashtag#ConfigMaps
+
+Store non-confidential data in key-value pairs.
+
+Example: database hostname, application environment (dev, prod).
+
+Can be mounted as files or exposed as environment variables.
+
+🔹 hashtag#Secrets
+
+Store sensitive information like passwords, tokens, certificates.
+
+Base64 encoded (not encrypted by default).
+
+More secure than ConfigMaps.
+
+
+ ConfigMaps & Secrets in Kubernetes
+
+Here’s a simple visual flow:
+
++----------------------+
+ | ConfigMap / Secret |
+ +----------------------+
+ |
+ ---------------------------
+ | |
+ As Environment Variable As Volume Mount
+ | |
+ +---------------+ +---------------+
+ | Pod | | Pod |
+ | (Container) | | (Container) |
+ +---------------+ +---------------+
+
+ hashtag#Example YAML
+
+ConfigMap Example
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: app-config
+data:
+ APP_ENV: "production"
+ DB_HOST: "db-service"
+
+hashtag#Secret Example
+
+apiVersion: v1
+kind: Secret
+metadata:
+ name: db-secret
+type: Opaque
+data:
+ DB_USER: YWRtaW4= # base64 for "admin"
+ DB_PASS: cGFzc3dvcmQ= # base64 for "password"
+---------------------------------------------------------------------------------
+Topic: Namespaces & Resource Isolation
+
+Namespaces in Kubernetes provide a logical way to separate cluster resources for different teams, projects, or environments. They are essential for managing large clusters effectively.
+
+
+*Why Namespaces?
+
+-Separate environments (dev, staging, prod)
+-Enable multi-tenancy in shared clusters
+-Apply RBAC & ResourceQuotas for better control
+-Keep workloads organized & secure
+-----------------------------------------------------------------------------------------
+𝐃𝐨𝐜𝐤𝐞𝐫 𝐖𝐨𝐫𝐤𝐟𝐥𝐨𝐰 𝐄𝐱𝐩𝐥𝐚𝐢𝐧𝐞𝐝 𝐒𝐢𝐦𝐩𝐥𝐲
+Docker has become the backbone of modern application development. But how does the workflow actually look in practice? Here is a breakdown you can follow:
+
+𝟏. 𝐃𝐨𝐜𝐤𝐞𝐫 𝐈𝐦𝐚𝐠𝐞 𝐋𝐢𝐟𝐞𝐜𝐲𝐜𝐥𝐞
+
+- Developers build images using a Dockerfile.
+- Images can be pulled from or pushed to registries like Docker Hub.
+- Old or unused images are pruned to keep the system clean.
+
+𝟐. 𝐃𝐨𝐜𝐤𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐢𝐧𝐞𝐫 𝐋𝐢𝐟𝐞𝐜𝐲𝐜𝐥𝐞
+
+- From an image, you create and run containers.
+- Containers can be started, stopped, restarted, or removed as needed.
+- This makes applications portable and easy to control.
+
+𝟑. 𝐃𝐨𝐜𝐤𝐞𝐫 𝐍𝐞𝐭𝐰𝐨𝐫𝐤 𝐚𝐧𝐝 𝐒𝐭𝐨𝐫𝐚𝐠𝐞
+
+- Containers often need to communicate over networks and persist data.
+- Networking allows mapping of ports (like 8080 to 80) to expose services.
+- Storage ensures data is not lost when a container is stopped or removed.
+
+𝟒. 𝐃𝐨𝐜𝐤𝐞𝐫 𝐎𝐫𝐜𝐡𝐞𝐬𝐭𝐫𝐚𝐭𝐢𝐨𝐧
+
+- For complex apps, orchestration tools like Docker Compose come in.
+- Dependencies are defined in files, and services like databases or web servers can run together.
+- This ensures a smooth, production-ready environment at scale.
+
+---
+
+Docker simplifies how we build, ship, and run applications. Once you get the workflow right, scaling and maintaining systems becomes far easier. 
+---------------------------------------------------------------------------------------------
+𝐋𝐞𝐭’𝐬 𝐛𝐫𝐞𝐚𝐤 𝐝𝐨𝐰𝐧 𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬-𝐧𝐨𝐭 𝐢𝐧 𝐭𝐡𝐞𝐨𝐫𝐲, 𝐛𝐮𝐭 𝐢𝐧 𝐚𝐫𝐜𝐡𝐢𝐭𝐞𝐜𝐭𝐮𝐫𝐞.
+
+🔸Control Plane - The Brain:
+It does not run your app. It orchestrates everything that does.
+
+- API Server - Your single point of truth. Every `kubectl` command? It hits here.
+- etcd - Think of it as Kubernetes' memory. It stores everything-from nodes to secrets.
+- Controller Manager - It notices when your system drifts and pulls it back to the desired state.
+- Scheduler - Looks at your nodes, looks at your pod, and plays matchmaker.
+
+🔸Worker Nodes - The Muscles:
+This is where your app actually runs.
+
+- Kubelet - The personal trainer for each node. It makes sure the pods are behaving.
+- Kube-proxy - Routes traffic where it needs to go. Think DNS + firewall + switchboard.
+- Container Runtime - Docker, containerd, etc. These guys run your containers.
+
+🔸Pods - The Actual Code:
+
+The smallest unit in Kubernetes.
+Each pod runs one or more containers-together, with shared IPs, volumes, and lifecycle.
+
+𝗛𝗲𝗿𝗲 𝗶𝘀 𝘁𝗵𝗲 𝘁𝗿𝘂𝘁𝗵:
+Kubernetes is just Linux distributed at scale.
+Understanding these parts is not optional-it is how you debug, scale, and secure production-grade systems.
+----------------------------------------------------------------------
+DevOps Scenario-Based Interview Questions & Answers
+1. What will you do if a Jenkins pipeline fails?
+Answer: Check Jenkins logs → Identify stage of failure → Fix configuration/code issue → Re-run the pipeline. If infra-related, verify Terraform or Kubernetes changes before redeploying.
+2. How do you handle a failed deployment in Kubernetes?
+Answer: Use kubectl describe pod and kubectl logs to check errors → If critical, rollback with kubectl rollout undo deployment <name> → Fix and redeploy.
+3. How do you manage Terraform state in a team?
+Answer: Store state in remote backend (Azure Blob, GCS bucket, Terraform Cloud) → Enable state locking to prevent conflicts → Use versioning for recovery.
+4. You changed a Terraform variable and want to see the impact before applying. What do you do?
+Answer: Run terraform plan to preview changes before applying.
+5. How do you ensure zero downtime deployment in Kubernetes?
+Answer: Use RollingUpdate strategy in deployments, configure readiness probes, and keep replicas running until new pods are healthy.
+6. How do you roll back in Jenkins if a deployment causes issues?
+Answer: Keep artifact versioning → Redeploy the last stable build from Jenkins → Or trigger rollback pipeline.
+7. What if Terraform state file gets corrupted or deleted?
+Answer: Restore from remote backend version history (e.g., GCS versioning, Azure Blob snapshots) → If not available, use terraform import to rebuild state.
+8. How do you secure secrets in pipelines?
+Answer: Use Jenkins credentials manager, Vault, or cloud secret managers (GCP Secret Manager, Azure Key Vault) instead of storing secrets in code.
+9. How do you monitor Kubernetes clusters?
+Answer: Use Prometheus + Grafana for metrics, ELK/EFK stack for logs, and Kubernetes liveness/readiness probes for pod health.
+10. What will you do if a pod is stuck in CrashLoopBackOff?
+Answer: Run kubectl describe pod and kubectl logs → Check startup script, image, or config issue → Fix error → Redeploy.
+11. How do you manage infrastructure across multiple environments (Dev/QA/Prod) using Terraform?
+Answer: Use workspaces or separate state files with environment-specific variables.
+12. How do you optimize CI/CD pipelines in Jenkins?
+Answer: Use parallel stages, caching (e.g., Docker layers, Maven cache), and parameterized builds to save time.
+13. How do you perform blue-green deployment in Kubernetes?
+Answer: Run two environments (Blue = current, Green = new) → Route traffic to Green only after successful validation → Rollback to Blue if issues occur.
+14. How do you troubleshoot high CPU usage on a Linux server?
+Answer: Use top, htop, vmstat, and iostat → Identify process → Kill/fix process → Scale infra if required.
+15. How do you automate infrastructure scaling in cloud?
+Answer: Configure Auto Scaling Groups in GCP (Instance Groups) or Azure (VM Scale Sets) → Integrate with Terraform for automation.
+--------------------------------------------------------------------------------------------------------------------------------------------
+I once asked this in an AWS cloud engineer interview.
+
+If I assign a /24 CIDR to a VPC, how many usable IPs are there?
+
+The candidate confidently replied: 256 IPs.
+
+Before getting into whether it was the right or wrong answer,
+
+I see many cloud practitioners, especially beginners, find it hard to choose the right subnet size.
+
+I made this visual to help you understand. Check it out !
+
+A /24 provides 256 IPs – right.
+
+But AWS reserves 5 IPs per subnet.
+
+These include: network address, broadcast, router, DNS, and one more for future use.
+
+So, /24 gives you only 251 usable IPs, not 256.
+
+Plan usable IPs, not theoretical ones.
+-------------------------------------------------------------------------------------------------
+🔧 Kubernetes Common Errors and explanation 🔧
+
+🔁 CrashLoopBackOff
+ This means your pod starts, crashes, and Kubernetes keeps trying to restart it.
+ 🔍 Check container logs using kubectl logs <pod> --previous to debug startup issues or failing health checks.
+
+📦 ImagePullBackOff / ErrImagePull
+ Kubernetes can’t pull your container image: often due to a wrong image name, missing tag, or lack of access to a private registry.
+ ✅ Double-check the image URL and credentials (if private).
+
+⏳ Pending
+ Your pod is stuck in "Pending" state because the scheduler can’t find a suitable node.
+ 🔍 This usually happens due to insufficient resources or missing tolerations/node selectors.
+
+⚠️ RunContainerError
+ The pod gets created but the container fails to run: often caused by incorrect entrypoint commands or missing files.
+ ✅ Review your Dockerfile CMD/ENTRYPOINT and the pod's command and args.
+
+🚫 CreateContainerConfigError
+ Kubernetes can’t create the container due to a config error: often related to missing Secrets, ConfigMaps, or invalid volume mounts.
+ 🔍 Use kubectl describe pod <pod> to inspect what’s going wrong.
+
+🔐 SecretNotFound / ConfigMapNotFound
+ Your pod references a missing Secret or ConfigMap.
+ ✅ Make sure the secret/configmap exists in the same namespace and is correctly referenced in your manifest.
+
+🧠 OOMKilled (Out of Memory)
+ Your container used more memory than requested or allowed, and got killed.
+ 🔍 Fix by adjusting the memory limits in your pod spec or optimizing the app’s memory usage.
+
+🌐 DNSResolutionFailed
+ Pod fails to resolve internal or external service names.
+ ✅ Check if kube-dns or CoreDNS is running correctly and verify the DNS configuration in your pod.
+
+📉 LivenessProbe Failed
+ K8s restarts your container because the liveness probe fails continuously.
+ 🔍 Review the probe settings and ensure the endpoint/command returns the right status code.
+
+🔄 NodeNotReady / NodeLost
+ Pods get evicted or stuck due to a node going down or being unreachable.
+ ✅ Monitor node health (kubectl get nodes), and check logs for network or disk issues.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+🚫 OpenShift isn’t hard. These 5 mistakes make it hard.
+
+Every week, I see professionals struggling with OpenShift.
+Not because the platform is “too complex” —
+but because they repeat the same mistakes again and again.
+
+Here are the most common ones 👇
+
+1️⃣ Using OpenShift like plain Kubernetes
+They ignore built-in features like Operators, S2I, GitOps.
+➡ Result? They reinvent the wheel with Helm + Jenkins and add unnecessary complexity.
+
+2️⃣ Cluster-admin for everyone
+To “fix errors quickly,” they give full access to all developers.
+➡ In production, this is a security nightmare. Learn RBAC, SCC, and OAuth the right way.
+
+3️⃣ Logs = kubectl logs
+That’s fine in a homelab, but in production you need enterprise-grade visibility.
+➡ Use OpenShift’s monitoring stack (Prometheus, Grafana, EFK).
+
+4️⃣ Ignoring OpenShift Pipelines
+Jenkins is great, but Tekton + ArgoCD are built-in.
+➡ Enterprises expect modern GitOps workflows — not legacy hacks.
+
+5️⃣ No resource quotas
+Pods eat all CPU/memory, apps crash, teams blame Kubernetes.
+➡ The real fix: set resource requests & limits per project.
+
+💡 Bonus: Passing EX280 doesn’t mean you’re production-ready.
+Real-world OpenShift is about building workloads, managing security, and handling scale.
+
+🔥 The truth: OpenShift isn’t “hard.”
+It only feels hard when you treat it like vanilla Kubernetes or skip the enterprise features that make it powerful.
+
+💬 Comment “OpenShift” and I’ll send you my real-world checklist of mistakes to avoid — the same one I give my students to prepare for production clusters & high-paying platform engineer roles.
+---------------------------------------------------------------------------------------------------------------------------
+𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬 𝐅𝐮𝐧𝐝𝐚𝐦𝐞𝐧𝐭𝐚𝐥 𝐂𝐨𝐧𝐜𝐞𝐩𝐭𝐬 𝐄𝐯𝐞𝐫𝐲 𝐃𝐞𝐯𝐎𝐩𝐬/𝐂𝐥𝐨𝐮𝐝 𝐄𝐧𝐠𝐢𝐧𝐞𝐞𝐫 𝐒𝐡𝐨𝐮𝐥𝐝 𝐊𝐧𝐨𝐰 👇
+
+1️⃣ 𝐏𝐨𝐝 – The smallest unit in Kubernetes. A pod can wrap one or more containers that share storage and networking.
+
+2️⃣ 𝐍𝐨𝐝𝐞 – A worker machine (VM or physical server) where pods run. It’s managed by the Kubernetes control plane.
+
+3️⃣ 𝐂𝐥𝐮𝐬𝐭𝐞𝐫 – A collection of nodes that together form a single Kubernetes system.
+
+4️⃣ 𝐃𝐞𝐩𝐥𝐨𝐲𝐦𝐞𝐧𝐭 – Ensures your pods run in the desired state. It also handles rolling updates without downtime.
+
+5️⃣ 𝐑𝐞𝐩𝐥𝐢𝐜𝐚𝐒𝐞𝐭 – Keeps a specific number of identical pods running at all times.
+
+6️⃣ 𝐒𝐞𝐫𝐯𝐢𝐜𝐞 – Provides reliable networking and a stable IP to access a group of pods.
+
+7️⃣ 𝐈𝐧𝐠𝐫𝐞𝐬𝐬 – Manages external HTTP/S traffic to services using rules and paths.
+
+8️⃣ 𝐂𝐨𝐧𝐟𝐢𝐠𝐌𝐚𝐩 – Stores non-sensitive configuration data separately from container images.
+
+9️⃣ 𝐒𝐞𝐜𝐫𝐞𝐭 – Stores sensitive data like passwords and tokens securely.
+
+🔟 𝐍𝐚𝐦𝐞𝐬𝐩𝐚𝐜𝐞 – Logical partitioning of cluster resources to isolate and organize workloads.
+
+1️⃣1️⃣ 𝐊𝐮𝐛𝐞𝐥𝐞𝐭 – An agent on each node that makes sure containers inside pods are running as expected.
+
+1️⃣2️⃣ 𝐤𝐮𝐛𝐞𝐜𝐭𝐥 – The command-line tool to interact with and manage Kubernetes clusters.
+
+1️⃣3️⃣ 𝐂𝐨𝐧𝐭𝐫𝐨𝐥 𝐏𝐥𝐚𝐧𝐞 – The brain of Kubernetes that manages the overall cluster state.
+
+1️⃣4️⃣ 𝐒𝐜𝐡𝐞𝐝𝐮𝐥𝐞𝐫 – Decides which node a new pod should run on, based on resource requirements.
+
+1️⃣5️⃣ 𝐂𝐨𝐧𝐭𝐫𝐨𝐥𝐥𝐞𝐫 𝐌𝐚𝐧𝐚𝐠𝐞𝐫 – Runs background controllers to maintain cluster state automatically.
+
+1️⃣6️⃣ 𝐄𝐭𝐜𝐝 – A distributed key-value store that stores all cluster data.
+
+1️⃣7️⃣ 𝐓𝐚𝐢𝐧𝐭𝐬 & 𝐓𝐨𝐥𝐞𝐫𝐚𝐭𝐢𝐨𝐧𝐬 – Define which pods can (or cannot) run on certain nodes.
+
+1️⃣8️⃣ 𝐋𝐚𝐛𝐞𝐥𝐬 & 𝐒𝐞𝐥𝐞𝐜𝐭𝐨𝐫𝐬 – Allow grouping and filtering Kubernetes objects dynamically.
+
+1️⃣9️⃣ 𝐑𝐞𝐬𝐨𝐮𝐫𝐜𝐞 𝐑𝐞𝐪𝐮𝐞𝐬𝐭𝐬 & 𝐋𝐢𝐦𝐢𝐭𝐬 – Control how much CPU and memory a container can request and use.
+
+2️⃣0️⃣ 𝐇𝐞𝐥𝐦 – A package manager for Kubernetes to easily deploy and manage applications.
+
+2️⃣1️⃣ 𝐂𝐑𝐃 (𝐂𝐮𝐬𝐭𝐨𝐦 𝐑𝐞𝐬𝐨𝐮𝐫𝐜𝐞 𝐃𝐞𝐟𝐢𝐧𝐢𝐭𝐢𝐨𝐧) – Lets you define your own resource types in Kubernetes.
+
+2️⃣2️⃣ 𝐎𝐩𝐞𝐫𝐚𝐭𝐨𝐫 – Automates complex application operations using CRDs.
+
+2️⃣3️⃣ 𝐃𝐚𝐞𝐦𝐨𝐧𝐒𝐞𝐭 – Ensures a pod runs on every node (or specific nodes) in the cluster.
+
+2️⃣4️⃣ 𝐋𝐨𝐠𝐬 & 𝐄𝐯𝐞𝐧𝐭𝐬 – Essential for debugging and tracking what’s happening inside your cluster.
+--------------------------------------------------------------------------------------------------------------------
+Part-1
+
+1. Your pod keeps getting stuck in CrashLoopBackOff, but logs show no errors. How would you approach debugging and resolution?
+Approach:
+
+- Run kubectl describe pod <pod-name> to check events (e.g., OOMKilled, permission issues)
+- Check if readiness/liveness probes are misconfigured.
+- Inspect init containers or sidecars
+- Check kubectl get events for resource or scheduling failures.
+- Run kubectl exec into a running container (if it stabilizes briefly) or use an ephemeral debug container (kubectl debug).
+
+Resolution:
+
+Adjust probe configurations, increase memory limits, fix environment/config errors, or troubleshoot dependencies like volume mounts or secrets.
+
+2. You have a StatefulSet deployed with persistent volumes, and one of the pods is not recreating properly after deletion. What could be the reasons, and how do you fix it without data loss?
+
+Possible Causes:
+
+- PVC still bound to the old pod (pod-0 PVC won't bind to a new pod)
+- StatefulSet not recreating pod due to volume reclaim policy.
+- Pod stuck in Terminating due to finalizers.
+
+Fix Without Data Loss:
+
+- Ensure PVC exists: kubectl get pvc.
+- Reattach existing PVC or force delete stuck pod.
+- Avoid deleting PVC manually unless backed up.
+- Check volume provisioner logs (e.g., CSI driver).
+
+3. Your cluster autoscaler is not scaling up even though pods are in Pending state. What would you investigate?
+
+Check:
+
+- Pod events: kubectl describe pod (look for insufficient resources).
+- Are pods unschedulable due to PDBs, affinity, or taints?
+- Cluster autoscaler logs (kubectl logs deployment/cluster-autoscaler).
+- IAM roles and permissions for autoscaler.
+- Are there node pool limits or maxNodesTotal reached?
+
+4. A network policy is blocking traffic between services in different namespaces. How would you design and debug the policy to allow only specific communication paths?
+
+Debug:
+
+- Run: kubectl get networkpolicies -A.
+- Use kubectl exec or netshoot to test connectivity.
+- Confirm the egress and ingress allow namespaceSelector or match labels properly.
+
+Design:
+
+- Explicitly allow traffic using:
+
+```
+namespaceSelector:
+ matchLabels:
+ name: target-namespace
+```
+- Consider default-deny policy, then allow by exception.
+
+5. One of your microservices has to connect to an external database via a VPN inside the cluster. How would you architect this in Kubernetes with HA and security in mind?
+
+Architecture:
+
+- Deploy a VPN client (e.g., strongSwan, WireGuard) as a highly available Deployment or DaemonSet.
+- Use a dedicated subnet/VPC peering to reach the DB.
+- Add NetworkPolicy to restrict access to DB.
+- Run VPN client as sidecar or separate service with failover.
+
+Security:
+
+- Store VPN credentials in Kubernetes Secrets.
+- Limit access with RBAC and PodSecurityPolicies.
+----------------------------------------------------------------------------------------------------------------------
+Advanced Linux and High Availability (HA) interview questions.
+
+
+🔹1. Are you aware of the configuration of RAID?
+
+Yes. RAID (Redundant Array of Independent Disks) can be configured via:
+ • Software RAID: Using mdadm tool (common in Linux).
+ • Example: mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sd[b-c]
+ • Hardware RAID: Configured via RAID controller BIOS or vendor-specific tools.
+
+
+🔹2. Upgrade RHEL 7.9 to RHEL 9.4
+
+Direct in-place upgrade from RHEL 7.9 to 9.4 is not supported. You need to:
+ • Backup everything.
+ • Clean install RHEL 9.4.
+ • Use tools like Leapp for supported upgrades (only 7 to 8 or 8 to 9).
+ • Restore data/configurations post-install.
+
+
+🔹3 & 4. App running on DC A, stopped due to power — how to run on DC B?
+
+Set up High Availability (HA) and Disaster Recovery (DR):
+ • Use Cluster tools (e.g. Pacemaker + Corosync, Red Hat Cluster Suite).
+ • Use Shared storage or replication (e.g., DRBD or rsync with cron).
+ • Use VIP (Virtual IP) that floats between DC A and DC B.
+ • Automate failover using heartbeat/stonith.
+
+
+🔹5. Which HA tools have you worked on?
+
+Examples:
+ • Pacemaker + Corosync – for resource failover.
+ • Keepalived – for VIP management.
+ • HAProxy – load balancing + failover.
+ • DRBD – block-level replication.
+ • GlusterFS – distributed filesystem.
+
+
+🔹6. Server pings but SSH fails
+
+Common causes:
+ • SSH service down: systemctl status sshd
+ • Port blocked by firewall: firewalld or iptables
+ • SSHD misconfig: Check /etc/ssh/sshd_config
+ • Host key issue: Remove old entry from ~/.ssh/known_hosts
+ • SELinux: May block access.
+
+
+🔹7. df -kh hangs
+Reasons:
+ • NFS mount is unresponsive
+ • Dead disk/LUN or bad block
+ • Stale mount
+ • Use: df -khT or timeout df -kh
+ • Use mount | grep -v '^/' or lsblk to narrow the cause.
+
+🔹8. Do you know about Daemon services?
+
+Yes.
+ • Daemons are background processes, often started at boot (e.g., sshd, httpd).
+ • Managed using Systemd in RHEL7+.
+
+
+🔹9. If Daemon service file is corrupted, how to recover?
+ • Restore from backup.
+ • Reinstall the package providing the service:
+
+rpm -qf /usr/lib/systemd/system/sshd.service # find package
+yum reinstall openssh-server
+ • Or recreate manually with proper ExecStart.
+
+
+🔹10. Troubleshooting daemon service
+
+ • Check status: systemctl status <service>
+ • Logs: journalctl -u <service>
+ • Validate service file: systemd-analyze verify
+ • Restart & test: systemctl restart <service>
+
+
+🔹11. Types of special permissions
+
+ • SUID (Set User ID): Executes with file owner’s permissions.
+ • SGID (Set Group ID): Executes with file group’s permissions.
+ • Sticky Bit: Restricts file deletion to owner (used in /tmp).
+
+
+🔹12. What is UUID and GUID?
+
+ • UUID (Universally Unique Identifier): 128-bit identifier, often used for identifying filesystems or disks.
+ • GUID is essentially a Microsoft synonym for UUID.
+------------------------------------------------------------------------------------------------------------
+
+
+1. What happens if a pod enters CrashLoopBackOff repeatedly?
+-> The kubelet keeps restarting it. But it won’t recover unless you fix the root cause — commonly bad env configs, failing probes, image errors, or missing mounts.
+
+2. What happens if CoreDNS fails inside the cluster?
+->Services can’t resolve each other by name. Apps break silently. curl fails. Debug with nslookup, kubectl logs -n kube-system, and always monitor DNS latency.
+
+3. What happens if a node runs out of memory?
+-> Kubelet starts evicting pods. Your app gets killed silently. Node marked MemoryPressure=True. Run kubectl describe node and top node to catch early signals.
+
+4. What happens if the service selector doesn’t match any pods?
+-> The service exists, but traffic goes nowhere. You’ll get “connection refused” errors. Always use kubectl get endpoints to confirm backend pod IPs.
+
+5. What happens when an unready pod gets traffic?
+-> If readiness probes are misconfigured or missing, kube-proxy routes traffic to broken pods. Monitor startup delays & readiness gating in your manifests.
+
+6. What happens if etcd fails?
+-> Kubernetes control plane becomes read-only or fails. No new pods can be scheduled. API server fails. This is your cluster’s brain. Backup frequently.
+
+7. What happens if you run a rolling deploy with a bad config?
+->You might take down every pod one by one. Without a maxUnavailable set, the app can go down completely. Set proper deployment strategies + prechecks.
+
+8. What happens when the kubelet loses connectivity to the API server?
+-> The node enters NotReady. No new pods get scheduled; existing pods may keep running, but updates fail. Node might get cordoned or evicted.
+
+9. What happens if HPA scales up too aggressively?
+-> Your app overloads the node or consumes all quota. Can lead to pod evictions, degraded performance, or even node crashes if limits aren’t set.
+
+10. What happens when a container exits with code 0, but the app is broken?
+-> Kubernetes thinks it’s “healthy” unless your probes catch it. Add proper liveness & readiness probes to ensure status reflects reality.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+10 Real-World Kubernetes Scenarios Every DevOps Engineer Should Know
+
+🔥 Bookmark this. These aren’t interview questions. These are 2AM production scenarios.
+
+1️⃣ . What happens if a pod enters CrashLoopBackOff repeatedly?
+👉 The kubelet keeps restarting it. But it won’t recover unless you fix the root cause — commonly bad env configs, failing probes, image errors, or missing mounts.
+
+2️⃣ . What happens if CoreDNS fails inside the cluster?
+👉 Services can’t resolve each other by name. Apps break silently. curl fails. Debug with nslookup, kubectl logs -n kube-system, and always monitor DNS latency.
+
+3️⃣ . What happens if a node runs out of memory?
+👉 Kubelet starts evicting pods. Your app gets killed silently. Node marked MemoryPressure=True. Run kubectl describe node and top node to catch early signals.
+
+4️⃣ . What happens if the service selector doesn’t match any pods?
+👉 The service exists, but traffic goes nowhere. You’ll get “connection refused” errors. Always use kubectl get endpoints to confirm backend pod IPs.
+
+5️⃣ . What happens when an unready pod gets traffic?
+👉 If readiness probes are misconfigured or missing, kube-proxy routes traffic to broken pods. Monitor startup delays & readiness gating in your manifests.
+
+6️⃣ . What happens if etcd fails?
+👉 Kubernetes control plane becomes read-only or fails. No new pods can be scheduled. API server fails. This is your cluster’s brain. Backup frequently.
+
+7️⃣ What happens if you run a rolling deploy with a bad config?
+👉 You might take down every pod one by one. Without a maxUnavailable set, the app can go down completely. Set proper deployment strategies + prechecks.
+
+8️⃣ What happens when the kubelet loses connectivity to the API server?
+👉 The node enters NotReady. No new pods get scheduled; existing pods may keep running, but updates fail. Node might get cordoned or evicted.
+
+9️⃣ What happens if HPA scales up too aggressively?
+👉 Your app overloads the node or consumes all quota. Can lead to pod evictions, degraded performance, or even node crashes if limits aren’t set.
+
+🔟 What happens when a container exits with code 0, but the app is broken?
+👉 Kubernetes thinks it’s “healthy” unless your probes catch it. Add proper liveness & readiness probes to ensure status reflects reality.
+
+---------------------------------------------------------------------------------------------------------------
+Linux troubleshooting and file system/storage questions effectively in interviews: part-1
+
+User & Login Issues
+ 1. User Cannot Log In:
+ • Check /var/log/secure or /var/log/auth.log.
+ • Ensure user exists: id username
+ • Check /etc/passwd for shell access.
+ • Account lock: faillock, passwd -S, or chage -l
+ • Permissions on home directory: ls -ld /home/username
+ 2. Script Executable for One User Only:
+ • Check ownership & permissions: ls -l script.sh
+ • Add execute rights: chmod +x script.sh
+ • Check #!/bin/bash or interpreter line.
+ 3. Service Using 100% CPU:
+ • Use top, htop, or ps -eo pid,ppid,%cpu,%mem,cmd --sort=-%cpu
+ • Get PID and check logs or strace: strace -p PID
+ • Restart service if needed: systemctl restart service
+
+SSH & Network
+ 4. SSH Not Working:
+ • Ping/IP reachability: ping, telnet IP 22, or nc
+ • Check firewall: firewalld, iptables, ufw
+ • Logs: /var/log/secure, journalctl -u sshd
+ • Check SSH key permissions: ~/.ssh/authorized_keys and mode 600
+ 5. Hostname SSH Fails, but Ping Works:
+ • Check /etc/hosts or DNS resolution via nslookup, dig
+ • SSH config: ~/.ssh/config or /etc/ssh/ssh_config
+
+Disk Issues
+ 6. Full / Partition:
+ • Use du -sh /* and ncdu / to find large dirs/files
+ • lsof +L1 shows deleted files still in use
+ • Clean logs: logrotate, /var/log
+ 7. Deleting File Doesn’t Free Space:
+ • File open by process: lsof | grep deleted
+ • Restart the process or truncate: > file
+ 8. Directory Using Too Much Space:
+ • du -sh /path/* | sort -h or ncdu /path
+ 9. Find Top Space in /var:
+ • du -sh /var/* | sort -hr
+
+Crontab & Services
+ 10. Cron Job Not Running:
+ • Check crontab syntax: crontab -l
+ • Add logs to job: >> /tmp/debug.log 2>&1
+ • Ensure cron or crond is running
+ • Check environment variables and full path usage
+ 11. Package Manager Fails (yum/apt):
+ • Clear cache: yum clean all, apt clean
+ • Check internet/DNS
+ • Check repo files in /etc/yum.repos.d/ or /etc/apt/
+ 12. Sudo Not Working:
+ • Check /etc/sudoers or visudo
+ • Confirm group: groups username
+ • Reboot/login again after group changes
+
+System Stability
+ 13. Kernel Panic:
+ • Boot from recovery mode
+ • Check logs in /var/crash, /var/log/messages
+ • Kernel version: uname -r
+ • Rollback to previous kernel: grub menu
+ 14. Zombie Processes:
+ • ps aux | grep Z
+ • Zombies can’t be killed; restart parent process or reboot
+ 15. Too Many Open Files:
+ • Check limits: ulimit -n, /etc/security/limits.conf
+ • Identify offending process: lsof | wc -l
+ 16. High Memory Process:
+ • top, htop, or ps aux --sort=-%mem
+ • Kill: kill -9 PID
+ 17. Home Directory Missing:
+ • Check /etc/passwd home path
+ • Restore from backup or mkdir /home/user && chown
+ 18. Time Sync Issue (NTP):
+ • Check chronyd or ntpd
+ • Sync manually: ntpdate <server> or chronyc sources
+ 19. High System Load:
+ • uptime, top, vmstat, iostat, sar
+ • Check CPU wait time, IO, memory
+---------------------------------------------------------------------------------------------------------
+
+Top 10 Kubernetes Failures in Production 
+
+Kubernetes is powerful — but misconfigurations can lead to major outages, even in mature production environments.
+After working on multiple production clusters and postmortems, here are the most common K8s failures I’ve seen in my last 6 years with K8s:
+
+- Missing Resource Limits
+ Pods consume all resources, causing other pods to get evicted.
+ Fix: Always set resources.requests and resources.limits.
+- Improper Liveness/Readiness Probes
+ Healthy pods get killed or unready pods receive traffic.
+ Fix: Use appropriate probe types and tune thresholds.
+- CrashLoopBackOff or OOMKilled
+ App crashes repeatedly or exceeds memory limits.
+ Fix: Check logs, adjust memory, fix startup bugs.
+- RBAC Misconfigurations
+ Permissions are either denied or overly permissive.
+ Fix: Use the principle of least privilege with roles and bindings.
+- Faulty Rolling Updates
+ No healthy pods left due to misconfiguration.
+ Fix: Set sane values for maxUnavailable and maxSurge.
+- DNS Failures
+ Services fail to resolve each other.
+ Fix: Monitor CoreDNS and review dnsPolicy settings.
+- Broken Ingress or Services
+ Applications become unreachable due to incorrect configuration.
+ Fix: Verify paths, ports, and service selectors.
+- Node Pressure and Evictions
+ Pods are evicted due to CPU, memory, or disk pressure.
+ Fix: Use autoscaling and monitor node resource usage.
+- Storage / PVC Issues
+ Apps fail to mount volumes or experience data loss.
+ Fix: Ensure storage classes are configured and access modes are correct.
+- Unreadable ConfigMaps or Secrets
+ Apps fail to start due to missing or misconfigured mounts.
+ Fix: Validate YAML syntax and inspect mount paths.
+------------------------------------------------------------------------------------
+******AWS Troubleshooting****** 
+
+1. You shared an AMI with another AWS account, but they can’t launch an instance from it.
+ A: Most forget to share the EBS snapshot linked to the AMI. Without it, the AMI shows up but fails at launch.
+
+2. ALB marks your targets as unhealthy, but the app works in your browser.
+ A: ALB health checks are picky. A 301 redirect or login page will cause failure. It wants a clean 200 OK response.
+
+3. ECS still runs the old container version after pushing a new image to ECR.
+ A: If you’re using tags like latest, ECS might pull from cache. Use unique tags or digests to ensure it fetches the correct version.
+
+4. In EKS, your stateful pod with an EBS volume is stuck in Pending. Why?
+ A: EBS volumes are AZ-bound. If the pod lands in a node from another AZ, it can’t attach the volume. Ensure the node group spans the correct Availability Zone.
+
+5. Your EKS pod can’t access S3, even though IAM roles for service accounts are enabled.
+ A: The pod must use a service account annotated with the IAM role. If it’s using the default service account or missing the annotation, the IAM role won’t apply.
+
+6. EC2 has a public IP and security group allows traffic—but it’s unreachable. Why?
+ A: *No Internet Gateway attached to the VPC.
+*Route table doesn't point to the Internet Gateway.
+*NACLs are blocking traffic.
+*OS firewall (like iptables) is blocking.
+*Service not running or listening on the wrong port.
+
+7. You restored a production RDS snapshot in staging, but queries behave differently.
+ A: Restored instances default to the default parameter group. If production uses a custom one, it won’t carry over unless you manually reassign it.
+------------------------------------------------------------------------------------------------------------------------------------------------
+𝐀𝐮𝐭𝐡𝐞𝐧𝐭𝐢𝐜𝐚𝐭𝐢𝐨𝐧 & 𝐏𝐞𝐫𝐦𝐢𝐬𝐬𝐢𝐨𝐧 𝐈𝐬𝐬𝐮𝐞𝐬
+
+1) Permission denied
+Cause: User doesn’t have required privileges.
+Fix:
+ sudo command # Run with elevated privileges
+chmod +x file # Add execute permission
+chown user:group file # Change ownership
+
+2) sudo: command not found
+Cause: sudo package not installed or misconfigured.
+Fix: Log in as root and install:
+
+su -
+apt install sudo # Debian/Ubuntu
+yum install sudo # RHEL/CentOS
+
+𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠 & 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐢𝐯𝐢𝐭𝐲
+
+3) ping: unknown host
+Cause: DNS resolution issue.
+Fix:
+Check /etc/resolv.conf for valid nameservers.
+Try using IP address instead of hostname.
+Restart networking:
+
+systemctl restart NetworkManager
+
+4) Connection refused / Connection timed out
+Cause: Service not running or firewall blocking.
+Fix:
+
+5) systemctl status service_name
+netstat -tulnp | grep port
+ufw allow port/tcp # Ubuntu firewall
+
+𝐅𝐢𝐥𝐞 𝐒𝐲𝐬𝐭𝐞𝐦 & 𝐃𝐢𝐬𝐤
+
+5) No space left on device
+Cause: Disk partition is full.
+Fix:
+
+df -h # Check disk usage
+du -sh * # Check folder sizes
+journalctl --vacuum-time=7d # Clean old logs
+
+6) Read-only file system
+Cause: Filesystem corruption or mounted read-only.
+Fix:
+
+mount -o remount,rw /
+fsck /dev/sdX
+
+𝐏𝐫𝐨𝐜𝐞𝐬𝐬 & 𝐑𝐞𝐬𝐨𝐮𝐫𝐜𝐞 𝐈𝐬𝐬𝐮𝐞𝐬
+
+7) Too many open files
+Cause: File descriptor limit exceeded.
+Fix:
+
+ulimit -n 65535
+
+8) Out of memory: Kill process
+Cause: RAM exhausted, OOM killer terminates processes.
+Fix:
+Add swap:
+
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+Optimize memory usage.
+
+𝐏𝐚𝐜𝐤𝐚𝐠𝐞 & 𝐃𝐞𝐩𝐞𝐧𝐝𝐞𝐧𝐜𝐲 𝐄𝐫𝐫𝐨𝐫𝐬
+
+9) command not found
+Cause: Package not installed or PATH misconfigured.
+Fix:
+
+which command
+apt install package # Debian/Ubuntu
+yum install package # RHEL/CentOS
+
+10) Failed to fetch (apt/yum)
+Cause: Repo unavailable or outdated.
+Fix:
+
+apt update --fix-missing
+yum clean all && yum makecache
+
+𝐒𝐒𝐇 𝐈𝐬𝐬𝐮𝐞𝐬
+
+11) ssh: Permission denied (publickey,password)
+Cause: Wrong key/permissions.
+Fix:
+
+chmod 600 ~/.ssh/id_rsa
+ssh -i ~/.ssh/id_rsa user@host
+
+12) ssh_exchange_identification: Connection closed
+Cause: SSH service misconfigured or blocked.
+Fix:
+
+systemctl restart sshd
+tail -f /var/log/auth.log
+
+𝐊𝐞𝐫𝐧𝐞𝐥 & 𝐁𝐨𝐨𝐭
+
+13) Kernel panic
+Cause: Corrupted kernel/initramfs.
+Fix: Boot into recovery mode, reinstall kernel:
+
+apt install --reinstall linux-image-$(uname -r)
+
+14) GRUB rescue> prompt
+Cause: Bootloader corruption.
+Fix: From rescue:
+
+set prefix=(hd0,msdos1)/boot/grub
+set root=(hd0,msdos1)
+insmod normal
+normal
+
+Grab DevOps/AI/Multi cloud learnings - https://lnkd.in/gadcAvB3 
+Checkout the Linux modules - https://lnkd.in/gkB27ZDF
+
+Note: If you found this post helpful do share with your community and follow Praveen Singampalli
+---------------------------------------------------------------------------------------------------------------
+
+******Linux Troubleshooting Cheatsheet****** 
+
+1. How to Check Disk Space Usage
+Answer: 
+Use df -h to view disk usage by mounted filesystems. For directory-level details, run du -sh /path/to/directory. Clean up old logs, unused packages, or large files with tools like ncdu for interactive analysis.
+
+2. Service Fails to Start
+Answer: 
+Check status with systemctl status service-name. View logs via journalctl -u service-name --since "10 minutes ago". Ensure dependencies are installed and configuration files (e.g., /etc/service-name/config.conf) are correct.
+
+3. Network Connectivity Issues
+Answer:
+- Test connectivity: ping 8.8.8.8 (Google DNS). 
+- Check routes: ip route or traceroute google.com. 
+- Verify DNS: dig google.com or nslookup google.com. 
+- Inspect interfaces: ip a or ifconfig. Restart networking with systemctl restart NetworkManager (or networkd).
+
+4. "Permission Denied" Errors
+Answer: 
+- Check permissions: ls -l /path/to/file. 
+- Modify permissions: chmod 755 file or chown user:group file. 
+- If SELinux/AppArmor blocks access, check logs (/var/log/audit/audit.log) or temporarily disable with setenforce 0.
+
+5. Terminating Unresponsive Processes
+Answer: 
+- Find PID: ps aux | grep process-name or top. 
+- Kill process: kill -9 PID or pkill process-name. 
+- Force-kill all instances: killall -9 process-name.
+
+6. System Fails to Boot
+Answer:
+- Boot into recovery mode (GRUB menu) and check logs (/var/log/boot.log or journalctl -b). 
+- Repair filesystems: fsck /dev/sdX. 
+- Reinstall bootloader (GRUB): grub-install /dev/sdX.
+
+7. "No Space Left on Device" Despite Free Space
+Answer: 
+- Check inode usage: df -i. 
+- Delete small, numerous files (e.g., temporary files) to free inodes.
+
+8. DNS Resolution Failures
+Answer: 
+- Verify DNS config: cat /etc/resolv.conf. 
+- Test DNS server: dig @8.8.8.8 google.com. 
+- Restart DNS resolver: systemctl restart systemd-resolved.
+
+9. High CPU/Memory Usage
+Answer: 
+- Identify resource hogs: top, htop, or vmstat 2. 
+- Kill problematic processes or optimize applications. Check for memory leaks with free -h.
+
+10. SSH Connection Refused
+Answer:
+- Ensure SSH service runs: systemctl status sshd. 
+- Check firewall rules: ufw status or iptables -L. 
+- Verify SSH port (default: 22) is open and accessible.
+
+ 11.Filesystem Corruption
+Answer:
+- Unmount the disk: umount /dev/sdX. 
+- Run fsck /dev/sdX to repair. Backup critical data first. For root FS, boot from a live USB.
+
+12. Cron Jobs Not Executing
+Answer: 
+- Check cron logs: grep CRON /var/log/syslog. 
+- Ensure the cron service is running: systemctl status cron. 
+- Validate syntax and user permissions in /etc/crontab or user crontabs (crontab -e).
+---------------------------------------------------------------------------------------------------------------
+
+
+
+
+

@@ -1,0 +1,2577 @@
+1. Two employees work in different shifts (10 AM–5 PM and 6 PM–2 AM). How do you provide AWS access based on timing?
+2. What is the default port number for DynamoDB?
+3. What is Ingress in Kubernetes, and how can we access applications deployed on-premises?
+4. What is the port range for NodePort mode?
+5. Do LoadBalancers work in on-premises setups?
+6. What’s the difference between ECS and EKS?
+7. How do you store secrets in Jenkins and use them in pipelines?
+8. Write a shell script to find prime numbers.
+9. Terraform code to launch an EC2 instance.
+10. Are you familiar with custom IAM policies? Can you write one?
+11. What is PV and PVC in Kubernetes? Which one comes first, and why?
+12. Explain RBAC – what is it, its uses, and how is it configured?
+13. How can we expose on-premise applications?
+14. What is the purpose of Jenkins shared libraries? Explain with steps.
+15. What is VPC peering and how does it work?
+16. Can we add storage to an existing EC2 instance and how, steps to add?
+17. What are the core components of Kubernetes, and which are the most important?
+18. Two users access the same application – one has low latency, the other high. How would you troubleshoot?
+19. How do we connect services deployed on the cloud with those on-premises?
+20. How do we know the entire process executed that we have mentioned in Jenkins? What are the possible ways to know this?
+21. How can we configure GitHub in Jenkins using both Freestyle and Pipeline jobs?
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+I recently went through an interview and came across some interesting L1 & L2 level questions related to AWS, Terraform, Kubernetes, Docker, Git.
+
+Level 1 -
+
+1, cicd workflow, what kind of pipeline.
+2, use of webhook
+3, purpose of webhook
+4, stages of pipeline...
+5, shared libraries in jenkins?
+6, how do we define shared libraries?
+7, how are shared libraries written?
+8, how do you define a pipeline and call it?
+9, what kind of app you deploy on the pipeline?
+10, basic structure, folder structure of helm?
+11, what command are you using deployment in helm
+12, in the Jenkins pipeline, the pipeline is running successfully but the build is not happening, what are the issues?
+13, in kubernetes, what are the errors you are getting, why they come and how you resolve?
+14, explain the crash loop back off,
+15, image pull error?
+16, command to go inside a pod?
+17, how can you create the kubernetes class?
+18, what are the steps to create the cluster?
+19, what is the master node and other node?
+20, code to create a cluster using terraform?
+21, stages in docker images?
+22, DB entry point, CMD 
+23, why do we use entrypoint, CMD
+24, DB ec2, eks, ecs
+25, command to connect ecs
+26, which tool are you using for deployment?
+27, which registry for storing the docker images?
+
+Level 2 -
+
+1, Branching strategy?
+2, your release branch will break, then how u will avoid this kind of issues, then how do you merge?
+3, in production having some bugs, how will you resolve?
+4, typical deployment flow?
+5, cicd workflow?
+6, how do we do a full quality check?
+7, jenkins file, different stages...
+8, shared libraries in jenkins file?
+9, typical structure of shared libraries...
+10, are you aware of security scanning tools?
+11, how do you pass the environment variables on docker build command.
+12, what services do you use for storing the images?
+13, DB, how do you establish the connection?
+14, how do you scan the images at the registry level?
+15, any extension you are using for image scanning?
+16, authentication of eks cluster?
+17, storing the secrets?
+18, how to create lambda function, how it's taking the artifacts.
+19, options on lambda to push the artifacts?
+20, what is email signing and helm chart signing?
+21, which tool for signing the helm chart?
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+Here’s a quick breakdown of what came up 👇
+
+
+🔍 Monitoring & Alerting
+
+What tools have you used to monitor infrastructure & applications?
+
+How do you set up alerts in Prometheus?
+
+What do you check if an alert doesn't trigger?
+
+How do you reduce CPU/storage usage in Prometheus?
+
+
+🐳 Docker
+
+What is Docker (in your own words)?
+
+How do you build an image and run a container?
+
+How do you create a container from an image?
+
+What’s the difference between a Docker container and a Kubernetes pod?
+
+
+☸️ Kubernetes
+
+Can you explain K8s architecture in simple terms?
+
+Have you ever set up a K8s cluster from scratch? How?
+
+What does kubectl apply do?
+
+How do you check pod logs?
+
+How do you launch a pod using a Docker image?
+
+What’s a pod vs a container?
+
+
+⚙️ Jenkins
+
+Can you write a simple Jenkins pipeline and explain it?
+
+How do you define and use variables in a pipeline?
+
+What's the role of Jenkins in your CI/CD workflow?
+
+
+📦 Ansible
+
+Have you written playbooks? For what use cases?
+
+How does Ansible help in DevOps?
+
+
+🐧 Linux & Shell Scripting
+
+What does grep do? Any common use cases?
+
+How do you list files in a directory?
+
+
+🧑‍💻 Day-to-Day Work
+
+What are your daily activities as a DevOps engineer?
+
+
+💡Hope this helps anyone getting ready for interviews or just looking to refresh their skills.
+------------------------------------------------------------------------------------------------------
+
+Interview Questions I Faced in the Last 10 Months – Cloud/DevOps Roles
+
+Hi All,
+
+ Over the last 10 months, I’ve attended around 13–14 interviews for Cloud Engineer and DevOps Engineer roles. It’s been a great learning experience, and I thought of sharing some of the real interview questions I faced — this might help others preparing for similar roles.
+
+But remember almost every interviewer starts asking the questions based on the introduction what you gave and on your resume — so be confident with everything you’ve mentioned in it!
+
+Networking Questions:
+
+1. What happens in the background when you type www.google.com?
+2. How does the internet work? (Explain in your perspective)
+3. What is DNS and how does it work?
+4. Explain the OSI model — what does each layer do?
+5. Difference between TCP and UDP
+6. What is the TCP 3-Way Handshake? Explain the process
+7. Questions on IP addressing and CIDR
+
+Linux Questions:
+
+1. Why is Linux preferred over Windows in most organizations?
+2. How would you troubleshoot the network connectivity issue on a Linux server?
+3. What does the top command do? What about disk space management?
+4. Linux file management questions
+5. What is inside /etc, /var directories?
+6. What is SSH? How does it work?
+7. Commands: ping, dig, nslookup – troubleshooting-related
+
+AWS Cloud Questions:
+
+1. What is S3 versioning?
+2. Difference between Internet Gateway and NAT Gateway? Why is NAT used?
+3. Is S3 bucket region-specific or globally accessible?
+4. What is an inline policy in AWS?
+5. Difference between IAM Policies, Groups, and Roles
+6. What is VPC Peering? What can be used if we need to connect to multiple VPCs?
+7. Explain the steps to create a custom VPC manually
+8. How to SSH into a private server from a public subnet without a bastion host?
+9. Is CloudWatch configured by default with AWS services?
+10. Difference between Security Groups and NACL (Which one is stateless?)
+11. What is Lambda concurrency?
+12. Advantages of Serverless architecture
+13. Difference between EBS and EFS — explain with real-world use cases
+
+Git & Version Control:
+
+1. Difference between git rebase and git merge
+2. What does git cherry-pick do?
+3. General Git workflow and commonly used commands.
+
+This is just Part 1 — I’ll be sharing Part 2 soon, where I’ll cover the Docker, Kubernetes, and Terraform questions I faced — including advanced, scenario-based, and hands-on questions asked during interviews. Stay tuned!
+
+----------------------
+ Interview Questions
+ ✅ What is VPC Peering and where do we use it?
+ ✅ Explain Transit Gateway and how it differs from VPC peering.
+ ✅ How does Amazon Route 53 work? Name some routing policies.
+ ✅ What's the difference between TCP and UDP?
+ ✅ Walk me through the OSI Model — layer by layer.
+ ✅ If your website is slow, what steps would you take?
+ ✅ What are tuples in Python and how are they useful?
+ ✅ IP: 150.150.150.150 — identify the class.
+ ✅ What is CIDR and how does it relate to IP address classes?
+ ✅ How do you install packages in Linux without internet access?
+ ✅ Explain the types of Load Balancers in AWS and their use cases.
+ ✅ Which Linux version are you using in your project, and how do you check it?.
+
+--------------------------------------------------------------------------------------
+
+🚀 𝐀𝐖𝐒
+Difference between NACL and Security Group
+How to establish a connection between two VPCs
+How to monitor using CloudWatch
+Networking concepts in AWS
+⚙️ 𝐉𝐞𝐧𝐤𝐢𝐧𝐬
+Types of jobs in Jenkins
+How to trigger a job automatically
+Writing and understanding pipeline scripts
+🐳 𝐃𝐨𝐜𝐤𝐞𝐫
+Difference between CMD and ENTRYPOINT
+What is Docker Swarm? How is it different from Kubernetes?
+Dockerfiles for Nagios & Python apps + common commands
+📦 𝐓𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦
+Importance of the Terraform state file, storing and locking it with DynamoDB
+for vs for_each usage
+Writing Terraform scripts
+Creating and using modules
+How to avoid state file conflicts
+☸️ 𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬
+A recent production issue you solved
+Writing YAML manifests
+Kubernetes Pod lifecycle
+How to auto-scale pods and types of scaling
+📊 𝐏𝐫𝐨𝐦𝐞𝐭𝐡𝐞𝐮𝐬 + 𝐆𝐫𝐚𝐟𝐚𝐧𝐚
+How to monitor applications and basic setup
+--------------------------------------------------------------------------------------------
+
+🧠 Questions included:
+
+🔹 What is the difference between for_each and for in Terraform?
+ 🔹 How do Terraform modules work and why should we use them?
+ 🔹 What is the purpose of the Terraform state file and how is it managed?
+ 🔹 What is DynamoDB and how is it used in Terraform?
+ 🔹 Why do we use a private subnet in a VPC?
+ 🔹 How can you automatically trigger jobs in a CI/CD pipeline?
+ 🔹 Can you describe a recent issue you troubleshooted in Kubernetes?
+ 🔹 Why do we create modules in Terraform and what are their benefits?
+ 🔹 Do you have any experience using functions in Terraform? If yes, explain.
+ 🔹 How many AWS accounts are used in your current project?
+ 🔹 Can you explain the build stages in Jenkins for your project?
+ 🔹 How do you avoid conflicts with the Terraform state file? Where do you store it?
+ 🔹 What is the difference between NACLs (Network ACLs) and Security Groups in AWS?
+ 🔹 How can you download files from an S3 bucket within AWS while keeping public access completely blocked?
+ 🔹 How do you configure AWS security credentials in Jenkins?
+ 🔹 What Kubernetes services are you using in your project and what is their purpose?
+ 🔹 Have you worked with AWS Transit Gateway in your project?
+ 🔹 Where do you store your Docker images? Do you use Docker Hub?
+ 🔹 How do you monitor your applications and EC2 instances using Amazon CloudWatch?
+ 🔹 What are Jenkins shared libraries and how do they work?
+ 🔹 What are the different types of Jenkins jobs?
+ 🔹 Do you work with freestyle projects or scripted pipelines in Jenkins?
+ 🔹 Can multiple pods run under a single deployment in Kubernetes? If yes, how?
+---------------------------------------------------------------------------------------------------
+
+Q: Your EC2 has a public IP and the port is open in the security group, but it's unreachable. Why?
+
+A: Check the subnet’s network ACL. If inbound or outbound rules are blocking traffic, the security group won’t help. NACLs silently drop traffic with no message.
+
+Q: You shared an AMI with another AWS account, but they still can’t launch an instance from it. What’s usually missed?
+
+A: Sharing the AMI isn’t enough. You also need to share the associated EBS snapshot. Without that, the AMI looks valid but fails at launch.
+
+Q: You restored an RDS snapshot for staging, but some queries behave differently than production. 
+
+A: When you restore from a snapshot, RDS assigns the default parameter group by default. Custom parameter groups from production are not restored automatically. If not manually reassigned, staging may run with different settings, leading to changes in query behavior or performance.
+
+Q: You enabled IAM roles for service accounts in EKS, but your pod can’t access S3. The role looks fine. What’s the catch?
+
+A: The pod must be using a service account with the right annotation linking to the IAM role. If the pod defaults to the default service account or the annotation is missing, the role doesn’t apply.
+
+Q: ALB is marking your targets as unhealthy, but hitting the app directly works fine.
+
+A: ALB health checks are strict. If your app returns a 301 or a login page without a clean 200 OK, it’ll fail the check even if the app seems fine in the browser.
+
+Q: You pushed a new image to ECR and updated your ECS task definition, but it still runs the old version.
+
+A: If you're using mutable tags like latest, ECS often pulls from cache. Unless you force a new digest or use a unique tag per version, you’ll keep running stale containers.
+
+Q: In EKS, your stateful pod using an EBS volume is stuck in Pending. Why doesn't it reschedule?
+
+A: EBS volumes are limited to a single Availability Zone. If EKS places the pod on a node in a different AZ, the volume cannot attach. Make sure your node group includes nodes in the same AZ as the volume.
+--------------------------------------------------------------------------------
+Who's preparing for interviews 
+
+🔍 Monitoring & Alerting
+
+What tools have you used to monitor infrastructure & applications?
+
+How do you set up alerts in Prometheus?
+
+What do you check if an alert doesn't trigger?
+
+How do you reduce CPU/storage usage in Prometheus?
+
+
+🐳 Docker
+
+What is Docker (in your own words)?
+
+How do you build an image and run a container?
+
+How do you create a container from an image?
+
+What’s the difference between a Docker container and a Kubernetes pod?
+
+
+☸️ Kubernetes
+
+Can you explain K8s architecture in simple terms?
+
+Have you ever set up a K8s cluster from scratch? How?
+
+What does kubectl apply do?
+
+How do you check pod logs?
+
+How do you launch a pod using a Docker image?
+
+What’s a pod vs a container?
+
+
+⚙️ Jenkins
+
+Can you write a simple Jenkins pipeline and explain it?
+
+How do you define and use variables in a pipeline?
+
+What's the role of Jenkins in your CI/CD workflow?
+
+
+📦 Ansible
+
+Have you written playbooks? For what use cases?
+
+How does Ansible help in DevOps?
+
+
+🐧 Linux & Shell Scripting
+
+What does grep do? Any common use cases?
+
+How do you list files in a directory?
+
+
+🧑‍💻 Day-to-Day Work
+
+What are your daily activities as a DevOps engineer?
+----------------------------------------------------------------------
+🔹 𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀
+ • What is Ingress and how is it used?
+ • How would you autoscale pods inside a node without exposing them externally?
+ • How to expose a Node.js app on port 3000 using Minikube (Dockerfile, Deployment, Service, ConfigMap)?
+ • How would you attach a volume mount to collect logs every time the page is reloaded?
+
+🔹 𝗖𝗜/𝗖𝗗
+ • How do you run parallel builds in a CI/CD pipeline without them interfering?
+ • If multiple builds run in a single pipeline, how do you isolate and store their artifacts?
+
+🔹 𝗔𝗪𝗦 & 𝗜𝗻𝗳𝗿𝗮𝘀𝘁𝗿𝘂𝗰𝘁𝘂𝗿𝗲 𝗮𝘀 𝗖𝗼𝗱𝗲
+ • Why are you moving from AWS CloudFormation to Terraform?
+ • How is AWS Lambda integrated with CloudWatch?
+ • What’s the difference between terraform plan and terraform apply?
+
+🔹 𝗦𝗲𝗰𝘂𝗿𝗶𝘁𝘆 / 𝗦𝗲𝗰𝗿𝗲𝘁𝘀 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁
+ • How do you handle secrets securely without hardcoding them?
+ • How do you restrict access to Kubernetes resources using RBAC?
+ • How do you prevent environment variables from being exposed in CI/CD logs?
+
+🔹 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 & 𝗦𝗰𝗲𝗻𝗮𝗿𝗶𝗼-𝗕𝗮𝘀𝗲𝗱
+ • How did you reduce downtime in your application?
+ • What’s the most challenging task you’ve completed in your recent project?
+ • What is one disadvantage you see in your current project’s infrastructure?
+--------------------------------------------------------------------
+
+J.P. Morgan Interview Questions🗒
+🛡Role : Senior DevOps
+
+➡️ Round 1 & 2 – 
+Technical Deep Dive ⬅️
+
+1. You’ve deployed an app to Azure Kubernetes Service (AKS) and it fails health checks randomly. How do you debug this end-to-end?
+
+2. In a canary deployment to production, half the traffic returns 502, while others succeed. Walk us through your troubleshooting approach.
+
+3. CI/CD pipeline takes 40 mins to deploy a small change. What would you do to optimize it?
+
+4. You see high CPU usage in one pod, but logs look clean. What next?
+
+5. You’re asked to design a highly available logging system for 100+ microservices across 3 regions. What tools and architecture would you suggest?
+
+6. Production app works fine for internal users but fails for external ones (403 error). How will you isolate the issue?
+
+7. How do you ensure secure and dynamic secret rotation in Azure DevOps pipelines?
+
+8. Explain how you’d use Azure Application Gateway with Web Application Firewall for a sensitive banking application.
+
+9. During an Azure deployment, you receive intermittent DNS resolution issues. What can be the causes?
+
+10. A user reports 10-second delays every 15 minutes in an app running on AKS. No code changes happened. How would you begin RCA?
+
+11. Jenkins jobs are randomly failing at the artifact upload step. What layers would you check?
+
+12. How would you set up an automated rollback strategy in Kubernetes for failed deployments?
+
+13. Design a cost-optimized cloud architecture for an internal reporting app that runs every night and stores logs for 3 years.
+
+14. How do you handle zero-downtime database migrations in a distributed application?
+
+15. What’s your approach to disaster recovery for stateful apps running on containers?
+
+16. An Azure function is being throttled. How will you detect and fix it?
+
+17. Define a plan for blue/green deployment with rollback on Azure using Terraform and pipelines.
+
+18. How would you monitor end-to-end SLA for services involved in a payments pipeline?
+
+19. Explain the difference in scaling strategies for compute-intensive vs I/O-intensive workloads in Azure.
+
+20. Suppose your production pipeline is blocked due to missing approvals and stakeholders are unreachable. What will you do?
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Scenario-Based DevOps Interview Questions (From My Experience)
+
+Hey LinkedIn fam 👋,
+
+I recently started revising for DevOps interviews and realized that scenario-based questions are becoming the new normal — especially for mid-level roles (2–4 years of experience).
+I’m sharing a few real questions I’ve encountered (or seen asked) during interviews. Hope this helps others in the same boat! 🚀
+🧩 Jenkins / CI-CD Scenarios
+ 🔹 Your Jenkins pipeline works in staging but fails in production. How would you go about debugging it?
+ 🔹 Jenkins job is stuck in “Waiting for executor” – what steps would you take to resolve it?
+ 🔹 How do you roll back a failed deployment using Jenkins?
+ 🔹 How would you prevent accidental deployments from feature branches to production?
+🐳 Docker Scenarios
+ 🔹 One of your Docker containers keeps restarting — how do you troubleshoot?
+ 🔹 Your image size is way too large. What steps will you take to optimize it?
+ 🔹 How do you handle secrets (passwords, API keys) securely inside a Docker container?
+☸️ Kubernetes Scenarios
+ 🔹 A pod is stuck in CrashLoopBackOff — where do you start investigating?
+ 🔹 A deployment fails mid-way in production — how do you roll it back?
+ 🔹 You want a service accessible only within the cluster — how would you configure that?
+ 🔹 How do you rotate Kubernetes secrets without downtime?
+☁️ AWS / Cloud Infra
+ 🔹 One of your EC2 instances is unresponsive — what would you check first?
+ 🔹 How do you perform a zero-downtime deployment in AWS?
+ 🔹 How do you configure autoscaling based on CPU utilization?
+🔁 Git / Collaboration Scenarios
+ 🔹 You and a teammate both pushed changes to the same branch and now there's a conflict — what next?
+ 🔹 You accidentally deleted a branch that wasn’t merged — how can you recover it?
+ 🔹 How do you handle GitOps when managing multiple environments (dev/stage/prod)?
+These questions are less about definitions and more about how you think as a DevOps Engineer in real situations.
+---------------------------------------------------------------------------------------------------------------------------
+
+Scenario based Kubernetes interview questions : 
+
+1. Suppose i want the pod to be scheduled on a specific node only, how can i achieve this ? 
+
+2. How can restrict which pod can access to the other pod in k8s .
+
+3. I am getting 503 error when i am hitting a load balancer url which routes the traffice to the application deployed in k8s cluster ? How will u troubleahoot this ? 
+
+4. I am getting crashloopbackoff error for one of the pods in a namespace? What should be the reason ?
+
+5. Pod is in pending state afetr the deployment is done ? What can be the reason behind this ?
+
+6. How can you ensure high availability for your application deployed in k8s cluster ? 
+
+7. I want the run one time database migration task before my application start ? How can i achive this in k8s ? 
+
+8. I want to only give read only permissions to check the logs for users ? How can u setup RBAC for this ? 
+
+9. What happens if the k8s master node and worker node firewall gets broken?
+
+10. What are steps to be performed while updating a k8s cluster ?
+
+11. How can u ensure that only pods with a specific label can talk to your backend service. How would you implement this?
+
+12. All pods on the statefulsets are trying to connect to the same storage volume. What’s is wrong, and how do you fix it?
+------------------------------------------------------------------------------------------------
+
+
+1. can we start with your introduction?   
+2. Have you heard of Flux or Argo CD?   
+3. on a scale of 5, how would you rate yourself on Linux?   
+4. Can you briefly explain how does the Linux boot processing happen?    
+5. So for services to load, there is one specific service in Linux. So can you name that service?
+5. Let's say I want the Nginx to be up as soon as I boot the system. Like system comes up, it should by default start Nginx service, which I have installed. So how do I configure that to system simply?   
+6. so what all tools, linux command do you use in your day-to-day activities?    7. So when you do df, I want to see the disk with the disk format, like the format in which the disk was formatted with. So it could be ext4, it could be xfs, anything. So what all things will I pass? What arguments will I pass? 
+8. Troubleshooted Linux networking?   
+9. have you added any remote repository to your get client on the command line?   
+10. in git let's say instead of writing get remote add origin. if i give my name in place of origin will it work?   
+11. how do you create a branch?   
+12. have you ever worked with ansible?   
+13. how will u check the status of a service (e.g., nginx) running on 10 VMs using Ansible, and find out which hosts do NOT have it running.
+14. how will you write the playbook in inanceable to check that status.  
+15. You said , u worked java app deployment using maven build tool so tell me what does maven clean package command does   
+16. what mvn clear test command does   
+17. can you explain the architecture of K8S?   
+18. what kube proxy does?  
+
+----------------------------------------------------------------------------
+
+PWC Interview experience for DevOps Engineer role
+
+
+✅ Round 1: Screening Round (30 minutes)
+- Walk me through your current project architecture and your role in it.
+- Which DevOps tools have you worked with in the last 2 years?
+- What AWS services have you used in production?
+- How do you expose a Kubernetes application to external traffic?
+- What is the purpose of a NAT Gateway?
+- How do you check running processes in Linux?
+- What command would you use to find files larger than 100MB?
+- What is the difference between Deployment and StatefulSet in Kubernetes?
+- What is a ConfigMap, and how is it different from a Secret?
+- How do you check network connectivity between two servers?
+- Describe your experience with CI/CD pipelines.
+
+✅ Round 2: Technical Round (60 minutes)
+- You have an application in Account A that needs to access an S3 bucket in Account B. How would you configure this?
+- Write a Dockerfile for a Node.js application with multi-stage builds.
+- How do you handle Terraform state file corruption?
+- Your EC2 instance in a private subnet needs to download packages without NAT Gateway. What alternatives exist?
+- How do you debug a container that has exited?
+- You need to import an existing AWS VPC into Terraform. What are the steps?
+- How would you implement blue-green deployment in Kubernetes?
+- How do you manage secrets in Terraform without hardcoding them?
+- What's the difference between COPY and ADD commands in Dockerfile?
+- How would you implement cross-account resource provisioning using Terraform?
+- How would you handle secrets in a Docker container for a PHP application connecting to MySQL?
+- An S3 bucket was created via Terraform, but someone manually added a policy. How do you handle this drift?
+- How do you implement network policies to restrict pod-to-pod communication in Kubernetes?
+- Write a Python script to backup all files older than 30 days from a directory.
+- Your company's cloud costs are increasing rapidly. - How would you approach cost optimization without impacting performance?
+- How would you set up geolocation-based routing using AWS services?
+- A critical production Kubernetes cluster is experiencing multiple issues. Pods are stuck in ImagePullBackOff, some pods are being evicted, and users are reporting 503 errors from the application. What troubleshooting process will you follow, and how can to avoid this in the future?
+
+✅ Round 3: Behavioral Round
+- How do you handle a situation where you're asked to work on a technology you have no experience with?
+- Describe a time when you had to work with tight deadlines and limited resources.
+- Tell me about a mistake you made in production and how you handled it.
+- Describe the most challenging technical problem you've solved in your career.
+- How would you convince stakeholders to adopt a new technology or process?
+- Tell me about a time when you had to learn a new tool quickly to solve a business problem.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Had an interview with the #Nagarro team for a #DevOps role  – here’s a quick recap of the questions asked!
+ It was a solid mix of Kubernetes, CI/CD, AWS, and real-world troubleshooting.
+Interview Questions I Faced:
+🔹 Tell me about yourself
+ 🔹 What is your role in your company?
+ 🔹 What is Ingress? Why do we use it?
+ 🔹 Difference between ConfigMap and Secret
+ 🔹 How will you deploy an application using Argo CD?
+ 🔹 What is a Rolling Update in Kubernetes?
+ 🔹 How to check logs of a Pod or application?
+ 🔹 How do you troubleshoot CrashLoopBackOff or other deployment errors?
+ 🔹 Explain DaemonSet, StatefulSet, Deployment
+ 🔹 What is a PDB (PodDisruptionBudget) in Kubernetes?
+ 🔹 NAT Gateway vs Internet Gateway
+ 🔹 What are different Kubernetes deployment strategies?
+ 🔹 Describe the VPC structure in your project
+ 🔹 Explain Kubernetes cluster architecture
+ 🔹 How do you integrate Argo CD with Jenkins?
+ 🔹 Use cases of CodeBuild, CodePipeline, and CodeDeploy
+ 🔹 How to autoscale in EC2?
+ 🔹 What is HPA, and what does a configmap contain?
+ 🔹 Errors faced while deploying in AWS using CodeDeploy?
+
+💡 Tip for candidates:
+ They focus on real-time troubleshooting, AWS services, Kubernetes deployments, and how you solve problems hands-on.
+--------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------
+PwC Interview experience
+Position: DevOps Engineer
+
+Round 2 & 3 Questions
+
+𝐑𝐨𝐮𝐧𝐝 𝟐: 𝐓𝐞𝐜𝐡𝐧𝐢𝐜𝐚𝐥 𝐑𝐨𝐮𝐧𝐝 (𝟔𝟎 𝐦𝐢𝐧𝐮𝐭𝐞𝐬)
+1. You’ve got an app running in one AWS account that needs to access an S3 bucket in another account. How would you set that up securely?
+2. Can you write a Dockerfile for a Node.js app using multi-stage builds — just something you’d actually use in a real project?
+3. Suppose your Terraform state file gets corrupted or out of sync. What steps would you take to recover from that?
+4. You have an EC2 in a private subnet and can’t use a NAT Gateway. How else can it reach the internet for updates or downloads?
+5. A container has crashed or exited suddenly — how would you go about figuring out what went wrong?
+6. There’s an existing AWS VPC created manually, but now you want to manage it through Terraform. How would you import it and make sure nothing breaks?
+7. How would you roll out blue-green deployments in a Kubernetes cluster? What would that look like in practice?
+8. When using Terraform, how do you manage sensitive values like secrets or API keys without hardcoding them?
+9. In a Dockerfile, what’s the practical difference between using COPY and ADD? When would you prefer one over the other?
+10. If you had to create resources across two different AWS accounts using Terraform, how would you set that up?
+11. Imagine you have a PHP app in a Docker container that needs MySQL credentials — how would you pass those securely?
+12. If someone manually changed an S3 bucket policy that was originally created with Terraform, how would you deal with that kind of drift?
+13. How do you enforce rules in Kubernetes to control which pods can talk to each other?
+14. Could you write a small Python script that backs up all files older than 30 days from a folder?
+15. If your team is seeing a spike in cloud costs, how would you go about figuring out why — and cutting cost without hurting performance?
+16. Say you want to serve users in different countries using AWS. How would you route traffic based on user location?
+17. You’re on-call. A production Kubernetes cluster is a mess — pods aren’t pulling images, some are getting evicted, and users are seeing errors. How do you troubleshoot this, and how would you prevent it next time?
+
+𝐑𝐨𝐮𝐧𝐝 𝟑: 𝐁𝐞𝐡𝐚𝐯𝐢𝐨𝐫𝐚𝐥 𝐑𝐨𝐮𝐧𝐝
+1. What would you do if you were asked to work on a tool or technology you’ve never used before?
+2. Can you share a time when you had to deliver something quickly, but didn’t have all the time or resources you needed? How did you manage it?
+3. Tell me about a mistake or outage you were involved in — how did you respond, and what did you learn from it?
+4. What’s the hardest technical issue you’ve faced so far? How did you go about solving it?
+5. If you wanted to convince your team or manager to adopt a new tool or process, how would you make your case?
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+EPAM DevOps Engineer – First Round Interview Questions (Part 2)
+
+1. How do you design a secure and scalable CI/CD pipeline in Jenkins or Azure DevOps?
+
+2. Explain the difference between build and release pipelines.
+
+3. How do you handle rollback strategies in CI/CD?
+
+4. What are Jenkins Shared Libraries? Why and how do you use them?
+
+5. How would you implement multi-branch pipelines for microservices?
+
+6. How do you handle pipeline-level caching to speed up builds?
+
+7. How do you inject secrets into your pipeline safely?
+
+8. What are manual approval gates, and where do you implement them?
+
+9. Explain pipeline-as-code. How do you implement it in Azure DevOps YAML format?
+
+10. How do you enforce compliance and quality checks in a CI/CD pipeline?
+
+11. What is the Terraform state file? How do you manage it securely in teams?
+
+12. Difference between terraform refresh, plan, and apply.
+
+13. Explain how you modularize Terraform code for reuse.
+
+14. What happens if you manually change infrastructure outside Terraform? How do you detect drift?
+
+15. Have you used Terraform with Azure or AWS? How do you set up backend state in Azure Blob or S3?
+
+16. How do you implement count, for_each, and dynamic blocks in Terraform?
+
+17. What is the lifecycle block in Terraform used for?
+
+18. Write a Dockerfile for a Node.js or Python application.
+
+19. Explain how multi-stage Docker builds help with image optimization.
+
+20. What’s the difference between a Docker volume and bind mount?
+
+21. What’s the role of kubelet, kube-proxy, and kube-apiserver?
+
+22. How do you perform a blue-green deployment in Kubernetes?
+
+23. What is a StatefulSet vs Deployment in K8s?
+
+24. What are readiness and liveness probes and how do they impact scaling?
+
+25. How do you manage secrets in Kubernetes?
+
+26. What is the difference between a private and service endpoint in Azure?
+
+27. How do you manage access between services using IAM roles or
+Managed Identity?
+
+28. What’s the difference between Azure VNet and AWS VPC?
+
+29. How do you implement VNet peering or inter-region connectivity securely?
+
+30. How do you handle high availability and disaster recovery in cloud deployments?
+
+31. What logging and monitoring solutions have you implemented in Azure or AWS?
+
+32. How do you enforce security baselines in your CI/CD pipelines?
+
+33. Have you used tools like Trivy, Aqua, or Snyk for container scanning?
+
+34. How do you integrate Azure Key Vault (or AWS Secrets Manager) in your pipeline securely?
+
+35. How do you rotate secrets without downtime?
+
+36. How do you set up RBAC in Jenkins, Azure DevOps, or Kubernetes?
+
+37. You deployed to production and a service is down. How do you debug and rollback safely!
+
+38. A junior DevOps engineer deleted a critical Terraform state file — how do you recover?
+
+39. A Docker container works locally but fails in Jenkins — how would you troubleshoot it?
+
+40. One pod in Kubernetes is restarting in a CrashLoopBackOff state — how do you fix it?
+
+Follow Jatin Bansal
+---------------------------------------------------------------
+
+#Interview Questions for 15 LPA - #Cloud & #DevOps Engineer Role
+
+I recently went through an interview and came across some interesting L1 & L2 level questions related to AWS, Terraform, Kubernetes, Docker, Git.
+
+Level 1
+
+1, write the python script for reading the output.
+2, write the python script to output of dockerfile.
+3, bash script - how to change the version of dockerfile.
+4, explain the CI CD workflow?
+5, components used in the pipeline.
+6, what is sonarqube?
+7, python script for triggering the Jenkins pipeline.
+8, how to manage terraform?
+9, version control, how to store the terraform files?
+10, S3 uses?
+11, troubleshoot failed Jenkins pipeline?
+12, handle security in devops?
+13, how do u ensure zero downtime?
+14, load balancer?
+15, troubleshooting steps followed in production failure?
+16, how to configure multiple environments in the Jenkins pipeline?
+17, challenges faced in a recent project?
+18, possibility to build triggered is not triggered?
+
+
+
+Level 2 - Client round.
+
+1, end to end workflow of devops.
+2, branching strategy.
+3, typical branches in dev?
+4, stages in pipeline, type of pipeline.
+5, unit testing, which tool u r using?
+6, docker deployment? Write the dockerfile?
+7, structure of dockerfile?
+8, how to deploy k8s in AWS?
+9, components of K8s?
+10, helm chart?
+11, commands to deploy on k8s, advantage?
+12, challenges faced?
+13, troubleshoot methods?
+
+----------------------------------------------------------------------------------------------------------------------------
+
+J.P. Morgan Interview Questions
+🚨Role: Senior DevOps
+
+▶Round 1 & 2 -
+
+➡️Technical Deep Dive
+
+1. You've deployed an app to Azure Kubernetes Service (AKS) and it fails health checks randomly. How do you debug this end-to-end?
+
+2. In a canary deployment to production, half the traffic returns 502, while others succeed. Walk us through your troubleshooting approach.
+
+3. CI/CD pipeline takes 40 mins to deploy a small change. What would you do to optimize it?
+
+4. You see high CPU usage in one pod, but logs look clean. What next?
+
+5. You're asked to design a highly available logging system for 100+ microservices across 3 regions. What tools and architecture would you suggest?
+
+6. Production app works fine for internal users but fails for external ones (403 error). How will you isolate the issue?
+
+7. How do you ensure secure and dynamic secret rotation in Azure DevOps pipelines?
+
+8. Explain how you'd use Azure Application Gateway with Web Application Firewall for a sensitive banking application.
+
+9. During an Azure deployment, you receive intermittent DNS resolution issues. What can be the causes?
+
+10. A user reports 10-second delays every 15 minutes in an app running on AKS. No code changes happened. How would you begin RCA?
+
+11. Jenkins jobs are randomly failing at the artifact upload step. What layers would you check?
+
+12. How would you set up an automated rollback strategy in Kubernetes for failed deployments?
+
+13. Design a cost-optimized cloud architecture for an internal reporting app that runs every night and stores logs for 3 years.
+
+14. How do you handle zero-downtime database migrations in a distributed application?
+
+15. What's your approach to disaster recovery for stateful apps running on containers?
+
+16. An Azure function is being throttled. How will you detect and fix it?
+
+17. Define a plan for blue/green deployment with rollback on Azure using Terraform and pipelines.
+
+18. How would you monitor end-to-end SLA for services involved in a payments pipeline?
+
+19. Explain the difference in scaling strategies for compute-intensive vs I/O-intensive workloads in Azure.
+
+20. Suppose your production pipeline is blocked due to missing approvals and stakeholders are unreachable. What will you do?
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+ DevOps Interview Questions at Deloitte – 5+ YOE Edition
+
+🧠 Round 1 – Infra Design & Cloud Foundations (45 mins)
+• Walk through your CI/CD pipeline. How is it secured from code to deploy?
+• What does a well-architected multi-account AWS setup look like for DevSecOps?
+• EBS vs EFS vs FSx. walk through use cases and tradeoffs
+• How does kubelet handle node pressure? What happens when the disk fills?
+• How do you manage secrets across staging, QA, and prod, without exposure?
+• Describe your logging strategy. How do you avoid observability blind spots?
+• How do you handle Terraform module upgrades with minimal impact?
+• Bash one-liner: Delete all .tmp files older than 15 days in /var/log
+• What happens in an S3 PUT call from CLI to data persistence?
+• How do you implement drift detection across infra environments?
+
+🔥 Round 2 – Live Fire, Triage & RCA Thinking (75 mins)
+• A Canary deploy passed. But prod is throwing timeouts. Where do you begin?
+• Karpenter provisioned double the expected nodes. What’s misconfigured?
+• Vault token expiry caused auth failures across services, RCA start to finish?
+• App gives 200 OK, but payment gateway isn’t triggering. What’s your hypothesis tree?
+• Your Helm upgrade corrupted the stateful workload rollback strategy?
+• EKS cluster degraded after configMap hot reload. What changed?
+• Simulate partial network loss to a single AZ. How do you test HA failover?
+• Jenkins jobs queue up endlessly. What metrics do you check first?
+• TLS handshake failed after ALB config update, root cause analysis?
+• Audit found secrets exposed in Git history. What’s your fix + prevention strategy?
+
+💬 Round 3 – Engineering Judgment & Team Fit (30 mins)
+• What’s your checklist before calling something “production-ready”?
+• How do you coach juniors without overwhelming them with tooling?
+• When was the last time you wrote (or read) a meaningful postmortem?
+• You’re asked to cut scope for reliability. Where do you push back?
+• What’s your incident response philosophy when metrics are fine, but users complain?
+
+💡 TL;DR:
+If you haven’t:
+Simulated partial network loss across AZs
+Investigated a 200 OK bug that masked real failure
+Rolled back a Helm upgrade under pressure
+Recovered from a secret leakage in version control
+
+Then Deloitte interviews won’t test you. They’ll expose the gaps in your chaos muscle.
+
+🧯 But what if you trained before prod burned?
+
+That’s what we do at InfraThrone
+Not just tutorials.
+Controlled disasters. RCA drills. Real engineering pressure.
+
+🎯 Next war room batch: August 10
+------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+HCL DevOps interview questions: Part 1😊
+
+✅ 1. Technical Round
+
+This round usually lasts 45–60 minutes, and covers a mix of practical, scenario-based, and conceptual questions from core DevOps tools and cloud services.
+
+1. Explain your CI/CD pipeline design. Which tools did you use and why?
+
+2. How do you create a Jenkins pipeline for multi-environment deployment (dev/stage/prod)?
+
+3. What’s the difference between freestyle and pipeline jobs in Jenkins?
+
+4. How do you handle Jenkins pipeline failures? Give a real-time issue and how you solved it.
+
+5. Have you integrated code quality tools like SonarQube? How do you do it?
+
+6. How do you write a production-ready Dockerfile? Any best practices?
+
+7. Difference between CMD and ENTRYPOINT in Docker?
+
+8. What is Docker Compose and where have you used it?
+
+9. Explain how container orchestration works and why it's important.
+
+10. What are pods, deployments, and services in Kubernetes?
+
+11. How do you perform a rolling update in Kubernetes using a YAML file?
+
+12. What’s a ConfigMap vs. Secret? How do you use them in k8s deployments?
+
+13. How do you handle resource limits and requests in Kubernetes?
+
+14. Which cloud provider have you worked with? What DevOps services did you use?
+
+15. How do you manage infrastructure using Terraform in Azure/AWS?
+
+16. What is the use of Terraform backend? Have you used remote state with locking?
+
+17. How do you securely store secrets in cloud pipelines? (Azure Key Vault, AWS Secrets Manager)
+
+18. Explain how you set up an auto-scaling group in cloud using Terraform.
+
+19. How do you manage role-based access control in Jenkins or Kubernetes?
+
+20. How do you rollback a faulty deployment using Git and CI tools?
+
+21. Explain Gitflow and how your team used branching strategies in DevOps.
+
+22. What is your approach to setting up logging and monitoring for infrastructure and apps?
+
+23. Have you implemented DevSecOps practices? Share an example.
+
+
+✅ 2. HR Round
+
+Usually a 10–15 minute conversation, focusing on:
+
+1. Brief intro and your career journey so far.
+
+2. Why are you looking to move from your current organization?
+
+3. Are you comfortable with rotational shifts or on-call support?
+
+4. Are you willing to relocate/work in hybrid mode (if applicable)?
+
+5. What is your current CTC, expected CTC, and notice period?
+
+6. Do you have experience working with client-facing roles or global teams?
+
+7. Where do you see yourself in the next 2–3 years?
+-------------------------------------------------------------------------------------------------
+ Interview Experience – Deutsche Bank | DevOps Engineer | Round 1
+-------------------------------------------------------
+Recently appeared for Round 1 of the DevOps Engineer interview at Deutsche Bank.
+
+🔍 Round Focus:
+This round emphasized secure DevOps pipelines, automation at scale, cloud-native infrastructure, and platform reliability — critical for the banking & financial services domain.
+
+📌 In-Depth Questions Asked:
+🔐 How do you design a DevSecOps pipeline for regulated industries like banking or insurance?
+📂 What’s your approach to auditing IAM policies and access controls across AWS or Azure in an enterprise setup?
+⚙️ Explain how you’d manage infrastructure provisioning across multiple environments using Terraform.
+🚀 How do you ensure rollback safety and transaction integrity in multi-step deployments?
+🔍 How do you approach drift detection and reconciliation in GitOps workflows?
+🛡️ What steps do you take to implement network policies and pod security in Kubernetes clusters?
+📈 How would you monitor and alert for critical services in a payment gateway system using Prometheus/Grafana or Splunk?
+🧩 Have you worked on integrating CI/CD with security scanning tools like Snyk, Aqua, or Trivy? Explain the integration flow.
+🔄 How do you automate patching and OS hardening in cloud-based systems at scale?
+🌐 What’s your experience with designing HA (high availability) and DR (disaster recovery) architecture for enterprise apps?
+🧠 How would you implement secrets rotation for database credentials across Kubernetes and CI/CD pipelines?
+📦 Explain the difference between Helm and Kustomize. When would you use one over the other?
+🔄 Can you walk us through how you set up Blue-Green or Canary deployments in Azure DevOps or ArgoCD?
+⚖️ How do you handle cost optimization in cloud-native infrastructure, especially in a FinTech context?
+🧩 What are the compliance checks you automate before production deployments (e.g., CIS benchmarks, encryption validation)?
+📋 Describe how you would manage and track configuration drifts in a large multi-account AWS environment.
+🛠️ How do you automate SSL/TLS certificate renewal in Kubernetes ingress controllers?
+🔐 How do you implement Zero Trust principles in internal tooling and CI/CD systems?
+📊 Have you implemented centralized logging and monitoring for audit trails and anomaly detection? Which stack did you use?
+🧪 How would you use tools like LitmusChaos or Gremlin for testing system resilience in production-like environments?
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ust Attended a Real DevOps Interview — Sharing the Actual Questions They Asked Me!
+
+1️⃣ 🧪 CI/CD Pipelines:
+How do you run builds in multiple operating systems in a pipeline?
+2️⃣ 🌍 Secret Management:
+How did you access HashiCorp Vault or any secret manager located in another AWS region?
+3️⃣ ⚙️ Kubernetes Basics:
+What are ConfigMaps and Secrets in Kubernetes?
+4️⃣ 🚨 502 Production Issue:
+The pod is running, but logs show a 502 error — how would you debug it?
+5️⃣ ♻️ CrashLoopBackOff Troubleshooting:
+How do you fix a CrashLoopBackOff issue in a pod?
+6️⃣ 📡 Missing Services:
+If a service doesn’t appear in kubectl get services, what could be the problem?
+7️⃣ 📊 Cluster Monitoring:
+How do you check node-level resource consumption in Kubernetes?
+8️⃣ 🐳 Container Crashes:
+What steps would you take if a container crashes immediately after starting?
+----------------------------------------------------------------------------------------------------------------------------------------
+Over the past 8 months, I’ve been deeply involved in hands-on AWS DevOps projects — from EC2 and S3 to VPC, RDS, Load Balancers, IAM, and CI/CD pipelines. While preparing for interviews, I came across a pattern of commonly asked questions that truly test your real-world understanding of AWS services.
+So I compiled them into one solid list that can help anyone preparing for AWS + DevOps interviews — whether you're a fresher, experienced professional, or just brushing up your concepts! 💡
+🎯What is EC2?
+🎯How can you scale EC2 instances based on traffic?
+🎯Can you resize an EBS volume and attach it to EC2?
+🎯EC2 instance terminated unexpectedly — how do you troubleshoot?
+🎯What are the types of EC2 instances?
+🎯How do you recover a PEM file after deletion?
+🎯Explain S3 bucket in AWS?
+🎯How does it help in backup and disaster recovery?
+🎯What are EBS and EFS? How do they differ?
+🎯Explain the concept of EBS Snapshot.
+🎯How does CloudWatch help in monitoring EC2?
+🎯Explain Horizontal and Vertical Scaling.
+🎯Explain Auto Scaling.
+🎯How to troubleshoot Auto Scaling not launching new servers?
+🎯Explain Bastion Host process.
+🎯How can we access the internet from a private server in a private subnet?
+🎯Can all resources access the internet in the default VPC? If yes, how?
+🎯How can resources in a private subnet of a second VPC communicate with resources in the public subnet of the first VPC (VPC Peering)?
+🎯How do VPC Peering and Transit Gateway differ?
+Difference between public and private subnet.
+How can you troubleshoot connectivity issues in a VPC?
+🎯What is a NAT Gateway?
+🎯How can we access resources outside the VPC without internet (VPC Endpoint)?
+🎯What is RDS and Read Replica? How did you use it in your previous company?
+🎯How does RDS help in scaling, high availability, and disaster recovery?
+What do you do if RDS storage gets full?
+🎯If a developer deletes a resource like EC2/S3/RDS accidentally — can we recover them? How?
+🎯What is Route 53 and what are its policies?
+🎯Explain steps to convert an IP address to a domain name.
+🎯Explain Load Balancer and its types.
+🎯When do you use ALB and when NLB?
+🎯What does a health check do in Load Balancing?
+🎯Have you heard of Failover Routing?
+🎯Explain IAM concepts in AWS.
+🎯How does IAM Policy differ from IAM Role?
+🎯How do you store sensitive information in AWS?
+🎯What is KMS in AWS?
+🎯How do you perform CI/CD in AWS?
+🎯Explain the Serverless approach in AWS.
+🎯How would you design a highly available and scalable multi-tier application?
+🎯What are RTO and RPO?
+🎯What cost optimization steps have you worked on before?
+🎯Explain recent challenges you faced in any AWS project.
+💬📝I'm also working on detailed answers for each question, to be published soon on Medium - stay tuned !💡
+ hashtag#AWS hashtag#DevOps hashtag#CloudEngineer hashtag#InterviewPrep hashtag#S3 hashtag#EC2 hashtag#RDS hashtag#CloudWatch hashtag#VPC hashtag#Scaling hashtag#CI_CD hashtag#Route53 hashtag#IAM hashtag#BastionHost hashtag#KMS hashtag#CloudFront hashtag#LoadBalancer hashtag#Terraform hashtag#Kubernetes hashtag#AWSInterview hashtag#Serverless hashtag#CostOptimization
+-----------------------------------------------------------------------------
+
+ DevOps Interview Experience – Teamware solutions (Azure DevOps Engineer)
+🔧 Linux | Azure | Kubernetes | Terraform | CI/CD | CloudOps
+
+Sharing some of the questions discussed during the interview as Part 1:
+
+1. How do you trigger a pipeline when code is pushed to a specific branch?
+2. You need to deploy only if tests pass. 
+3. How do you enforce that in a pipeline?
+4. A pipeline fails during artifact publishing. What’s your first step to debug?
+5. How do you manage secrets securely in Azure DevOps pipelines?
+6. You’re asked to deploy infra using Terraform. 
+7. How do you handle state files?
+8. How do you implement blue/green deployment using Azure DevOps?
+9. A release failed in production. How do you roll back using Azure DevOps?
+10. How do you integrate SonarQube and security scans into your CI pipeline?
+----------------------------------------------------------------------------
+During my recent job switch journey, I encountered several 𝗥𝗲𝗮𝗹𝘁𝗶𝗺𝗲 𝗗𝗲𝘃𝗢𝗽𝘀 𝗶𝗻𝘁𝗲𝗿𝘃𝗶𝗲𝘄 𝗾𝘂𝗲𝘀𝘁𝗶𝗼𝗻𝘀 that really tested my knowledge and experience. I’m sharing them here to help anyone preparing for interviews — hope you find them useful! 💡
+
+🧠 𝗚𝗶𝘁 🐙
+
+What is a merge conflict and how do you resolve it?
+
+Difference between git pull and git fetch?
+
+What is git rebase?
+
+Unable to clone a Git repo — what could be the reasons?
+
+
+
+🐳 𝗗𝗼𝗰𝗸𝗲𝗿 📦
+
+Write a sample Dockerfile for a Python/Java app and explain.
+
+What is Docker Compose?
+
+Troubleshooting a Docker container that won’t start.
+
+Difference between COPY and ADD?
+
+Difference between CMD and ENTRYPOINT?
+
+What is a multi-stage Docker build and why use it?
+
+
+
+☸️ 𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀 🧩
+
+Issues faced in Kubernetes and how you resolved them?
+
+What is Ingress and when should you use it?
+
+How does traffic flow into your K8s cluster?
+
+Have you performed a cluster upgrade? Steps?
+
+What are Liveness and Readiness probes?
+
+A pod needs to access an RDS instance outside the cluster — how?
+
+How do you ensure your Kubernetes cluster is secure?
+
+How do you perform deployments in your cluster?
+
+
+
+🌍 𝗧𝗲𝗿𝗿𝗮𝗳𝗼𝗿𝗺 🛠️
+
+What is a state file and backend in Terraform?
+
+How to bring manually created AWS resources under Terraform management?
+
+Deleted 3 of 5 EC2s manually — what happens on terraform apply?
+
+How to sync local and remote state files?
+
+What are lifecycle policies in Terraform?
+
+How do you manage dependencies between resources?
+
+
+
+🤖 𝗔𝗻𝘀𝗶𝗯𝗹𝗲 📜
+
+What are Ansible roles?
+
+Write a playbook to install NGINX.
+
+What is gather_facts in Ansible?
+
+Modules you’ve worked with in Ansible?
+
+Explain Ansible architecture.
+
+
+
+☁️ 𝗔𝗪𝗦 🧱
+
+Which AWS services have you worked with?
+
+What is a Transit Gateway?
+
+How to connect two VPCs?
+
+What is Direct Connect?
+
+What are IAM roles?
+
+EC2 in Account A needs S3 access in Account B — how?
+
+How to attach an SSL certificate to an S3 bucket?
+
+What is AWS Lambda and its limitations?
+
+
+
+🐍 𝗦𝗰𝗿𝗶𝗽𝘁𝗶𝗻𝗴 📧
+
+Write a shell/Python script to monitor CPU & memory usage and send an alert if thresholds are crossed.
+----------------------------------------------------------------------------------------------------------------------------
+
+Linux | AWS | Kubernetes | Terraform | CI/CD | CloudOps 
+
+📌 Follow for daily insights 
+✅ Linux & System Administration
+1️⃣ How do you perform an in-place upgrade from RHEL 7 to RHEL 8 using leapp? What precautions do you take?
+2️⃣ Faced a Linux boot failure due to fstab misconfiguration? How did you recover?
+3️⃣ Steps to configure network bonding in RHEL for redundancy & throughput?
+4️⃣ How do you tune kernel parameters for performance in RHEL? Tools & files involved?
+5️⃣ How do you securely configure user access and sudo privileges in Linux?
+✅ AWS & EC2
+6️⃣ How do you assign a secondary private IP to an EC2 instance and make it persist after reboot?
+7️⃣ How do you optimize S3 cost using storage classes & lifecycle policies?
+8️⃣ What is S3 Object Lock and when should you enable it?
+9️⃣ How do you deploy a 3-tier architecture using EC2, RDS & Load Balancer?
+🔟 How do you manage IAM roles & security groups in a multi-instance EC2 setup?
+✅ CI/CD & Jenkins
+1️⃣1️⃣ How do you implement multi-branch pipelines in Jenkins? Why are they important?
+1️⃣2️⃣ What are your best practices for securing Jenkins and credentials?
+1️⃣3️⃣ How do you troubleshoot failed deployments in GitLab CI/CD?
+✅ Kubernetes & OpenShift
+1️⃣4️⃣ Difference between a container and a pod? When to use StatefulSets over Deployments?
+1️⃣5️⃣ Faced pod scheduling failures due to resource limits? How did you resolve it?
+1️⃣6️⃣ How do you expose services using NodePort, Ingress & LoadBalancer?
+1️⃣7️⃣ How do you handle RBAC permission issues during app deployment?
+1️⃣8️⃣ Role of kubelet, kube-proxy & etcd in a K8s cluster?
+1️⃣9️⃣ Challenges with persistent volumes? How did you solve them?
+2️⃣0️⃣ What tools/commands do you use to debug networking issues inside a pod?
+✅ Terraform & IaC
+2️⃣1️⃣ How do you use the lifecycle block to ignore changes to specific fields like hostname?
+2️⃣2️⃣ Safely creating/modifying EC2 instances using AWS provider in Terraform?
+2️⃣3️⃣ How do you handle rollback/change management when updating critical infra?
+✅ Real-World Experience
+2️⃣4️⃣ Describe a production issue involving node pressure in Kubernetes. How did you mitigate it?
+2️⃣5️⃣ In a cloud migration, how did you choose between in-place OS upgrades vs provisioning new VMs?
+2️⃣6️⃣ What monitoring/alerting tools did you use with Azure Monitor or CloudWatch to scale apps?
+-------------------------------------------------------------------------------------------------------------------------
+Questions I Faced / Explored as a Cloud Support Engineer (Fresher Level)
+Starting my journey as a Cloud Support Engineer, I came across some interesting AWS & DevOps questions which are commonly asked to freshers.
+ I’m sharing them here so that it helps others who are preparing -
+
+# AWS Basics
+An EC2 instance is not reachable via SSH – what steps will you take?
+Your EC2 app is running slow – how will you check CPU, memory, or network issues?
+Which AWS service will you recommend for storing & sharing large files securely worldwide?
+Your S3 bucket suddenly becomes inaccessible,what checks will you perform?
+How will you make a web application on EC2 highly available?
+
+# Networking / VPC
+Users can’t access an app in a private subnet – how will you make it accessible securely?
+What’s the difference between Security Groups and NACLs? Give a simple example.
+If a NAT Gateway fails, what happens to private subnet instances?
+
+# Docker
+Your Docker container is running but the app inside is not accessible – how will you debug it?
+You pushed a new Docker image but old containers are still running – how will you fix it?
+How will you reduce Docker image size for faster deployments?
+
+# Jenkins CI/CD 
+Your Jenkins pipeline fails at the build stage , what will you check first?
+Code is committed to GitHub but not deployed via Jenkins,how will you troubleshoot?
+How will you integrate security scans (like SonarQube/Trivy) into a Jenkins pipeline?
+A production app needs zero downtime deployment , how will you set it up in Jenkins?
+
+ These are fresher-level but scenario-based questions I explored during my learning and Cloud Support Engineer journey.
+ I hope this helps others who are preparing for AWS & DevOps roles 🚀
+--------------------------------------------------------------------------------------
+
+During my recent interview 𝗥𝗲𝗮𝗹𝘁𝗶𝗺𝗲 𝗗𝗲𝘃𝗢𝗽𝘀 𝗶𝗻𝘁𝗲𝗿𝘃𝗶𝗲𝘄 𝗾𝘂𝗲𝘀𝘁𝗶𝗼𝗻𝘀 that really tested my knowledge and experience. I’m sharing them here to help anyone preparing for interviews — hope you find them useful! 💡
+
+
+🧠 𝗚𝗶𝘁 🐙
+
+What is a merge conflict and how do you resolve it?
+
+Difference between git pull and git fetch?
+
+What is git rebase?
+
+Unable to clone a Git repo — what could be the reasons?
+
+
+
+🐳 𝗗𝗼𝗰𝗸𝗲𝗿 📦
+
+Write a sample Dockerfile for a Python/Java app and explain.
+
+What is Docker Compose?
+
+Troubleshooting a Docker container that won’t start.
+
+Difference between COPY and ADD?
+
+Difference between CMD and ENTRYPOINT?
+
+What is a multi-stage Docker build and why use it?
+
+
+
+☸️ 𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀 🧩
+
+Issues faced in Kubernetes and how you resolved them?
+
+What is Ingress and when should you use it?
+
+How does traffic flow into your K8s cluster?
+
+Have you performed a cluster upgrade? Steps?
+
+What are Liveness and Readiness probes?
+
+A pod needs to access an RDS instance outside the cluster — how?
+
+How do you ensure your Kubernetes cluster is secure?
+
+How do you perform deployments in your cluster?
+
+
+
+🌍 𝗧𝗲𝗿𝗿𝗮𝗳𝗼𝗿𝗺 🛠️
+
+What is a state file and backend in Terraform?
+
+How to bring manually created AWS resources under Terraform management?
+
+Deleted 3 of 5 EC2s manually — what happens on terraform apply?
+
+How to sync local and remote state files?
+
+What are lifecycle policies in Terraform?
+
+How do you manage dependencies between resources?
+
+
+
+🤖 𝗔𝗻𝘀𝗶𝗯𝗹𝗲 📜
+
+What are Ansible roles?
+
+Write a playbook to install NGINX.
+
+What is gather_facts in Ansible?
+
+Modules you’ve worked with in Ansible?
+
+Explain Ansible architecture.
+
+
+
+☁️ 𝗔𝗪𝗦 🧱
+
+Which AWS services have you worked with?
+
+What is a Transit Gateway?
+
+How to connect two VPCs?
+
+What is Direct Connect?
+
+What are IAM roles?
+
+EC2 in Account A needs S3 access in Account B — how?
+
+How to attach an SSL certificate to an S3 bucket?
+
+What is AWS Lambda and its limitations?
+
+
+
+🐍 𝗦𝗰𝗿𝗶𝗽𝘁𝗶𝗻𝗴 📧
+
+Write a shell/Python script to monitor CPU & memory usage and send an alert if thresholds are crossed.
+-----------------------------------------------------
+👉Deloitte Interview Experience
+✅Position: DevOps Engineer
+
+𝗥𝗼𝘂𝗻𝗱 𝟭: 𝗧𝗲𝗰𝗵𝗻𝗶𝗰𝗮𝗹 𝗦𝗰𝗿𝗲𝗲𝗻𝗶𝗻𝗴
+
+1. Explain the CI/CD workflow you follow and the kind of pipeline you use. How do you define and invoke pipelines in Jenkins?
+2. What are shared libraries in Jenkins, and how are they written and defined?
+3. What kind of applications do you deploy using Jenkins pipelines, and what deployment tools do you use?
+4. If the Jenkins pipeline runs but the build doesn’t happen, what possible issues could be causing it?
+5. What is the purpose of a webhook, and how is it used in a CI/CD pipeline?
+6. How do you create and manage Kubernetes clusters (using tools like Terraform), and what are the master and worker nodes?
+7. What are common Kubernetes errors you’ve faced (like CrashLoopBackOff, ImagePullError), and how did you resolve them?
+8. What is the command to access a pod and how can you define or create a Kubernetes class or object?
+9. Explain the folder structure of a basic Helm chart. What commands do you use to deploy with Helm?
+10. What are the stages in a Docker image build? Why do we use ENTRYPOINT and CMD instructions?
+11. How do you manage and connect services like DBs, EC2, EKS, or ECS? Include the command to connect to ECS.
+12. Which container registry do you use for storing Docker images?
+
+𝗥𝗼𝘂𝗻𝗱 𝟮: 𝗜𝗻-𝗱𝗲𝗽𝘁𝗵 𝗧𝗲𝗰𝗵𝗻𝗶𝗰𝗮𝗹 𝗦𝗰𝗿𝗲𝗲𝗻𝗶𝗻g
+
+1. What branching strategy do you follow, and how do you handle merges to avoid breaking the release branch? If a bug appears in production, what’s your approach to resolving it?
+2. Describe your typical deployment flow and CI/CD workflow. What stages do you define in your Jenkins pipeline, and how do you ensure full quality checks during deployment?
+3. How do you use Jenkins shared libraries? Explain their typical structure and how they are integrated into your Jenkinsfiles.
+4. Are you aware of security scanning tools? How do you scan Docker images—both during build and at the registry level? Are you using any extensions or tools for image scanning?
+5. How do you pass environment variables during Docker build commands? What services do you use for storing Docker images?
+6. How do you establish a connection with databases in your deployments or infrastructure setup?
+7. How do you handle authentication for EKS clusters and store secrets securely in your environment?
+8. How do you create AWS Lambda functions and manage the artifacts for deployment? What options do you use to push artifacts to Lambda?
+9. What is email signing and Helm chart signing? Which tools do you use to sign Helm charts?
+
+𝗥𝗼𝘂𝗻𝗱 𝟯: 𝗛𝗠 𝗥𝗼𝘂𝗻𝗱 (𝗛𝗶𝗿𝗶𝗻𝗴 𝗠𝗮𝗻𝗮𝗴𝗲𝗿)
+1. Project experiences.
+2. Day-to-day responsibilities.
+3. Light behavioral questions.
+4. Teamwork & Culture Fit questions.
+-------------------------------------------------------------------------------------------------------------------------------------
+Kubernetes, DevOps, or Cloud Engineer interviews, here’s a curated list of essential questions — from core concepts to troubleshooting and security.
+I recently appeared for the interview, own experience.
+📌 Kubernetes 
+ 1️⃣ What is a Pod in Kubernetes, and how is it used?
+ 2️⃣ Explain each major component of Kubernetes and its role.
+ 3️⃣ What is the difference between a Replica and a ReplicaSet?
+ 4️⃣ Difference between ReplicaSet and Deployment.
+ 5️⃣ What is a StatefulSet? How does it differ from a Deployment?
+📌 Scaling & Scheduling
+ 6️⃣ Difference between Horizontal Pod Autoscaler (HPA) and Vertical Pod Autoscaler (VPA) — with examples.
+ 7️⃣ If a node is in "NotReady" state, can a Pod be scheduled on it? Why or why not?
+📌 Services & Networking
+ 8️⃣ What are the different types of Kubernetes Services, and why are they used?
+ 9️⃣ Briefly explain OpenShift and how it relates to Kubernetes.
+📌 Storage
+ 🔟 Difference between PersistentVolume (PV) and PersistentVolumeClaim (PVC).
+📌 Pod Management & Troubleshooting
+ 1️⃣1️⃣ How can you view logs from a Pod? Provide a command example.
+ 1️⃣2️⃣ If a Pod is in a CrashLoopBackOff state, how do you troubleshoot it?
+ 1️⃣3️⃣ What does OOMKilled mean, and what are the possible causes?
+ 1️⃣4️⃣ What does the -it flag mean when executing into a Pod?
+ 1️⃣5️⃣ How do you execute commands inside a Pod?
+📌 Probes & Monitoring
+ 1️⃣6️⃣ Explain Liveness and Readiness probes with use cases.
+📌 Configuration & Secrets
+ 1️⃣7️⃣ Difference between ConfigMap and Secret, and how to use them in a Pod.
+ 1️⃣8️⃣ How can you add a Secret in a particular YAML file?
+📌 Security & Access Control
+ 1️⃣9️⃣ Explain RoleBinding and ClusterRoleBinding.
+---------------------------------------------------------------------------------------------------------------------------------------------
+📍𝐋𝐢𝐧𝐮𝐱 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠 𝐁𝐚𝐬𝐢𝐜𝐬
+
+What is the difference between TCP and UDP?
+What is an IP address? How is it different from a MAC address?
+Explain the OSI model layers and their relevance to networking.
+What command do you use to check network interfaces in Linux?
+How do you assign an IP address to an interface temporarily?
+What is the purpose of the /etc/hosts file?
+Explain the difference between a public and private IP address.
+What is a subnet mask? How does subnetting work?
+What Linux command would you use to see routing tables?
+How do you test connectivity to a remote host?
+What is ARP? How does Linux maintain ARP cache?
+What is the role of DNS in networking? How do you check DNS resolution in Linux?
+What is the difference between ifconfig and ip commands?
+
+📍𝐋𝐢𝐧𝐮𝐱 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠 𝐈𝐧𝐭𝐞𝐫𝐦𝐞𝐝𝐢𝐚𝐭𝐞
+
+Explain how TCP three-way handshake works.
+How does the Linux kernel handle packet forwarding?
+What is iptables and how does it work in Linux networking?
+Explain the difference between stateful and stateless firewalls.
+What is the use of netstat, ss, and how do they differ?
+How can you monitor real-time network traffic on Linux?
+What is MTU and why is it important? How can you check and change it?
+How to configure static routes in Linux?
+What is a socket? How does Linux expose sockets to userspace?
+How to use tcpdump to capture packets? Give examples.
+What is the difference between unicast, multicast, and broadcast?
+What tools and commands can you use to debug slow network connections in Linux?
+
+📍𝐋𝐢𝐧𝐮𝐱 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠 𝐀𝐝𝐯𝐚𝐧𝐜𝐞𝐝
+
+Explain how Linux networking stack processes incoming and outgoing packets.
+What is netfilter? How is it related to iptables and nftables?
+Describe the differences between iptables and nftables.
+How would you implement QoS (Quality of Service) in Linux?
+Explain TCP congestion control algorithms available in Linux.
+How does Linux implement network namespaces? Give practical use cases.
+Explain Linux kernel modules related to networking (e.g., xtables, nf_conntrack).
+How do you perform packet filtering and NAT using nftables?
+What is the role of eBPF in modern Linux networking?
+How do you isolate network traffic using cgroups and namespaces?
+--------------------------------------------------------------------------------------------------
+General Questions:
+1. Introdcution
+2. Explain the project that you are working on?
+3. Day to Day responsibilities?
+
+
+Linux:
+1. How do u check running processes in linux?
+2. Differenece between top,htop and ps?
+3. Explain cron expression & how to schedule cron job for every 15 mins?
+4. Diff between hard and soft links?
+5. How to find porcess that using most memory & more cpu?
+6. Diff between find and locate?
+7.What is logrotation?
+8.What is an inode in Linux?
+9. What are runlevels?
+10. What is chmod 755 mean
+11. How to setup default permissions for files and directories 
+12.How do u analyze and troubleshoot a system that is running slowly
+13. How do u check if port is open and listening
+14. Diff between scp and rsync
+15. How do u configure static IP address
+16. How do u flush DNS cache
+17. How do u mount and unmount file system
+18. How do u view disk partitions and usage
+19. What is sticky bit,setuid and setgid
+
+Terraform:
+
+1. What is the difference between Terraform & Terragrunt?
+2. How do you securely store the statefile?
+3. How can you avoid stroing any kind of secrets in Terraform & Terragrunt files?
+4. How can you restrict someone to delete the resources? ( Only destroy should be restricted but not init,plan & apply).
+5. Diff between count & for_each?
+
+AWS:
+1. What is the diff between private and public subnets?
+2. What is Cloudfront?
+3. What is VPC peering & Direct connect? When these two can be used?
+4. What is Elastic IP?
+
+Docker & Kubernetes:
+1. Diff between CMD & Entrypoint?
+2. What are Cgroups in Docker?
+3. What are dangling objects in Docker?
+4. How do you troubleshoot POD's with unhealthy status?
+5. Explain your deployment strategy?
+6. How do you update your cluster version?
+7. How do you fix the POD issue with OOM killed issues?
+8. what are diff probes in Kubernetes?
+
+CI-CD:
+1. How do you migrate pipelines from one Ci-CD to other?
+2. How do you store secrets in your CI-CD?
+3. What is Github actions and why it is gaining more popularity now?
+4. Can we use docker contianers as agents for Ci-CD?
+
+
+Feedback: 
+1.Good at what you are doing on a daily basis.
+2. Should explore a little more about recent trends in Cloud & DevOps
+3. We need guys who has more experience on GitHub actions and Ansible( I use Harness & Chef in my project).
+
+I was told my experience didn’t exactly match the tools they use,So Rejected😥
+-----------------------------------------------------------------------------------------------------------------
+
+If you’re preparing for a DevOps role, start with these:
+
+1️⃣ Kubernetes — “How would you troubleshoot a pod stuck in CrashLoopBackOff?”
+2️⃣ Docker — “Explain the difference between COPY and ADD in a Dockerfile.”
+3️⃣ CI/CD — “How would you implement blue-green deployment in Jenkins or Tekton?”
+4️⃣ Infrastructure as Code — “How do you manage secrets in Terraform?”
+5️⃣ Monitoring — “How would you set up alerts for high CPU usage in Prometheus + Grafana?”
+6️⃣ Cloud — “How do you design a fault-tolerant system in AWS?”
+7️⃣ Git — “How do you resolve conflicts in a rebase vs. a merge?”
+8️⃣ OpenShift — “Explain how Routes work and their purpose.”
+9️⃣ Problem-Solving — “Production is down. What’s your first step?”
+
+-------------------------------------------------------------------------------------
+Deloitte USI interview experience For devops engineer role technical round question asked by interviewer….
+
+
+1. What types of pipelines do you work with Jenkins?
+2. To automate the process of triggering a pipeline, how do you trigger Jenkins automatically after a Git commit?
+3. What type of credentials do you use in your pipeline, and how will you configure GitLab?
+4. I want you to write a Jenkins Groovy script.
+5. YAML file – Write a GitLab YAML code.
+6. What is a Lambda?
+7. Lambda is getting failed within 1–2 seconds – what could be the reason?
+8. How will Lambda A trigger Lambda B after finishing its task?
+9. You created an EC2 instance and lost the PEM key – what will you do?
+10. Explain Kubernetes architecture.
+11. What does a Pod consist of?
+12. What is the Kubernetes API Server?
+13. If the API Server is down, what happens to the cluster?
+14. What is a Dockerfile?
+15. Write a Dockerfile.
+16. What is only: main in GitLab YAML?
+17. What is a Pod?
+18. Write a Kubernetes YAML code.
+19. Write a GitLab CI YAML code.
+-----------------------------------------------------------------------
+Interview questions for AWS Devops
+
+1. How can automated infrastructure setup transform your DevOps workflows, and what tools (like Terraform or CloudFormation) have you used to make it seamless?
+
+2. What are the biggest challenges you've encountered with unreliable CI/CD pipelines, such as random failures, and how do you approach debugging them without oversimplifying the errors?
+
+3. In troubleshooting lambda function issues, how do you systematically collect and analyze logs from various sources to pinpoint root causes?
+
+4. Should optional components in a pipeline ever cause the whole process to fail? What's your strategy for managing them—fix, remove, or isolate?
+
+5. How does continuous deployment automate resource management across multiple environments (e.g., dev, staging, prod), and what's the ideal frequency for releasing application updates?
+
+6. When dealing with ECR (Elastic Container Registry) failures in DevOps projects, how do you navigate publication errors and ensure smooth image handling?
+
+7. What's your go-to method for explaining complex pipeline failures to your team, and how has gathering detailed data helped in past resolutions?
+
+**Bonus Questions to Dive Deeper (Inspired by the Abhishek veramalla):**
+
+8. In AWS environments, how do you balance speed and reliability in CI/CD—any best practices for integrating security scans without slowing down deployments?
+
+9. Have you implemented blue-green deployments or canary releases to minimize downtime? What pitfalls should beginners watch out for?
+
+10. How can monitoring tools like CloudWatch or Prometheus help predict and prevent CI/CD failures before they impact production?
+
+11. For interview prep: Describe a time when you optimized a flaky pipeline—what metrics did you track (e.g., deployment success rate, mean time to recovery)?
+
+12. What's the role of IaC (Infrastructure as Code) in making deployments predictable, and how do you handle rollbacks in case of issues?
+
+13. In a multi-team setup, how do you ensure CI/CD pipelines support collaboration without introducing bottlenecks?
+---------------------------------------------------------------------
+🚀 Interview Experience – DevOps Role 🚀
+
+Yesterday, I had a really engaging DevOps interview where I was challenged with some deep technical and scenario-based questions. I’m sharing them here for my network – it might help someone preparing for similar roles, and I’d love to hear how others would answer them!
+
+Questions I was asked:
+
+1️⃣ You mentioned you’ve worked with Argo CD – how do you use it?
+
+2️⃣ There’s a scenario where someone wants to deploy infrastructure on AWS via Terraform. Which tool will you use and why?
+
+3️⃣ How do you maintain Argo CD and use it to deploy on Kubernetes?
+
+4️⃣ How do you manage rollbacks of an application in Argo CD?
+
+5️⃣ In Kubernetes, how many master and worker nodes you had configure?
+
+6️⃣ Would you use an entirely different AWS account, a separate cluster, or just a namespace to differentiate Dev and Prod?
+
+7️⃣ If you have 1 master node and 1 worker node running an application, how would you upgrade Kubernetes on both?
+
+8️⃣ Do you store your Terraform state file locally or remotely? Why?
+
+9️⃣ If you deployed 12 EC2 instances and 2 were deleted manually, what happens when you run terraform apply again?
+
+🔟 How do you update your Terraform state file to match current AWS resources? Which command will you use?
+
+1️⃣1️⃣ How would you deploy to multiple AWS accounts like Dev, UAT, and Prod?
+
+1️⃣2️⃣ Can we do it with Terraform workspaces?
+
+1️⃣3️⃣ What does terraform init do?
+
+1️⃣4️⃣ If an EC2 instance has an IAM role to access S3 but gets “Permission Denied,” how do you troubleshoot?
+
+1️⃣5️⃣ You use ALB for EKS external traffic – how do you manage traffic inside EKS to different paths?
+
+1️⃣6️⃣ For cost optimization, how do AWS Savings Plans work?
+
+1️⃣7️⃣ You use rolling updates for deployments, but what if you want to use a Blue-Green approach with Argo CD inside Kubernetes?
+
+💬 It was a great mix of AWS, Terraform, Kubernetes, Argo CD, and real-world DevOps scenarios.
+
+Have you faced similar interview questions?
+Which ones do you think are the trickiest?
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Just gave my technical interview for the Senior DevOps Engineer role at Ericsson — sharing the questions I remember few of them, so they might help someone preparing for similar DevOps interviews.
+
+📋 Some of the questions asked:
+
+⸻
+
+Maven & CI/CD
+ • If Maven is taking too long to build and compile the code, what steps can you take to reduce the pipeline execution time?
+
+⸻
+
+Shell Scripting
+ • Write a shell script that accepts first name, last name, age and prints whether the person is a minor or a major.
+
+⸻
+
+AWS
+ • How do you use scp in AWS to securely copy files between your local machine and an EC2 instance?
+ • What is a Secure Control Policy (SCP) in AWS and how does it differ from general security access control policies?
+
+⸻
+
+Dockerfile Discussion (Dockerfile given by interviewer)
+ • What is wrong with using FROM latest ubuntu in a Dockerfile? How would you correct it?
+ • Why is it a good practice to define a WORKDIR in your Dockerfile?
+ • What is the difference between CMD and ENTRYPOINT in Docker?
+ • Why is CMD important in a Dockerfile, and what happens if you don’t specify it?
+ • What are some improvements you would make to this Dockerfile?
+ • Explain the purpose of COPY . . in a Dockerfile and when it might fail.
+ • How would you make this Dockerfile more production-ready?
+
+⸻
+
+Ansible – Experience and Project Fit
+ • In your project where you used GitHub → Maven → Jenkins → SonarQube → Nexus → Docker → Kubernetes (EKS), how could you integrate Ansible?
+ • What kind of Ansible playbooks could you write for tasks related to EC2 jump hosts and Kubernetes clusters?
+ • Can you give an example of an Ansible playbook to install Docker on a VM?
+ • How would you write an Ansible playbook to copy a kubeconfig file to a server?
+ • How can Ansible be used to pull Docker images from Nexus and run them?
+ • What Ansible modules have you used for service configuration and restarts?
+
+⸻
+
+Ansible – Interview Task Scenario
+ • How would you write an Ansible playbook to install multiple system packages (e.g., Python and related dependencies)?
+ • If the interviewer gives you packages like python3, python3-pip, python3-venv, how would you install them using Ansible?
+ • What is the difference between installing Python packages via the apt module and the pip module in Ansible?
+ • Write an Ansible playbook to install Python libraries like Flask, Dash, and Pandas using pip.
+
+--------------------------------------------------------------------------------------------------------------------
+
+📝Questions Asked in My First Round
+1. What command is used to see the running container processes in Kubernetes?
+2. What command is used to see the running container processes in Docker?
+3. If you have a Dockerfile, what’s the process to build and run a container from it?
+4. What is a Docker image?
+5. If you want to create an EC2 in a specific region & AZ via Terraform, what’s the process from scratch?
+6. Scenario: You’ve created an EC2 with Terraform. How will you install Jenkins, monitoring tools, and run an application for a pipeline?
+7. Why do we use SonarQube? What are its use cases
+8. How does Terraform talk to AWS?
+9. What is a Security Group in AWS?
+10. What is a VPC in AWS?
+11. What are inbound and outbound rules in Security Groups?
+12. What is a GitHub webhook?
+13. Scenario: If you run both a Spring Boot app and Jenkins on the same EC2 on port 8080, will it work? Why or why not?
+14. How do you change the default port number of Jenkins?
+15. Default port numbers: Jenkins, Prometheus, Grafana.
+16. How to integrate Prometheus and Grafana for monitoring EC2?
+17. Scenario: You have an on-prem application running, how will you migrate it to Kubernetes with CI/CD?
+18. What is Git/GitHub and why do we use it?
+19. What is GitHub Actions and how do you use it?
+20. If you want to create a webhook and integrate it with a Jenkins pipeline, how will you configure it or write it in a Jenkinsfile?
+
+💡Takeaways for this Fellow Fresher:
+-Don’t underestimate basic questions: Interviewers often check fundamentals more than advanced tools.
+-Speak slowly, even if you feel nervous, your mind gets time to recall the answer.
+-Scenario-based answers matter. They show you can think in workflows, not just memorize commands.
+-It’s okay to fumble. The key is to keep going and not let one question throw off the rest of the interview.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Senior DevOps Engineer Interview at Netflix – Part 2
+
+Round 1 – Scale, Reliability & K8s Internals
+1. Netflix runs 1000s of microservices. How do you enforce API contract reliability across them?
+2. A pod mounts 3 PVCs on an EKS node with disk pressure. What happens when the kubelet starts eviction?
+3. Walk through how you’d design cross-cluster service discovery without relying on DNS alone.
+4. What’s your strategy to handle kernel version drift across worker nodes in a large fleet?
+5. How would you debug a CNI plugin race condition that intermittently drops packets?
+6. Explain how you’d structure Terraform workspaces & modules for 50+ engineering teams without breaking state.
+7. Netflix often runs chaos tests. How would you simulate gRPC connection resets between sidecars in staging?
+
+Round 2 – Chaos, RCA & Streaming-Grade Debugging
+1. Video playback errors surge for 5% of LATAM users. ALB + Envoy health checks are all green. Where do you start?
+2. Kafka consumer lag spikes during a new show premiere. Producers are fine. What’s your triage sequence?
+3. Latency spikes only for multi-bitrate streams while single-bitrate streams are fine. Debug this.
+4. An Istio upgrade silently breaks circuit breaker configs. How do you root-cause and rollback?
+5. A single AZ shows increased TCP retransmits, but infra looks healthy. How do you pinpoint?
+6. Kubernetes autoscaler provisions nodes, but pods remain Pending with GPU requests. RCA?
+
+Round 3 – Leadership, Culture & Production Judgment
+1. How do you prevent resume-driven development when engineers want to add new infra toys?
+2. Leadership demands 99.999% uptime for live events. Where’s the hidden tradeoff you’d expose?
+3. How would you train engineers to debug “green but dead” systems without handholding?
+4. Describe your chaos game plan if half of North America’s streaming traffic must failover in under 60 seconds.
+5. How do you explain a post-incident RCA to non-technical execs without losing technical depth?
+
+TL;DR
+If you haven’t:
+Root-caused CNI race conditions under load
+Debugged Kafka lag during real-time ingestion spikes
+Simulated gRPC resets and circuit breaker failures
+Balanced chaos testing against 5-nines uptime
+
+Then a Netflix interview won’t just test your skills.
+It’ll show you how fragile your production instincts are.
+
+🔥 That’s what InfraThrone exists for.
+Not tutorials. Not labs.
+But RCA drills. Fire room simulations. Streaming-grade chaos.
+----------------------------------------------------------------------------------------------------------------
+******Devops Interview Question******
+
+1) Tell me about your self
+ 2) Explain your experience in CI/CD tools and how do you used it?
+ 3) Give me some commands in Linux
+ 4) Command to generate SSH Key
+ 5) What if user lost SSH key?
+ 6) Command to show memory usage & CPU processing's?
+ 7) Command to kill any one of process
+ 8) How will you change user access or privileges?
+ 9) What are GitHub actions?
+10) Difference between GitHub actions & Jenkins?
+11) Any Branching strategics you followed in your organization?
+12) How much you are confident in Kubernetes & Docker?
+13) How will you stop POD in K8s?
+14) How will you replicate a POD?
+15) Command to get logs in K8s?
+16) what will you do if POD is not responding?
+17) What will you do if POD is getting more load and we need to stay it healthy before it gets died
+17) what is docker?
+18) How docker is useful & how will you implement in your pipeline?
+19) How will you find out merge conflicts?
+20) what kind of tools will you prefer for SAST & DAST securities?
+21) How will you manage your ServiceNow task assigned to you & what basis will you pick those and solve it?
+
+2nd Round: - 
+
+1) How much experience you have in writing pipeline scripts?
+2) Write a pipeline script of implementing some tools by Groovy language?
+3) Have you created pipeline script end to end what kind of tools you used?
+3) How will you create GitHub actions?
+4) Did you gave any ideas to your team or project in DevOps to improve the deployments? if any what are they?
+5) How much will you rate yourself about Linux & Python languages?
+6) How far you are good in using Ai in DevOps? (GitHub Copilot)
+7) How about Monitoring tools? what you have used in your organization?
+8) How are alerts managed in Prometheus or Grafana?
+--------------------------------------------------------------------------------------------------------------------------
+𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬
+Q. What is the difference between a Deployment and a StatefulSet in Kubernetes?
+Q. When should you use a StatefulSet instead of a Deployment?
+Q. Can you attach a volume to a Deployment? If yes, how is it different from a StatefulSet?
+Q. What could cause a StatefulSet pod to fail when rescheduled to a different availability zone?
+Q. How do PV/PVC behave across zones in EKS or Kubernetes in general?
+Q. What is a DaemonSet and when would you use it?
+Q. If you want two pods per node (instead of one), what alternatives to DaemonSet can you use?
+Q. What is a Pod Disruption Budget (PDB) and how is it useful?
+Q. How do you handle certificate rotation in on-prem Kubernetes clusters?
+Q. What are the challenges with scheduling pods in a multi-node, multi-AZ setup?
+Q. How does the Kubernetes scheduler decide where to place pods?
+Q. What happens when a StatefulSet pod cannot mount its volume after moving to another node?
+
+🔹 𝐓𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦
+Q. What are common challenges faced while working with Terraform?
+Q. How do you handle state file management in Terraform?
+Q. How do you detect and resolve drift in Terraform-managed infrastructure?
+Q. How do you manage secrets securely in Terraform?
+Q. Why should you use a remote backend for Terraform?
+
+🔹 𝐀𝐖𝐒 & 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠
+Q. What are all the possible ways to deploy an Nginx server on AWS?
+Q. What are the pre-requisites for VPC peering between two VPCs?
+Q. What problems occur when two VPCs have overlapping CIDR blocks?
+Q. How can you enable communication between overlapping CIDR VPCs?
+Q. What is a Transit Gateway and how does it help in VPC communication?
+Q. How can a jump server be used in overlapping network scenarios?
+Q. Can you explain transitive routing between VPCs A, B, and C?
+
+🔹 𝐂𝐈/𝐂𝐃 – 𝐆𝐢𝐭𝐇𝐮𝐛 𝐀𝐜𝐭𝐢𝐨𝐧𝐬
+Q. What CI/CD tools have you used in your current role?
+Q. How are you integrating tools like SonarQube, Docker, and Trivy in your pipelines?
+Q. How do you trigger a GitHub Actions workflow in another repository?
+Q. What is the purpose of repository_dispatch in GitHub Actions?
+Q. How would you trigger a CI/CD pipeline in Repo A from changes in Repo B?
+----------------------------------------------------------------------------------------------------------------
+CloudOps
+
+1. How do you ensure security in AWS?
+
+2. How do you create Grafana queries for metrics like CPU, memory, error rate?
+
+3. Why is Transit Gateway more costly than VPC Peering?
+
+4. How do you enable autoscaling in Kubernetes?
+
+5. Explain the difference between S3, DynamoDB, and RDS.
+
+6. What are the key benefits of cloud migration?
+
+7. What is the difference between Internet Gateway and NAT Gateway?
+
+8. How do you manage large migrations in Terraform?
+
+9. How do you diagnose findings in AWS Inspector?
+
+10. What are Beats in the ELK stack and their use cases?
+
+11. What are the best practices missing in a simple Terraform S3 bucket config?
+
+12. What are the common pod errors in Kubernetes (e.g., CrashLoopBackOff, OOMKilled)?
+
+13. How do you size an EKS cluster for a project?
+
+14. What happens if a microservice pod fails due to port already in use?
+
+15. How do you use API Gateway and when would you choose public vs private APIs?
+
+16. How do you decide between VPC Peering and Transit Gateway?
+
+17. What steps do you take when Grafana dashboards load slowly?
+
+18. How do you secure secrets in Terraform (tools like Lowkey, SSM, Vault)?
+
+19. What are the limitations of auto-generated Terraform code?
+
+------------------------------------------------------------------------------------------------------------
+Real Interview Questions – DevOps Engineer 𝑃𝑊𝐶🧠💥
+
+𝐑𝐨𝐮𝐧𝐝 𝟏: 𝐒𝐜𝐫𝐞𝐞𝐧𝐢𝐧𝐠 𝐑𝐨𝐮𝐧𝐝 
+1.Walk me through your current project architecture and your role in it.
+2.Which DevOps tools have you worked with in the last 2 years?
+3.What AWS services have you used in production?
+4.Describe your experience with CI/CD pipelines.
+5.How do you expose a Kubernetes application to external traffic?
+6.What is the difference between Deployment and StatefulSet in Kubernetes?
+7.What is a ConfigMap, and how is it different from a Secret?
+8.What is the purpose of a NAT Gateway?
+9.How do you check network connectivity between two servers?
+10.How do you check running processes in Linux?
+11.What command would you use to find files larger than 100MB?
+
+𝐑𝐨𝐮𝐧𝐝 𝟐: 𝐓𝐞𝐜𝐡𝐧𝐢𝐜𝐚𝐥 𝐑𝐨𝐮𝐧𝐝 (𝟔𝟎 𝐦𝐢𝐧𝐬)
+1.You have an application in Account A that needs to access an S3 bucket in Account B. How would you configure this?
+2.Your EC2 instance in a private subnet needs to download packages without a NAT Gateway. What alternatives exist?
+3.How would you set up geolocation-based routing using AWS services?
+4.Write a Dockerfile for a Node.js application with multi-stage builds.
+5.What's the difference between COPY and ADD commands in Dockerfile?
+6.How do you debug a container that has exited?
+7.How would you handle secrets in a Docker container for a PHP application connecting to MySQL?
+8.How would you implement blue-green deployment in Kubernetes?
+9.How do you implement network policies to restrict pod-to-pod communication in Kubernetes?
+10.critical production Kubernetes cluster is experiencing multiple issues:
+Pods stuck in ImagePullBackOff
+Pods being evicted
+Users reporting 503 errors
+11.What troubleshooting steps will you follow, and how to avoid this in the future?
+12.How do you handle Terraform state file corruption?
+13.You need to import an existing AWS VPC into Terraform. What are the steps?
+14.How do you manage secrets in Terraform without hardcoding them?
+15.How would you implement cross-account resource provisioning using Terraform?
+16.An S3 bucket was created via Terraform, but someone manually added a policy. How do you handle this drift?
+17.Write a Python script to backup all files older than 30 days from a directory.
+18.Your company's cloud costs are increasing rapidly. How would you approach cost optimization without impacting performance?
+--------------------------------------------------------------------------------------------------------------------------------------------
+If you’re preparing for Kubernetes, DevOps, or Cloud Engineer interviews, here’s a curated list of essential questions, most repeated and few are very crucial, I crafted this myself from my own interviews experience. 
+
+ I recently appeared for the couple of interviews, own experience.
+📌 Cloud & AWS
+ 1️⃣ How can you connect an EC2 in one AWS account to an S3 bucket in another AWS account?
+ 1️⃣0️⃣ What’s the difference between ALB and NLB?
+ 1️⃣3️⃣ What’s the difference between stateless and stateful in AWS?
+📌 Docker & Containers
+ 2️⃣ Difference between volume and bind mount in Docker?
+ 5️⃣ Difference between hard link and soft (symbolic) link?
+ 6️⃣ Difference between image and container?
+ 7️⃣ Difference between CMD and ENTRYPOINT?
+ 1️⃣5️⃣⭐ Difference between Docker bridge and custom bridge — and how can I create one?
+📌 Kubernetes & Networking
+ 4️⃣ Difference between CRI, CNI and CSI?
+ 8️⃣ Which component is responsible for providing pod IPs in Kubernetes?
+ 9️⃣ If I schedule a pod on the master node with a toleration, and kube-proxy runs only on worker nodes, who will take care of the master pod’s IP?
+ 1️⃣4️⃣⭐ Difference between Calico and Flannel?
+ 1️⃣6️⃣⭐ If a Pod has three init containers and one main container — and one init container fails — what happens?
+📌 Linux Ops & Troubleshooting
+ 1️⃣1️⃣ If on a Linux machine the disk is 100% full and I need to save & rotate a file whenever I want, how can I do it?
+ 1️⃣2️⃣ How can I check the top CPU and memory usage on Linux, and how can I check which files/processes are using the most CPU/memory?
+
+------------------------------------------------------------------------------------------------------------------
+Interview questions for AWS Devops
+
+1. How can automated infrastructure setup transform your DevOps workflows, and what tools (like Terraform or CloudFormation) have you used to make it seamless?
+
+2. What are the biggest challenges you've encountered with unreliable CI/CD pipelines, such as random failures, and how do you approach debugging them without oversimplifying the errors?
+
+3. In troubleshooting lambda function issues, how do you systematically collect and analyze logs from various sources to pinpoint root causes?
+
+4. Should optional components in a pipeline ever cause the whole process to fail? What's your strategy for managing them—fix, remove, or isolate?
+
+5. How does continuous deployment automate resource management across multiple environments (e.g., dev, staging, prod), and what's the ideal frequency for releasing application updates?
+
+6. When dealing with ECR (Elastic Container Registry) failures in DevOps projects, how do you navigate publication errors and ensure smooth image handling?
+
+7. What's your go-to method for explaining complex pipeline failures to your team, and how has gathering detailed data helped in past resolutions?
+
+**Bonus Questions to Dive Deeper (Inspired by the Abhishek veramalla):**
+
+8. In AWS environments, how do you balance speed and reliability in CI/CD—any best practices for integrating security scans without slowing down deployments?
+
+9. Have you implemented blue-green deployments or canary releases to minimize downtime? What pitfalls should beginners watch out for?
+
+10. How can monitoring tools like CloudWatch or Prometheus help predict and prevent CI/CD failures before they impact production?
+
+11. For interview prep: Describe a time when you optimized a flaky pipeline—what metrics did you track (e.g., deployment success rate, mean time to recovery)?
+
+12. What's the role of IaC (Infrastructure as Code) in making deployments predictable, and how do you handle rollbacks in case of issues?
+
+13. In a multi-team setup, how do you ensure CI/CD pipelines support collaboration without introducing bottlenecks?
+
+------------------------------------------------------------------------------------------------------------------
+Kubernetes, DevOps, or Cloud Engineer interviews, here’s a curated list of essential questions — from core concepts to troubleshooting and security.
+I recently appeared for the interview, own experience.
+📌 Kubernetes 
+ 1️⃣ What is a Pod in Kubernetes, and how is it used?
+ 2️⃣ Explain each major component of Kubernetes and its role.
+ 3️⃣ What is the difference between a Replica and a ReplicaSet?
+ 4️⃣ Difference between ReplicaSet and Deployment.
+ 5️⃣ What is a StatefulSet? How does it differ from a Deployment?
+📌 Scaling & Scheduling
+ 6️⃣ Difference between Horizontal Pod Autoscaler (HPA) and Vertical Pod Autoscaler (VPA) — with examples.
+ 7️⃣ If a node is in "NotReady" state, can a Pod be scheduled on it? Why or why not?
+📌 Services & Networking
+ 8️⃣ What are the different types of Kubernetes Services, and why are they used?
+ 9️⃣ Briefly explain OpenShift and how it relates to Kubernetes.
+📌 Storage
+ 🔟 Difference between PersistentVolume (PV) and PersistentVolumeClaim (PVC).
+📌 Pod Management & Troubleshooting
+ 1️⃣1️⃣ How can you view logs from a Pod? Provide a command example.
+ 1️⃣2️⃣ If a Pod is in a CrashLoopBackOff state, how do you troubleshoot it?
+ 1️⃣3️⃣ What does OOMKilled mean, and what are the possible causes?
+ 1️⃣4️⃣ What does the -it flag mean when executing into a Pod?
+ 1️⃣5️⃣ How do you execute commands inside a Pod?
+📌 Probes & Monitoring
+ 1️⃣6️⃣ Explain Liveness and Readiness probes with use cases.
+📌 Configuration & Secrets
+ 1️⃣7️⃣ Difference between ConfigMap and Secret, and how to use them in a Pod.
+ 1️⃣8️⃣ How can you add a Secret in a particular YAML file?
+📌 Security & Access Control
+ 1️⃣9️⃣ Explain RoleBinding and ClusterRoleBinding.
+
+---------------------------------------------------------------------------------
+31. How do you secure Kubernetes cluster? 
+Answer: 
+• Use RBAC for access control. 
+• Enable Network Policies. 
+• Regularly patch cluster. 
+• Restrict container privileges (no root user). 
+• Use Secrets API for sensitive data. 
+32. What if Terraform shows “drift” in infrastructure? 
+Answer: Run terraform plan to identify drift → Apply changes to sync with config → Or update .tf files to reflect actual infra. 
+33. How do you handle high latency issues in GCP/Azure services? 
+Answer: • Check network logs. 
+• Use Cloud Monitoring (Stackdriver/Azure Monitor). 
+• Scale infra (VMs, AKS nodes). 
+• Optimize load balancer & caching. 
+34. How do you perform blue-green deployment using Jenkins + Kubernetes? 
+Answer: Jenkins pipeline deploys Green → Run tests → Switch traffic to Green (via service or ingress) → Keep Blue as rollback option. 
+35. What if Jenkins master crashes? 
+Answer: • Use backup plugin to restore jobs. 
+• Store Jenkins home in persistent storage. 
+• Run Jenkins in HA mode with Kubernetes. 
+36. How do you integrate monitoring into DevOps pipelines? 
+Answer: Add monitoring setup steps in pipeline (Prometheus config, log forwarding, alerts) → Validate health after each deployment. 
+37. How do you optimize Terraform execution time? 
+Answer: • Use smaller state files (split projects). 
+• Run in parallel with -parallelism. 
+• Use modules to reduce duplication. 
+38. How do you troubleshoot high pod restart counts in Kubernetes?
+Answer: • Check pod logs for crash reason. 
+• Validate resource limits. 
+• Verify liveness/readiness probes. 
+• Fix config/secret errors. 
+39. How do you ensure auditability in DevOps? 
+Answer: • Store IaC in Git for versioning. 
+• Enable Cloud Audit Logs (GCP/Azure). 
+• Use Jenkins pipeline logs. 
+• Implement approval stages for production. 
+40. What if your GCP/Azure costs suddenly spike? 
+Answer: • Check billing reports. 
+• Identify unused resources (VMs, disks, load balancers). 
+• Set budgets & alerts. 
+• Use autoscaling + reserved instances.
+------------------------------------------------------------------------------------------------------------------------------
+HCL DevOps Interview Questions – Real Scenarios You Must Prepare For
+
+1. Technical Round (45–60 mins)
+Expect real-world scenario-based questions across CI/CD, Cloud, Kubernetes, Terraform, and DevOps best practices:
+1️⃣ Explain your CI/CD pipeline design. Which tools did you use and why?
+2️⃣ Jenkins multi-environment deployment (dev/stage/prod) – how would you do it?
+3️⃣ Jenkins pipeline failures → Debugging & real-time fix examples.
+4️⃣ Dockerfile best practices → Production-ready approach.
+5️⃣ Kubernetes rolling updates using YAML → Steps and concepts.
+6️⃣ Terraform backend & remote state with locking → Why & how.
+7️⃣ Secrets management → AWS Secrets Manager / Azure Key Vault.
+8️⃣ Git branching strategies → Gitflow in real projects.
+9️⃣ Logging & Monitoring setup → Tools and approach.
+🔟 DevSecOps → Any real-time implementation you’ve done.
+
+2. HR Round (10–15 mins)
+Covers:
+1️⃣ Career journey & motivations
+2️⃣ Flexibility (shifts, relocation, hybrid)
+3️⃣ CTC, notice period, and career aspirations
+4️⃣ Experience with global teams & client roles
+------------------------------------------------------------------------------------------------------------------------------
+******Devops Interview Question******
+
+1) Tell me about your self
+ 2) Explain your experience in CI/CD tools and how do you used it?
+ 3) Give me some commands in Linux
+ 4) Command to generate SSH Key
+ 5) What if user lost SSH key?
+ 6) Command to show memory usage & CPU processing's?
+ 7) Command to kill any one of process
+ 8) How will you change user access or privileges?
+ 9) What are GitHub actions?
+10) Difference between GitHub actions & Jenkins?
+11) Any Branching strategics you followed in your organization?
+12) How much you are confident in Kubernetes & Docker?
+13) How will you stop POD in K8s?
+14) How will you replicate a POD?
+15) Command to get logs in K8s?
+16) what will you do if POD is not responding?
+17) What will you do if POD is getting more load and we need to stay it healthy before it gets died
+17) what is docker?
+18) How docker is useful & how will you implement in your pipeline?
+19) How will you find out merge conflicts?
+20) what kind of tools will you prefer for SAST & DAST securities?
+21) How will you manage your ServiceNow task assigned to you & what basis will you pick those and solve it?
+
+2nd Round: - 
+
+1) How much experience you have in writing pipeline scripts?
+2) Write a pipeline script of implementing some tools by Groovy language?
+3) Have you created pipeline script end to end what kind of tools you used?
+3) How will you create GitHub actions?
+4) Did you gave any ideas to your team or project in DevOps to improve the deployments? if any what are they?
+5) How much will you rate yourself about Linux & Python languages?
+6) How far you are good in using Ai in DevOps? (GitHub Copilot)
+7) How about Monitoring tools? what you have used in your organization?
+8) How are alerts managed in Prometheus or Grafana?
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+🔹 Sample Questions Covered
+1️⃣ What will you do if a Jenkins pipeline fails?
+2️⃣ How do you handle a failed deployment in Kubernetes?
+3️⃣ How do you manage Terraform state in a team?
+4️⃣ How do you preview Terraform changes before applying?
+5️⃣ How do you ensure zero-downtime deployment in Kubernetes?
+6️⃣ How do you roll back in Jenkins if deployment causes issues?
+7️⃣ What if Terraform state file gets corrupted or deleted?
+8️⃣ How do you secure secrets in pipelines?
+------------------------------------------------------------------------------------------------------------------------
+🧠 𝗚𝗶𝘁 🐙
+
+What is a merge conflict and how do you resolve it?
+
+Difference between git pull and git fetch?
+
+What is git rebase?
+
+Unable to clone a Git repo — what could be the reasons?
+
+
+
+🐳 𝗗𝗼𝗰𝗸𝗲𝗿 📦
+
+Write a sample Dockerfile for a Python/Java app and explain.
+
+What is Docker Compose?
+
+Troubleshooting a Docker container that won’t start.
+
+Difference between COPY and ADD?
+
+Difference between CMD and ENTRYPOINT?
+
+What is a multi-stage Docker build and why use it?
+
+
+
+☸️ 𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀 🧩
+
+Issues faced in Kubernetes and how you resolved them?
+
+What is Ingress and when should you use it?
+
+How does traffic flow into your K8s cluster?
+
+Have you performed a cluster upgrade? Steps?
+
+What are Liveness and Readiness probes?
+
+A pod needs to access an RDS instance outside the cluster — how?
+
+How do you ensure your Kubernetes cluster is secure?
+
+How do you perform deployments in your cluster?
+
+
+
+🌍 𝗧𝗲𝗿𝗿𝗮𝗳𝗼𝗿𝗺 🛠️
+
+What is a state file and backend in Terraform?
+
+How to bring manually created AWS resources under Terraform management?
+
+Deleted 3 of 5 EC2s manually — what happens on terraform apply?
+
+How to sync local and remote state files?
+
+What are lifecycle policies in Terraform?
+
+How do you manage dependencies between resources?
+
+
+
+🤖 𝗔𝗻𝘀𝗶𝗯𝗹𝗲 📜
+
+What are Ansible roles?
+
+Write a playbook to install NGINX.
+
+What is gather_facts in Ansible?
+
+Modules you’ve worked with in Ansible?
+
+Explain Ansible architecture.
+
+
+
+☁️ 𝗔𝗪𝗦 🧱
+
+Which AWS services have you worked with?
+
+What is a Transit Gateway?
+
+How to connect two VPCs?
+
+What is Direct Connect?
+
+What are IAM roles?
+
+EC2 in Account A needs S3 access in Account B — how?
+
+How to attach an SSL certificate to an S3 bucket?
+
+What is AWS Lambda and its limitations?
+
+
+
+🐍 𝗦𝗰𝗿𝗶𝗽𝘁𝗶𝗻𝗴 📧
+
+Write a shell/Python script to monitor CPU & memory usage and send an alert if thresholds are crossed.
+------------------------------------------------------------------------------------------------------------------------------------
+******Interview Questions******
+
+𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬
+Q. What is the difference between a Deployment and a StatefulSet in Kubernetes?
+Q. When should you use a StatefulSet instead of a Deployment?
+Q. Can you attach a volume to a Deployment? If yes, how is it different from a StatefulSet?
+Q. What could cause a StatefulSet pod to fail when rescheduled to a different availability zone?
+Q. How do PV/PVC behave across zones in EKS or Kubernetes in general?
+Q. What is a DaemonSet and when would you use it?
+Q. If you want two pods per node (instead of one), what alternatives to DaemonSet can you use?
+Q. What is a Pod Disruption Budget (PDB) and how is it useful?
+Q. How do you handle certificate rotation in on-prem Kubernetes clusters?
+Q. What are the challenges with scheduling pods in a multi-node, multi-AZ setup?
+Q. How does the Kubernetes scheduler decide where to place pods?
+Q. What happens when a StatefulSet pod cannot mount its volume after moving to another node?
+
+🔹 𝐓𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦
+Q. What are common challenges faced while working with Terraform?
+Q. How do you handle state file management in Terraform?
+Q. How do you detect and resolve drift in Terraform-managed infrastructure?
+Q. How do you manage secrets securely in Terraform?
+Q. Why should you use a remote backend for Terraform?
+
+🔹 𝐀𝐖𝐒 & 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠
+Q. What are all the possible ways to deploy an Nginx server on AWS?
+Q. What are the pre-requisites for VPC peering between two VPCs?
+Q. What problems occur when two VPCs have overlapping CIDR blocks?
+Q. How can you enable communication between overlapping CIDR VPCs?
+Q. What is a Transit Gateway and how does it help in VPC communication?
+Q. How can a jump server be used in overlapping network scenarios?
+Q. Can you explain transitive routing between VPCs A, B, and C?
+
+🔹 𝐂𝐈/𝐂𝐃 – 𝐆𝐢𝐭𝐇𝐮𝐛 𝐀𝐜𝐭𝐢𝐨𝐧𝐬
+Q. What CI/CD tools have you used in your current role?
+Q. How are you integrating tools like SonarQube, Docker, and Trivy in your pipelines?
+Q. How do you trigger a GitHub Actions workflow in another repository?
+Q. What is the purpose of repository_dispatch in GitHub Actions?
+Q. How would you trigger a CI/CD pipeline in Repo A from changes in Repo B?
+-----------------------------------------------------------------------------------------------------------
+Recently, I attended an interview for a DevOps Engineer position (around 2 years of experience).
+ It was a very valuable experience, and I wanted to share the types of questions I was asked. Hopefully, this helps others preparing for similar opportunities. 
+ L1 Interview Questions (Basics & Scenarios)
+ 1.Briefly introduce yourself
+ 2.How do you securely authenticate your cloud with Terraform?
+ 3. How do you store secrets in Terraform?
+ 4. What is a backend in Terraform? Why do we use it, and what is its purpose?
+ 5. If you have existing infrastructure in an AWS account, how do you replicate it into your Terraform state?
+ 6. If you lose a .pem key, how can you connect to your server? Mention different approaches.
+ 7. In a CI/CD pipeline, if build artifacts are stored in one S3 bucket and deployment happens to another S3 bucket in a different AWS account, how do you establish the connection?
+ 8. What is VPC Peering and Transit Gateway?
+ 9. What are the common issues you have faced while using CloudFront?
+ 10. Types of Load Balancers in AWS — in which scenarios have you used each?
+ 11. Difference between CMD and ENTRYPOINT in Docker
+ 12.Write a basic Dockerfile for a Node.js application
+ 13 Difference between Deployment and StatefulSet in Kubernetes
+ L2 Interview Questions (Hands-On & Advanced)
+1. Write a Jenkins Declarative Pipeline with a post section
+2. Difference between COPY and ADD in Docker
+3.Difference between a Multistage Dockerfile and a Distroless Dockerfile
+4.Write a Multistage Dockerfile for Node.js
+ 5.Explain how Kubernetes Architecture works
+ 6. How to check Jenkins version
+ 7. Write a Kubernetes Deployment YAML file
+ 8.Write a Shell script to create an S3 bucket
+-----------------------------------------------------------------------------------------------------------------
+🔹 DevOps / CI/CD / Kubernetes Questions:
+
+1️⃣ What is SCM, IaC, playbook, and a Docker image?
+ 2️⃣ Explain Git and GitHub in simple terms.
+ 3️⃣ How does GitLab CI/CD work?
+ 4️⃣ What are the stages you have built in Jenkins pipelines?
+ 5️⃣ How do you resolve pipeline errors in Jenkins?
+ 6️⃣ How can you schedule a cron job in shell scripting?
+ 7️⃣ What is Kubernetes and why do we use it?
+ 8️⃣ If a pod crashes, how would you fix/debug it?
+ 9️⃣ How do you secure a Terraform state file?
+ 🔟 How do you manage secrets in DevOps projects?
+ 1️⃣1️⃣ What is a Kubernetes Deployment vs StatefulSet?
+ 1️⃣2️⃣ How does Service & Ingress work in Kubernetes?
+ 1️⃣3️⃣ What is the difference between ConfigMap and Secret in Kubernetes?
+ 1️⃣4️⃣ How do you perform rolling updates & rollbacks in Kubernetes?
+ 1️⃣5️⃣ What are taints and tolerations in Kubernetes, and when would you use them?
+
+🔹 AWS Cloud Questions :
+
+1️⃣ How do you launch and configure an EC2 instance with user data?
+ 2️⃣ How do you configure security groups vs NACLs in a VPC?
+ 3️⃣ Explain how to design a VPC with public and private subnets.
+ 4️⃣ What is the use of a NAT Gateway vs Internet Gateway?
+ 5️⃣ How do you attach and mount EBS volumes to EC2?
+ 6️⃣ How do you configure Auto Scaling for EC2 instances?
+ 7️⃣ What is the difference between Application Load Balancer (ALB) and Network Load Balancer (NLB)?
+ 8️⃣ How do you monitor EC2 using CloudWatch (metrics, alarms, dashboards)?
+ 9️⃣ How do you set up CloudWatch log groups for an application?
+ 🔟 How do you manage RDS backups and automated failover?
+ 1️⃣1️⃣ How do you configure Route 53 for domain hosting and failover routing?
+ 1️⃣2️⃣ What is the difference between Elastic IPs and Public IPs?
+------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+🖥 Recent Asked Interview Questions: 𝗦𝗲𝗿𝘃𝗶𝗰𝗲 𝗕𝗮𝘀𝗲𝗱 𝗖𝗼𝗺𝗽𝗮𝗻𝘆
+
+🔠Role: 𝗗𝗲𝘃𝗢𝗽𝘀/𝗖𝗹𝗼𝘂𝗱 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 𝗘𝗻𝗴𝗶𝗻𝗲𝗲𝗿
+🔠Exp Range : 𝟯-𝟱 𝘆𝗿𝘀
+
+1. What is the role of IAM roles and policies?
+2. Can you explain the Terraform plan and its purpose?
+3. What is AWS Lambda, and how does it work?
+4. How do you invoke a Lambda function, and where do you configure it?
+5. Can you describe how Lambda handles scaling and event-based invocations?
+6. What is Amazon CloudWatch, and have you configured any custom metrics?
+7. What metrics are available on your CloudWatch dashboard?
+8. How do you configure CPU utilization on your CloudWatch dashboard?
+9. How do you attach an SSL certificate to an S3 bucket?
+10. What type of encryption have you implemented in your project?
+11. If an S3 bucket has a read-only policy, can you modify objects in the bucket?
+12. Why did you choose Terraform over Boto3 for infrastructure provisioning?
+13. What is a Content Delivery Network (CDN), and how does it work?
+14. Have you created a Jenkins pipeline for your project?
+15. How do you attach policies to IAM users, either individually or by group?
+16. What type of deployment strategies are you using in your project?
+17. Have you used any tools to create customized Amazon Machine Images (AMIs)?
+18. What is connection draining, and how does it work?
+19. How does an Elastic Load Balancer (ELB) distribute traffic?
+20. What is auto-scaling, and how does it work?
+21. Can you describe the different types of Load Balancers and provide examples?
+22. What is the maximum runtime for a Lambda function?
+23. What is the maximum memory size for a Lambda function?
+24. How can you increase the runtime for a Lambda function?
+25. What automations have you performed using Lambda in your project?
+26. Why did you choose Terraform over Boto3 for infrastructure provisioning?
+27. What modules have you used in your Lambda function?
+28. Have you created an SNS topic for your project?
+29. If you've exhausted IP addresses in your VPC, how would you provision new resources?
+30. What is Groovy, and how is it used in Jenkins?
+31. Why do you use Groovy in Jenkins, and where do you save Jenkins files?
+32. What is Ansible, and what is its purpose?
+33. What language do you use in Ansible?
+34. Where do you run Terraform code, remotely or locally?
+35. What is the purpose of access keys and secret keys in AWS?
+36. What are Terraform modules, and have you used any in your project?
+37. What environments have you set up for your project?
+38. Do you use the same AWS account for all environments?
+39. Do you have separate Jenkins servers for each environment?
+40. Where do you write and save your Lambda function code?
+------------------------------------------------------------------------------------------------------------------------
+🕯 Interview Questions for 18 LPA ⁉️ - Cloud & DevOps Engineer Role
+
+My friend recently went through an interview and came across some interesting L1 & L2 level questions related to AWS, Terraform, Kubernetes, Docker, Git.
+
+💎 Level 1 -
+1. cicd workflow, what kind of pipeline.
+2. use of webhook
+3. purpose of webhook
+4. stages of pipeline...
+5. shared libraries in jenkins?
+6. how do we define shared libraries?
+7. how are shared libraries written?
+8. how do you define a pipeline and call it?
+9. what kind of app you deploy on the pipeline?
+10. basic structure, folder structure of helm?
+11. what command are you using deployment in helm
+12. in the Jenkins pipeline, the pipeline is running successfully but the build is not happening, what are the issues?
+13. in kubernetes, what are the errors you are getting, why they come and how you resolve?
+14. explain the crash loop back off,
+15. image pull error?
+16. command to go inside a pod?
+17. how can you create the kubernetes class?
+18. what are the steps to create the cluster?
+19. what is the master node and other node?
+20. code to create a cluster using terraform?
+21. stages in docker images?
+22. DB entry point, CMD 
+23. why do we use entrypoint, CMD
+24. DB ec2, eks, ecs
+25. command to connect ecs
+26. which tool are you using for deployment?
+27. which registry for storing the docker images?
+
+💎 Level 2 -
+1. Branching strategy?
+2. your release branch will break, then how u will avoid this kind of issues, then how do you merge?
+3. in production having some bugs, how will you resolve?
+4. typical deployment flow?
+5. cicd workflow?
+6. how do we do a full quality check?
+7. jenkins file, different stages...
+8. shared libraries in jenkins file?
+9. typical structure of shared libraries...
+10. are you aware of security scanning tools?
+11. how do you pass the environment variables on docker build command.
+12. what services do you use for storing the images?
+13. DB, how do you establish the connection?
+14. how do you scan the images at the registry level?
+15. any extension you are using for image scanning?
+16. authentication of eks cluster?
+17. storing the secrets?
+18. how to create lambda function, how it's taking the artifacts.
+19. options on lambda to push the artifacts?
+20. what is email signing and helm chart signing?
+21. which tool for signing the helm chart?
+-----------------------------------------------------------------------------------------------------------
+
+🚨 Interview Questions – Sr. DevOps Engineer Siemens 🧠💥
+
+If you're preparing for mid to senior-level roles in DevOps, Cloud, or Platform Engineering — this list might help you benchmark your readiness.
+
+🔹 𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬
+Q. What is the difference between a Deployment and a StatefulSet in Kubernetes?
+Q. When should you use a StatefulSet instead of a Deployment?
+Q. Can you attach a volume to a Deployment? If yes, how is it different from a StatefulSet?
+Q. What could cause a StatefulSet pod to fail when rescheduled to a different availability zone?
+Q. How do PV/PVC behave across zones in EKS or Kubernetes in general?
+Q. What is a DaemonSet and when would you use it?
+Q. If you want two pods per node (instead of one), what alternatives to DaemonSet can you use?
+Q. What is a Pod Disruption Budget (PDB) and how is it useful?
+Q. How do you handle certificate rotation in on-prem Kubernetes clusters?
+Q. What are the challenges with scheduling pods in a multi-node, multi-AZ setup?
+Q. How does the Kubernetes scheduler decide where to place pods?
+Q. What happens when a StatefulSet pod cannot mount its volume after moving to another node?
+
+🔹 𝐓𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦
+Q. What are common challenges faced while working with Terraform?
+Q. How do you handle state file management in Terraform?
+Q. How do you detect and resolve drift in Terraform-managed infrastructure?
+Q. How do you manage secrets securely in Terraform?
+Q. Why should you use a remote backend for Terraform?
+
+🔹 𝐀𝐖𝐒 & 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠
+Q. What are all the possible ways to deploy an Nginx server on AWS?
+Q. What are the pre-requisites for VPC peering between two VPCs?
+Q. What problems occur when two VPCs have overlapping CIDR blocks?
+Q. How can you enable communication between overlapping CIDR VPCs?
+Q. What is a Transit Gateway and how does it help in VPC communication?
+Q. How can a jump server be used in overlapping network scenarios?
+Q. Can you explain transitive routing between VPCs A, B, and C?
+
+🔹 𝐂𝐈/𝐂𝐃 – 𝐆𝐢𝐭𝐇𝐮𝐛 𝐀𝐜𝐭𝐢𝐨𝐧𝐬
+Q. What CI/CD tools have you used in your current role?
+Q. How are you integrating tools like SonarQube, Docker, and Trivy in your pipelines?
+Q. How do you trigger a GitHub Actions workflow in another repository?
+Q. What is the purpose of repository_dispatch in GitHub Actions?
+Q. How would you trigger a CI/CD pipeline in Repo A from changes in Repo B?
+
+--------------------------------------------------------------------------------------------------------------------------
+🌟 HCL DevOps interview questions 🌟
+
+
+ℹ️ 1. Technical Round
+This round usually lasts 45–60 minutes, and covers a mix of practical, scenario-based, and conceptual questions from core DevOps tools and cloud services.
+
+1. Explain your CI/CD pipeline design. Which tools did you use and why?
+2. How do you create a Jenkins pipeline for multi-environment deployment (dev/stage/prod)?
+3. What’s the difference between freestyle and pipeline jobs in Jenkins?
+4. How do you handle Jenkins pipeline failures? Give a real-time issue and how you solved it.
+5. Have you integrated code quality tools like SonarQube? How do you do it?
+6. How do you write a production-ready Dockerfile? Any best practices?
+7. Difference between CMD and ENTRYPOINT in Docker?
+8. What is Docker Compose and where have you used it?
+9. Explain how container orchestration works and why it's important.
+10. What are pods, deployments, and services in Kubernetes?
+11. How do you perform a rolling update in Kubernetes using a YAML file?
+12. What’s a ConfigMap vs. Secret? How do you use them in k8s deployments?
+13. How do you handle resource limits and requests in Kubernetes?
+14. Which cloud provider have you worked with? What DevOps services did you use?
+15. How do you manage infrastructure using Terraform in Azure/AWS?
+16. What is the use of Terraform backend? Have you used remote state with locking?
+17. How do you securely store secrets in cloud pipelines? (Azure Key Vault, AWS Secrets Manager)
+18. Explain how you set up an auto-scaling group in cloud using Terraform.
+19. How do you manage role-based access control in Jenkins or Kubernetes?
+20. How do you rollback a faulty deployment using Git and CI tools?
+21. Explain Gitflow and how your team used branching strategies in DevOps.
+22. What is your approach to setting up logging and monitoring for infrastructure and apps?
+23. Have you implemented DevSecOps practices? Share an example.
+
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+
+ℹ️ 2. HR Round
+Usually a 10–15 minute conversation, focusing on:
+
+1. Brief intro and your career journey so far.
+2. Why are you looking to move from your current organization?
+3. Are you comfortable with rotational shifts or on-call support?
+4. Are you willing to relocate/work in hybrid mode (if applicable)?
+5. What is your current CTC, expected CTC, and notice period?
+6. Do you have experience working with client-facing roles or global teams?
+7. Where do you see yourself in the next 2–3 years?
+
+-------------------------------------------------------------------------------------
+Deloitte Interview Experience 
+🟣Position : DevOps Engineer
+
+🟣𝗥𝗼𝘂𝗻𝗱 𝟭: 𝗧𝗲𝗰𝗵𝗻𝗶𝗰𝗮𝗹 𝗦𝗰𝗿𝗲𝗲𝗻𝗶𝗻𝗴
+1. Explain the CI/CD workflow you follow and the kind of pipeline you use. How do you define and invoke pipelines in Jenkins?
+2. What are shared libraries in Jenkins, and how are they written and defined?
+3. What kind of applications do you deploy using Jenkins pipelines, and what deployment tools do you use?
+4. If the Jenkins pipeline runs but the build doesn’t happen, what possible issues could be causing it?
+5. What is the purpose of a webhook, and how is it used in a CI/CD pipeline?
+6. How do you create and manage Kubernetes clusters (using tools like Terraform), and what are the master and worker nodes?
+7. What are common Kubernetes errors you’ve faced (like CrashLoopBackOff, ImagePullError), and how did you resolve them?
+8. What is the command to access a pod and how can you define or create a Kubernetes class or object?
+9. Explain the folder structure of a basic Helm chart. What commands do you use to deploy with Helm?
+10. What are the stages in a Docker image build? Why do we use ENTRYPOINT and CMD instructions?
+11. How do you manage and connect services like DBs, EC2, EKS, or ECS? Include the command to connect to ECS.
+12. Which container registry do you use for storing Docker images?
+
+🟣𝗥𝗼𝘂𝗻𝗱 𝟮: 𝗜𝗻-𝗱𝗲𝗽𝘁𝗵 𝗧𝗲𝗰𝗵𝗻𝗶𝗰𝗮𝗹 𝗦𝗰𝗿𝗲𝗲𝗻𝗶𝗻𝗴
+1. What branching strategy do you follow, and how do you handle merges to avoid breaking the release branch? If a bug appears in production, what’s your approach to resolving it?
+2. Describe your typical deployment flow and CI/CD workflow. What stages do you define in your Jenkins pipeline, and how do you ensure full quality checks during deployment?
+3. How do you use Jenkins shared libraries? Explain their typical structure and how they are integrated into your Jenkinsfiles.
+4. Are you aware of security scanning tools? How do you scan Docker images—both during build and at the registry level? Are you using any extensions or tools for image scanning?
+5. How do you pass environment variables during Docker build commands? What services do you use for storing Docker images?
+6. How do you establish a connection with databases in your deployments or infrastructure setup?
+7. How do you handle authentication for EKS clusters and store secrets securely in your environment?
+8. How do you create AWS Lambda functions and manage the artifacts for deployment? What options do you use to push artifacts to Lambda?
+9. What is email signing and Helm chart signing? Which tools do you use to sign Helm charts?
+
+🟣𝗥𝗼𝘂𝗻𝗱 𝟯: 𝗛𝗠 𝗥𝗼𝘂𝗻𝗱 (𝗛𝗶𝗿𝗶𝗻𝗴 𝗠𝗮𝗻𝗮𝗴𝗲𝗿)
+1. Project experiences.
+2. Day-to-day responsibilities.
+3. Light behavioral questions.
+4. Teamwork & Culture Fit questions.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Interview Questions – DevOps Engineer 🧠💥
+
+If you're preparing for mid to senior-level roles in DevOps, Cloud, or Platform Engineering — this list might help you benchmark your readiness.
+
+🔹 𝐊𝐮𝐛𝐞𝐫𝐧𝐞𝐭𝐞𝐬
+Q. What is the difference between a Deployment and a StatefulSet in Kubernetes?
+Q. When should you use a StatefulSet instead of a Deployment?
+Q. Can you attach a volume to a Deployment? If yes, how is it different from a StatefulSet?
+Q. What could cause a StatefulSet pod to fail when rescheduled to a different availability zone?
+Q. How do PV/PVC behave across zones in EKS or Kubernetes in general?
+Q. What is a DaemonSet and when would you use it?
+Q. If you want two pods per node (instead of one), what alternatives to DaemonSet can you use?
+Q. What is a Pod Disruption Budget (PDB) and how is it useful?
+Q. How do you handle certificate rotation in on-prem Kubernetes clusters?
+Q. What are the challenges with scheduling pods in a multi-node, multi-AZ setup?
+Q. How does the Kubernetes scheduler decide where to place pods?
+Q. What happens when a StatefulSet pod cannot mount its volume after moving to another node?
+
+🔹 𝐓𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦
+Q. What are common challenges faced while working with Terraform?
+Q. How do you handle state file management in Terraform?
+Q. How do you detect and resolve drift in Terraform-managed infrastructure?
+Q. How do you manage secrets securely in Terraform?
+Q. Why should you use a remote backend for Terraform?
+
+🔹 𝐀𝐖𝐒 & 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠
+Q. What are all the possible ways to deploy an Nginx server on AWS?
+Q. What are the pre-requisites for VPC peering between two VPCs?
+Q. What problems occur when two VPCs have overlapping CIDR blocks?
+Q. How can you enable communication between overlapping CIDR VPCs?
+Q. What is a Transit Gateway and how does it help in VPC communication?
+Q. How can a jump server be used in overlapping network scenarios?
+Q. Can you explain transitive routing between VPCs A, B, and C?
+
+🔹 𝐂𝐈/𝐂𝐃 – 𝐆𝐢𝐭𝐇𝐮𝐛 𝐀𝐜𝐭𝐢𝐨𝐧𝐬
+Q. What CI/CD tools have you used in your current role?
+Q. How are you integrating tools like SonarQube, Docker, and Trivy in your pipelines?
+Q. How do you trigger a GitHub Actions workflow in another repository?
+Q. What is the purpose of repository_dispatch in GitHub Actions?
+Q. How would you trigger a CI/CD pipeline in Repo A from changes in Repo B?
+
+--------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
